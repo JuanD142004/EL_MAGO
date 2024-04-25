@@ -52,6 +52,16 @@
                             @endif
                         @else
                         <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('supplier.index') }}">{{ __('Proveedores') }}</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.index') }}">{{ __('Productos') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('truck_type.index') }}">{{ __('Tipo de Camion') }}</a>
+                                </li>
+                        <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.index') }}">{{ __('Usuarios') }}</a>
                                 </li>
                             <li class="nav-item dropdown">

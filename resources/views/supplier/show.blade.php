@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $detailsSale->name ?? "{{ __('Show') Details Sale" }}
+    {{ $supplier->name ?? __('Show') . " " . __('Supplier') }}
 @endsection
 
 @section('content')
@@ -11,34 +11,34 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Details Sale</span>
+                            <span class="card-title">{{ __('Show') }} Supplier</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('details-sales.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('supplier.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Products Id:</strong>
-                            {{ $detailsSale->products_id }}
+                            <strong>Nit:</strong>
+                            {{ $supplier->nit }}
                         </div>
                         <div class="form-group">
-                            <strong>Price Unit:</strong>
-                            {{ $detailsSale->price_unit }}
+                            <strong>Supplier Name:</strong>
+                            {{ $supplier->supplier_name }}
                         </div>
                         <div class="form-group">
-                            <strong>Amount:</strong>
-                            {{ $detailsSale->amount }}
+                            <strong>Cell Phone:</strong>
+                            {{ $supplier->cell_phone }}
                         </div>
                         <div class="form-group">
-                            <strong>Discount:</strong>
-                            {{ $detailsSale->discount }}
+                            <strong>Mail:</strong>
+                            {{ $supplier->mail }}
                         </div>
                         <div class="form-group">
-                            <strong>Sales Id:</strong>
-                            {{ $detailsSale->sales_id }}
+                            <strong>Address:</strong>
+                            {{ $supplier->address }}
                         </div>
 
                     </div>

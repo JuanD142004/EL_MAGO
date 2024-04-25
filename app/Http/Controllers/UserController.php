@@ -78,7 +78,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        return redirect()->route('users.index')
+        return redirect()->route('user.index')
             ->with('success', 'User updated successfully');
     }
 
@@ -86,7 +86,7 @@ class UserController extends Controller
     {
         User::find($id)->delete();
 
-        return redirect()->route('users.index')
+        return redirect()->route('user.index')
             ->with('success', 'User deleted successfully');
     }
 }

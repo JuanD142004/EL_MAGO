@@ -2,49 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TruckType;
-use App\Http\Requests\TruckTypeRequest;
 
-/**
- * Class TruckTypeController
- * @package App\Http\Controllers
- */
+use App\Models\TruckType;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
+
 class TruckTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $truckTypes = TruckType::paginate();
-
-        return view('truck-type.index', compact('truckTypes'))
+        $busqueda = $request->busqueda;
+        $truckTypes = TruckType::where('truck_brand', 'LIKE', '%' . $busqueda . '%')
+                                ->orWhere('plate', 'LIKE', '%' . $busqueda . '%')
+                                ->orderBy('id', 'asc')
+                                ->paginate();
+    
+        return view('truck-type.index', compact('truckTypes', 'busqueda'))
             ->with('i', (request()->input('page', 1) - 1) * $truckTypes->perPage());
     }
+    
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $truckType = new TruckType();
         return view('truck-type.create', compact('truckType'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(TruckTypeRequest $request)
+    public function store(Request $request)
     {
-        TruckType::create($request->validated());
+        $request->validate([
+            'truck_brand' => 'required',
+            'plate' => 'required|unique:truck_types,plate',
+            'ability' => 'required',
+            'enabled' => 'required',
+        ],
+        [
+            'truck_brand.required' => 'El campo Marca de Camión es obligatorio.',
+            'plate.required' => 'El campo Placa es obligatorio.',
+            'plate.unique' => 'La placa ya está en uso.',
+            'ability.required' => 'El campo Capacidad es obligatorio.',
+            'enabled.required' => 'El campo Enabled es obligatorio.',
+    ]);
 
-        return redirect()->route('truck-types.index')
-            ->with('success', 'TruckType created successfully.');
+        TruckType::create($request->all());
+
+        return redirect()->route('truck_type.index')
+            ->with('success', 'Tipo de Camión Creado Exitosamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $truckType = TruckType::find($id);
@@ -52,9 +58,6 @@ class TruckTypeController extends Controller
         return view('truck-type.show', compact('truckType'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $truckType = TruckType::find($id);
@@ -62,22 +65,42 @@ class TruckTypeController extends Controller
         return view('truck-type.edit', compact('truckType'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(TruckTypeRequest $request, TruckType $truckType)
-    {
-        $truckType->update($request->validated());
+    public function update(Request $request, TruckType $truckType)
+{
+    
 
-        return redirect()->route('truck-types.index')
+    $messages = [
+        'truck_brand.required' => 'El campo Marca de Camión es obligatorio.',
+        'plate.required' => 'El campo Placa es obligatorio.',
+        'plate.unique' => 'La placa ya está en uso.',
+        'ability.required' => 'El campo Capacidad es obligatorio.',
+        'enabled.required' => 'El campo Enabled es obligatorio.',
+    ];
+
+
+
+        $truckType->update($request->all());
+
+        return redirect()->route('truck_type.index')
             ->with('success', 'TruckType updated successfully');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $truckType = TruckType::findOrFail($id);
+        $truckType->enabled = $request->input('status');
+        $truckType->save();
+
+        
+
+        return redirect()->back()->with('success', 'El Estado del Camión se Actualizó Correctamente');
     }
 
     public function destroy($id)
     {
         TruckType::find($id)->delete();
 
-        return redirect()->route('truck-types.index')
+        return redirect()->route('truck_type.index')
             ->with('success', 'TruckType deleted successfully');
     }
 }
