@@ -16,7 +16,17 @@
                          <div class="btn-group">
                             <input type="text" name="busqueda" class="from-control my-2">
                             <input type="submit" value="Buscar" class="btn btn-primary my-2" >
+                            
                          </div>
+                         <div>
+                            @if (!empty($busqueda))
+                                        <div>
+                                            <a href="{{ route('supplier.index') }}" class="btn btn-primary btn-sm">
+                                                {{ __('Volver al índice') }}
+                                            </a>
+                                        </div>
+                                    @endif
+                          </div>
                      </form>
                   </div>
                     <div class="card-header">
