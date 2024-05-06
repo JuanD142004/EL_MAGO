@@ -10,27 +10,21 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h1 class="card-title mb-0">
-                            {{ __('Productos') }}
-                        </h1>
-                        <div class="d-md-flex justify-content-between align-items-center">
-                            <form action="{{ route('product.index') }}" method="GET">
-                            </form>
-                            @if (!empty($busqueda))
-                                <div>
-                                    <a href="{{ route('product.index') }}" class="btn btn-primary btn-sm">
-                                        {{ __('Volver al índice') }}
-                                    </a>
-                                </div>
-                            @endif
-                            <div class="float-right">
-                                <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm float-right" data-placement="right">
-                                    {{ __('Crear Nuevo') }}
+                    <div class="card-header"  >
+                           <div class="card-header">
+
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+
+                            <span id="card_title">
+                                {{ __('Productos') }}
+                            </span>
+
+                             <div class="float-right">
+                                <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Crear Nuevo') }}
                                 </a>
-                            </div>
+                              </div>
                         </div>
-                    
                     </div>
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
