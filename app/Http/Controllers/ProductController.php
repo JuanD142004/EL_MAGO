@@ -82,11 +82,17 @@ class ProductController extends Controller
     }
     public function updateStatus(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'required|boolean', // Asegura que 'status' sea un valor booleano
+        ]);
+
         $product = Product::findOrFail($id);
         $product->enabled = $request->input('status');
         $product->save();
-    
-        return redirect()->back()->with('success', 'El producto se actualizó con éxito.');
+
+        $action = $product->enabled ? 'habilitado' : 'inhabilitado';
+
+        return redirect()->back()->with('success', "El producto ha sido $action correctamente.");
     }
 
     public function destroy($id)
