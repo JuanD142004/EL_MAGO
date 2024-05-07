@@ -24,6 +24,9 @@ Route::resource('user', App\Http\Controllers\UserController::class);
 
 // Rutas de autenticación
 Auth::routes();
+Route::resource('user', App\Http\Controllers\UserController::class);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 // Rutas para los Productos
 Route::resource('product', App\Http\Controllers\ProductController::class);
