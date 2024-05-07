@@ -119,3 +119,4 @@ protected function extendPasswordValidator()
   
     }
 }
+
