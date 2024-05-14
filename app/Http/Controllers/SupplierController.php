@@ -17,21 +17,11 @@ class SupplierController extends Controller
      */
     public function index(Request $request)
     {
-        $busqueda = $request ->busqueda;
-        $suppliers = Supplier:: where('supplier_name','LIKE','%' .$busqueda.'%')
-        ->orwhere('nit','LIKE','%' .$busqueda)
-        ->orderBy('id', 'asc')
-        ->paginate(10);
-
-        $data = [
-            'supplier'=>$suppliers,
-            'busqueda'=>$busqueda,
-
-        ];
+        $suppliers = Supplier::paginate();
 
       
 
-        return view('supplier.index', compact('suppliers','busqueda'))
+        return view('supplier.index', compact('suppliers'))
             ->with('i', (request()->input('page', 1) - 1) * $suppliers->perPage());
     }
 
@@ -74,6 +64,7 @@ class SupplierController extends Controller
 
         return view('supplier.show', compact('supplier'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -107,11 +98,17 @@ class SupplierController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'required|boolean', // Asegura que 'status' sea un valor booleano
+        ]);
+
         $supplier = Supplier::findOrFail($id);
         $supplier->enabled = $request->input('status');
         $supplier->save();
-    
-        return redirect()->back()->with('success', 'Proveedor se actualizó con éxito.');
+
+        $action = $supplier->enabled ? 'habilitado' : 'inhabilitado';
+
+        return redirect()->back()->with('success', "El proveedor ha sido $action correctamente.");
     }
     
     /**

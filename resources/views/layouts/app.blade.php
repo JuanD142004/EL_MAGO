@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -54,7 +55,9 @@
                         <li class="nav-item">
                                     <a class="nav-link" href="{{ route('supplier.index') }}">{{ __('Proveedores') }}</a>
                                 </li>
-                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('employee.index') }}">{{ __('Empleados') }}</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('product.index') }}">{{ __('Productos') }}</a>
                                 </li>

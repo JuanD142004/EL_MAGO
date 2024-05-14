@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
-use App\Http\Controllers\LoadController;
+use App\Http\Controllers\LoadController;    
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +43,12 @@ Route::resource('truck_type', App\Http\Controllers\TruckTypeController::class);
 Route::patch('/truck_type/disable/{id}', [App\Http\Controllers\TruckTypeController::class, 'disable'])->name('truck_type.disable');
 Route::patch('/truck_type/enable/{id}', [App\Http\Controllers\TruckTypeController::class, 'enable'])->name('truck_type.enable');
 Route::patch('/truck_type/{id}/update_status', [App\Http\Controllers\TruckTypeController::class, 'updateStatus'])->name('update_status');
+
+// Rutas para Empleados
+Route::resource('employee', App\Http\Controllers\EmployeeController::class);
+Route::patch('/employee/disable/{id}', [App\Http\Controllers\EmployeeController::class, 'disable'])->name('employee.disable');
+Route::patch('/employee/enable/{id}', [App\Http\Controllers\EmployeeController::class, 'enable'])->name('employee.enable');
+Route::patch('/employee/{id}/update_status', [App\Http\Controllers\EmployeeController::class, 'updateStatus'])->name('employee.update_status');
 
 Route::resource('load', App\Http\Controllers\LoadController::class);
 Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
