@@ -12,7 +12,16 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+    <!-- Custom CSS -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    </style>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -21,9 +30,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container d-flex align-items-center">
-                <img src="{{ asset('logo.jpeg') }}" alt="Logo" style="max-width: 70px; margin-right: 10px;">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                   
+                <a class="navbar-brand" href="{{ url('/') }}" style="margin-left: 20px;">
+                    <img src="{{ asset('logo-removebg-preview.png') }}" alt="Logo" style="max-width: 80px; margin-right: 10px;">
+                    <h1 style="color: black; font-family: 'ALGERIAN', cursive; font-size: 25px;margin-left: 90px;margin-top: -70px;">DISTRIBUCIONES EL MAGO</h1>
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -41,7 +50,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
                                 </li>
                             @endif
 
@@ -51,12 +60,6 @@
                                 </li>
                             @endif
                         @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('purchase.index') }}">{{ __('Compras') }}</a>
-                        </li>
-                        <li class="nav-item">
-                             <a class="nav-link" href="{{ route('details_purchase.index') }}">{{ __('Detalles') }}</a>
-                        </li>
                         <li class="nav-item">
                                     <a class="nav-link" href="{{ route('supplier.index') }}">{{ __('Proveedores') }}</a>
                                 </li>
@@ -101,5 +104,20 @@
             @yield('content')
         </main>
     </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Script para alternar la visibilidad de la contraseña -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordField = document.querySelector('#password');
+        const togglePassword = document.querySelector('.toggle-password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+        });
+    });
+    </script>
 </body>
 </html>

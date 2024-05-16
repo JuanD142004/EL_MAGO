@@ -55,6 +55,22 @@ class RegisterController extends Controller
         ]);
     }
 
+    protected function messages()
+    {
+        return [
+            'password.strong_password' => 'La contraseña debe contener al menos un carácter especial.',
+        ];
+    }
+
+// Definición de la regla de validación personalizada dentro del método validator
+protected function extendPasswordValidator()
+{
+    Validator::extend('strong_password', function ($attribute, $value, $parameters, $validator) {
+        return preg_match('/[!@#$%^&*(),.?":{}|<>]/', $value);
+    });
+}
+    
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -70,3 +86,4 @@ class RegisterController extends Controller
         ]);
     }
 }
+
