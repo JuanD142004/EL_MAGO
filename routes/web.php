@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\LoadController;
+use App\Http\Controllers\PurchaseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,3 +47,16 @@ Route::patch('/truck_type/{id}/update_status', [App\Http\Controllers\TruckTypeCo
 
 Route::resource('load', App\Http\Controllers\LoadController::class);
 Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
+Auth::routes();
+
+// Rutas para las compras 
+Route::resource('purchase',App\Http\Controllers\PurchaseController::class);
+Route::resource('details_purchase', App\Http\Controllers\DetailsPurchaseController::class);
+Route::patch('purchase/{id}/update_status', [PurchaseController::class, 'updateStatus'])->name('purchase.update_status');
+
+
+
+// ruta para la barra de busqueda
+Route::get('/purchase/search', [PurchaseController::class, 'search'])->name('purchase.search');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

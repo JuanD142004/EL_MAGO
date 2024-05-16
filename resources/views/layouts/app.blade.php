@@ -52,6 +52,12 @@
                             @endif
                         @else
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('purchase.index') }}">{{ __('Compras') }}</a>
+                        </li>
+                        <li class="nav-item">
+                             <a class="nav-link" href="{{ route('details_purchase.index') }}">{{ __('Detalles') }}</a>
+                        </li>
+                        <li class="nav-item">
                                     <a class="nav-link" href="{{ route('supplier.index') }}">{{ __('Proveedores') }}</a>
                                 </li>
                                 
