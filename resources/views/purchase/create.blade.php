@@ -1,31 +1,26 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ __('Create') }} Purchase
+{{ __('Create') }} Purchase
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+<section class="content container-fluid">
+    <div class="row">
+        <div >
+            <div class="card card-default">
+                <div class="card-header">
+                    <span class="card-title">{{ __('Create Purchase') }}</span>
+                </div>
+                <div class="card-body bg-white">
+                    <form method="POST" action="{{ route('purchase.store') }}" role="form" enctype="multipart/form-data">
+                        @csrf
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Purchase</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('purchase.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
-
-                            @include('purchase.form')
-<h2>Detalles </h2>
-                            @include('details-purchase.form')
-
-
-                        </form>
-                    </div>
+                        {{-- Formulario de compra --}}
+                        @include('purchase.form')
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-@endsection
+    </div>
+    @endsection

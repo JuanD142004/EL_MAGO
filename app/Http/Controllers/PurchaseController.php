@@ -100,7 +100,7 @@ class PurchaseController extends Controller
         
                 $action = $purchase->enabled ? 'habilitado' : 'inhabilitado';
         
-                return redirect()->back()->with('success', "El proveedor ha sido $action correctamente.");
+                return redirect()->back()->with('success', "La compra ha sido $action correctamente.");
             }
     
 

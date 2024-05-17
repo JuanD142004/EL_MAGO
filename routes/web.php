@@ -56,6 +56,7 @@ Auth::routes();
 Route::resource('purchase',App\Http\Controllers\PurchaseController::class);
 Route::resource('details_purchase', App\Http\Controllers\DetailsPurchaseController::class);
 Route::patch('purchase/{id}/update_status', [PurchaseController::class, 'updateStatus'])->name('purchase.update_status');
+Route::post('/details-purchase', [DetailsPurchaseController::class, 'store'])->name('details-purchase.store');
 
 
 

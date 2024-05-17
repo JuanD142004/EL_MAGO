@@ -76,6 +76,12 @@
                                 <li class="nav-item"> 
                                     <a class="nav-link" href="{{route('load.index')}}">{{__('Carga')}}</a>
                                 </li>
+                                <li class="nav-item"> 
+                                     <a class="nav-link" href="{{route('purchase.index')}}">{{__('Compras')}}</a>
+                                </li>
+                                <li class="nav-item"> 
+                                     <a class="nav-link" href="{{route('details_purchase.index')}}">{{__('Detalle')}}</a>
+                                </li>
                         
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
