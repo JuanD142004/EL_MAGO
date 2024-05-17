@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
+use Illuminate\Http\Request;
 
 
 /**
@@ -80,6 +81,20 @@ class UserController extends Controller
 
         return redirect()->route('user.index')
             ->with('success', 'User updated successfully');
+    }
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|boolean', // Asegura que 'status' sea un valor booleano
+        ]);
+    
+        $user  = User::findOrFail($id);
+        $user->enabled = $request->input('status');
+        $user->save();
+    
+        $action = $user->enabled ? 'habilitado' : 'inhabilitado';
+    
+        return redirect()->route('user.index')->with('success', "El Usuario ha sido $action correctamente.");
     }
 
     public function destroy($id)

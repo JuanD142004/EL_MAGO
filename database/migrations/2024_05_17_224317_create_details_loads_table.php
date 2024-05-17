@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('departaments', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_UNIQUE');
-            $table->string('name', 45);
+        Schema::create('details_loads', function (Blueprint $table) {
+            $table->integer('id', true);
+            $table->string('amount', 45);
             $table->timestamps();
-
-            $table->primary(['id']);
+            $table->integer('products_id')->index('fk_details_loads_products1_idx');
+            $table->integer('loads_id')->index('fk_details_loads_loads1_idx');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departaments');
+        Schema::dropIfExists('details_loads');
     }
 };
