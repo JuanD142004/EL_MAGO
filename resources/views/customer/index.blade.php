@@ -3,6 +3,8 @@
 @section('template_title')
     Customer
 @endsection
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 
 @section('content')
     <div class="container-fluid">
@@ -16,7 +18,7 @@
                             </span>
                             <div class="float-right">
                                 <a href="{{ route('customer.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Crear Cliente') }}
+                                  <i class="fas fa-plus"></i>  {{ __('Crear Cliente') }}
                                 </a>
                             </div>
                         </div>
@@ -26,24 +28,16 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <div class="card-header ">
-                     <form action="{{route('customer.index')}}" method="GET">
-                         <div class="btn-group">
-                            <input type="text" name="busqueda" class="from-control my-2">
-                            <input type="submit" value="Enviar" class="btn btn-primary my-2" >
-                         </div>
-                     </form>
-                  </div>
-
                     <div class="card-body bg-white">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table  id="myTable" class="table table-striped table-hover">
+
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
                                         <th>Nombre del cliente</th>
                                         <th>Nombre de la empresa</th>
-                                        <th>Ubicacion</th>
+                                        <th>Dirección</th>
                                         <th>Celular</th>
                                         <th>Correo</th>
                                         <th>Id Ruta</th> <!-- Cambiado de Routes Id a Route Name -->
@@ -67,33 +61,15 @@
                                             <td>{{ $customer->mail }}</td>
                                             <td>{{ $customer->route->route_name }}</td> <!-- Accede al nombre de la ruta a través de la relación -->
                                             <td> 
-                                                @if($customer->enabled)
-                                                    <form id="disableForm{{ $customer->id }}" action="{{ route('customer.disable', $customer->id) }}" method="POST" style="display: inline;">
-                                                        @method('PUT')
+                                              <form id="toggle-form-{{ $customer->id }}" action="{{ route('customer.update_status', $customer) }}" method="POST">
                                                         @csrf
-                                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDisable({{ $customer->id }})">Inhabilitar</button>
+                                                        @method('PATCH')
+                                                        <button type="button" class="btn btn-sm {{ $customer->enabled ? 'btn-warning' : 'btn-success' }}" onclick="toggleSaleStatus({{ $customer->id }}, {{ $customer->enabled ? 0 : 1 }})">
+                                                            <i class="fa fa-fw {{ $customer->enabled ? 'fa-times' : 'fa-check' }}"></i> {{ $customer->enabled ? 'Inhabilitar' : 'Habilitar' }}
+                                                        </button>
+                                                        <input type="hidden" name="status" value="{{ $customer->enabled ? 0 : 1 }}">
                                                     </form>
-                                                @else
-                                                    <form id="enableForm{{ $customer->id }}" action="{{ route('customer.enable', $customer->id) }}" method="POST" style="display: inline;">
-                                                        @method('PUT')
-                                                        @csrf
-                                                        <button type="button" class="btn btn-success btn-sm" onclick="confirmEnable({{ $customer->id }})">Habilitar</button>
-                                                    </form>
-                                                @endif
-
-                                                <script>
-                                                    function confirmDisable(customerId) {
-                                                        if (confirm('¿Estás seguro de inhabilitar a este cliente?')) {
-                                                            document.getElementById('disableForm' + customerId).submit();
-                                                        }
-                                                    }
-
-                                                    function confirmEnable(customerId) {
-                                                        if (confirm('¿Estás seguro de habilitar a este cliente?')) {
-                                                            document.getElementById('enableForm' + customerId).submit();
-                                                        }
-                                                    }
-                                                </script>
+                                                </td>
 
                                             </td>
                                             <td>
@@ -126,3 +102,31 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    });
+
+    function toggleSaleStatus(customerId, status) {
+        var form = document.getElementById('toggle-form-' + customerId);
+        var action = status ? 'habilitar' : 'inhabilitar';
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: `Esta acción cambiará el estado del cliente a ${status ? 'habilitado' : 'inhabilitado'}.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Sí, ${action}`,
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>

@@ -13,9 +13,10 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="card-title">{{ __('Crear') }} Cliente</span>
-                                    <div>
-                                        <a href="{{ url()->previous() }}" class="btn btn-default btn-sm" style="background-color: #007bff; color: #fff;"><i class="fas fa-arrow-left"></i> {{ __('Atrás') }}</a>
-                                    </div>
+                                   <a href="{{ route('customer.index') }}" class="btn btn-default btn-sm" style="background-color: #007bff; color: #fff;">
+    <i class="fas fa-arrow-left"></i> {{ __('Atrás') }}
+</a>
+
                             </div>
                         </div>    </div>
                     <div class="card-body bg-white">

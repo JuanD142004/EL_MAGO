@@ -10,12 +10,11 @@
             <div class="col-md-12">
 
                 <div class="card card-default">
-                
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span class="card-title">{{ __('Crear') }} Carga</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('load.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('loads.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('load.form')

@@ -7,9 +7,6 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Session;
 
 class RegisterController extends Controller
 {
@@ -23,9 +20,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-  
-   
-
 
     use RegistersUsers;
 
@@ -45,27 +39,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-  /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
-
-         // Almacenar un mensaje en la sesión flash
-    Session::flash('registration_success', '¡Registro exitoso! Por favor inicia sesión.');
-
-    // Redirigir al usuario al formulario de inicio de sesión
-    return redirect($this->redirectTo);
-
-        // Redirigir al usuario al login después del registro exitoso
-        return redirect('/login');
-    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -74,32 +48,12 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-                // Define la regla de validación personalizada antes de crear el objeto Validator
-                $this->extendPasswordValidator();
-
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed','strong_password'],
-            'role' => ['required', 'string', 'in:user,admin'], // Validación del campo de rol
-        ], $this->messages());
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
-
-    protected function messages()
-    {
-        return [
-            'password.strong_password' => 'La contraseña debe contener al menos un carácter especial.',
-        ];
-    }
-
-// Definición de la regla de validación personalizada dentro del método validator
-protected function extendPasswordValidator()
-{
-    Validator::extend('strong_password', function ($attribute, $value, $parameters, $validator) {
-        return preg_match('/[!@#$%^&*(),.?":{}|<>]/', $value);
-    });
-}
-    
 
     /**
      * Create a new user instance after a valid registration.
@@ -113,8 +67,6 @@ protected function extendPasswordValidator()
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' =>$data['role'],
         ]);
-  
     }
 }

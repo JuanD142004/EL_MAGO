@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\LoadController;
+use App\Http\Controllers\DetailsLoadController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +23,7 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('customer', App\Http\Controllers\CustomerController::class);
+Route::patch('/customer/{id}/update_status', [App\Http\Controllers\CustomerController::class, 'updateStatus'])->name('customer.update_status');
 Route::resource('user', App\Http\Controllers\UserController::class);
 
 // Rutas de autenticación
@@ -44,5 +48,26 @@ Route::patch('/truck_type/disable/{id}', [App\Http\Controllers\TruckTypeControll
 Route::patch('/truck_type/enable/{id}', [App\Http\Controllers\TruckTypeController::class, 'enable'])->name('truck_type.enable');
 Route::patch('/truck_type/{id}/update_status', [App\Http\Controllers\TruckTypeController::class, 'updateStatus'])->name('update_status');
 
-Route::resource('load', App\Http\Controllers\LoadController::class);
-Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
+  // Rutas para las cargas
+  Route::resource('load', LoadController::class);
+  Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
+
+  // Rutas para los detalles de carga
+  Route::resource('details_load', DetailsLoadController::class);
+  Route::get('/details-loads', [DetailsLoadController::class, 'index'])->name('details-loads.index');
+  Route::delete('/details_loads/{id}', [DetailsLoadController::class, 'destroy'])->name('details_loads.destroy');
+
+
+  Route::get('/loads/create', [LoadController::class, 'create'])->name('loads.create');
+  Route::delete('/loads/{id}', [LoadController::class, 'destroy'])->name('loads.destroy');
+  Route::get('/loads/{id}', [LoadController::class, 'show'])->name('loads.show');
+  Route::get('/loads/{id}/edit', [LoadController::class, 'edit'])->name('loads.edit');
+  Route::post('/loads', [LoadController::class, 'store'])->name('loads.store');
+  Route::get('/loads', [LoadController::class, 'index'])->name('loads.index');
+  Route::patch('/loads/{load}', [LoadController::class, 'update'])->name('loads.update');
+  Route::patch('/load/{id}/update_status', [LoadController::class, 'updateStatus'])->name('load.update_status');
+
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

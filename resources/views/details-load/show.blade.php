@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $load->name ?? __('Show') . " " . __('Load') }}
+    {{ $detailsLoad->name ?? __('Show') . " " . __('Details Load') }}
 @endsection
 
 @section('content')
@@ -11,26 +11,26 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Load</span>
+                            <span class="card-title">{{ __('Show') }} Details Load</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('loads.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('details-loads.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body bg-white">
                         
                         <div class="form-group mb-2 mb20">
-                            <strong>Date:</strong>
-                            {{ $load->date }}
+                            <strong>Amount:</strong>
+                            {{ $detailsLoad->amount }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Routes Id:</strong>
-                            {{ $load->routes_id }}
+                            <strong>Products Id:</strong>
+                            {{ $detailsLoad->products_id }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Truck Types Id:</strong>
-                            {{ $load->truck_types_id }}
+                            <strong>Loads Id:</strong>
+                            {{ $detailsLoad->loads_id }}
                         </div>
 
                     </div>

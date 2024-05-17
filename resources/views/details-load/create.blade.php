@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ __('Actualizar') }} Carga
+    {{ __('Create') }} Details Load
 @endsection
 
 @section('content')
@@ -11,14 +11,13 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Actualizar') }} Carga</span>
+                        <span class="card-title">{{ __('Create') }} Details Load</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('loads.update', $load->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
+                        <form method="POST" action="{{ route('details_load.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('load.form')
+                            @include('details-load.form')
 
                         </form>
                     </div>
