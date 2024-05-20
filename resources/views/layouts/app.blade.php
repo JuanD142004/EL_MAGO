@@ -79,7 +79,16 @@
                                 <li class="nav-item"> 
                                     <a class="nav-link" href="{{route('load.index')}}">{{__('Carga')}}</a>
                                 </li>
-                        
+                                 <li class="nav-item">
+                                  <a class="nav-link" href="{{ route('route.index') }}">{{ __('Rutas') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                 <a class="nav-link" href="{{ route('departament.index') }}">{{ __('Departamentos') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                 <a class="nav-link" href="{{ route('municipality.index') }}">{{ __('Municipios') }}</a>
+                                </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -122,5 +131,6 @@
         });
     });
     </script>
+    @yield('script')
 </body>
 </html>

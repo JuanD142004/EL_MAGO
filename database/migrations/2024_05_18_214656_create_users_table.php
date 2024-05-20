@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('municipalities', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_UNIQUE');
-            $table->string('name', 45);
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('role', 45)->nullable();
+            $table->rememberToken();
             $table->timestamps();
-            $table->integer('departaments_id')->index('fk_municipalities_departaments1_idx');
-
-            $table->primary(['id']);
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('users');
     }
 };

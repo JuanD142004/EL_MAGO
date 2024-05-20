@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\DepartamentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Models\Departament;
+use App\Models\Municipality;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,3 +26,4 @@ Route::put('/customers/{id}/enable', [CustomerController::class, 'enable'])->nam
 Route::put('/customers/{id}/disable', [CustomerController::class, 'disable'])->name('customer.disable');
 
 Route::resource('customer', CustomerController::class);
+
