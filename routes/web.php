@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\DepartamentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\LoadController;
+use App\Http\Controllers\RouteController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +47,19 @@ Route::patch('/truck_type/disable/{id}', [App\Http\Controllers\TruckTypeControll
 Route::patch('/truck_type/enable/{id}', [App\Http\Controllers\TruckTypeController::class, 'enable'])->name('truck_type.enable');
 Route::patch('/truck_type/{id}/update_status', [App\Http\Controllers\TruckTypeController::class, 'updateStatus'])->name('update_status');
 
+//Rutas para los Departamentos
+Route::resource('departament', App\Http\Controllers\DepartamentController::class);
+Route::patch('/departament/disable/{id}', [App\Http\Controllers\DepartamentController::class, 'disable'])->name('departament.disable');
+Route::patch('/departament/enable/{id}', [App\Http\Controllers\DepartamentController::class, 'enable'])->name('departament.enable');
+Route::patch('/departament/{id}/update_status', [App\Http\Controllers\DepartamentController::class, 'updateStatus'])->name('departament.update_status');
+
+//Rutas para los Municipios
+Route::resource('municipality', App\Http\Controllers\MunicipalityController::class);
+
+//Rutas para Ruta
+Route::get('/route/create/departament/{departament}/municipalities', [App\Http\Controllers\DepartamentController::class, 'municipalities']);
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -53,4 +69,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('load', App\Http\Controllers\LoadController::class);
+Route::resource('route', App\Http\Controllers\RouteController::class);  
 Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');

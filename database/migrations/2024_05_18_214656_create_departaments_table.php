@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('users_id')->index('fk_employees_users1_idx');
-            $table->string('gender', 45);
-            $table->string('civil_status', 45);
-            $table->integer('routes_id')->index('fk_employees_routes1_idx');
+        Schema::create('departaments', function (Blueprint $table) {
+            $table->integer('id', true)->unique('id_UNIQUE');
+            $table->string('name', 45);
             $table->timestamps();
             $table->tinyInteger('enabled')->nullable();
+
+            $table->primary(['id']);
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('departaments');
     }
 };
