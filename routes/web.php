@@ -3,9 +3,10 @@
 use App\Http\Controllers\DepartamentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
-use App\Http\Controllers\LoadController;
+use App\Http\Controllers\LoadController;    
 use App\Http\Controllers\RouteController;
 
+use App\Http\Controllers\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,6 +71,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Rutas para Empleados
+Route::resource('employee', App\Http\Controllers\EmployeeController::class);
+Route::patch('/employee/disable/{id}', [App\Http\Controllers\EmployeeController::class, 'disable'])->name('employee.disable');
+Route::patch('/employee/enable/{id}', [App\Http\Controllers\EmployeeController::class, 'enable'])->name('employee.enable');
+Route::patch('/employee/{id}/update_status', [App\Http\Controllers\EmployeeController::class, 'updateStatus'])->name('employee.update_status');
+Route::get('/employee/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+
+
 
 Route::resource('load', App\Http\Controllers\LoadController::class);
 Route::resource('route', App\Http\Controllers\RouteController::class);  

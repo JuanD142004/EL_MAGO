@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('template_title')
+    Productos
+    
 @endsection
 <link href="/path/to/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 @section('content')
@@ -10,6 +12,7 @@
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css">
+
 
 <div class="container-fluid">
    <div class="row">
