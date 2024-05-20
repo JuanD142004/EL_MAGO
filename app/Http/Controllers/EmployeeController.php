@@ -20,22 +20,51 @@ class EmployeeController extends Controller
     public function create()
     {
         $employee = new Employee();
-        $users = User::pluck('name', 'id');
+        $users = User::all(); // Obtener todos los usuarios con sus datos
         $routes = Route::pluck('route_name', 'id');
+        
 
         return view('employee.create', compact('employee', 'users', 'routes'));
     }
 
     public function store(Request $request)
     {
-        request()->validate(Employee::$rules);
+        
 
-        Employee::create($request->all());
 
-        return redirect()->route('employee.index')
-            ->with('success', 'Employee created successfully.');
+    $request->validate([
+        // Aquí van tus reglas de validación para los campos del formulario
+    ]);
+
+    // Obtener el correo electrónico del formulario
+    $email = $request->input('user_email');
+
+    // Verificar si ya existe un empleado con este correo electrónico
+    $existingEmployee = Employee::whereHas('user', function ($query) use ($email) {
+        $query->where('email', $email);
+    })->exists();
+
+    if ($existingEmployee) {
+        // Si el empleado ya existe, redirigir de vuelta al formulario con un mensaje de error
+        return redirect()->back()->withErrors(['user_email' => 'El empleado ya está registrado.'])->withInput();
     }
+    $validatedData = $request->validate([
+        'users_id' => 'required|exists:users,id',
+        'document_number' => 'required|string|max:255',
+        'gender' => 'required|string|max:10',
+        'civil_status' => 'required|string|max:255',
+        'eps' => 'required|string|max:255',
+        'phone' => 'required|string|max:15',
+        'children' => 'required|integer',
+        'home' => 'required|string|max:255',
+        'routes_id' => 'required|exists:routes,id',
+    ]);
 
+    $employee = new Employee($validatedData);
+    $employee->save();
+
+    return redirect()->route('employee.index')->with('success', 'Employee created successfully.');
+    }
     public function show($id)
     {
         $employee = Employee::find($id);
@@ -46,7 +75,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
-        $users = User::pluck('name', 'id');
+        $users = User::all(); // Obtener todos los usuarios con sus datos
         $routes = Route::pluck('route_name', 'id');
 
         return view('employee.edit', compact('employee', 'users', 'routes'));

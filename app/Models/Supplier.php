@@ -30,6 +30,7 @@ class Supplier extends Model
 		'cell_phone' => 'required',
 		'mail' => 'string',
 		'address' => 'string',
+        
     ];
 
     protected $perPage = 20;
@@ -39,9 +40,11 @@ class Supplier extends Model
      *
      * @var array
      */
-    protected $fillable = ['nit','supplier_name','cell_phone','mail','address'];
+    protected $fillable = ['nit','supplier_name','cell_phone','mail','address','enabled'];
 
-
+    protected $attributes = [
+        'enabled' => true,
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

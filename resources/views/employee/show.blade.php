@@ -5,39 +5,65 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
+
+    <section class="d-flex justify-content-center align-items-center min-vh-50">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-15">
+            
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Employee</span>
+                            <span class="card-title">Empleado {{ $employee->user->name }}</span>
                         </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('employee.index') }}"> {{ __('Back') }}</a>
-                        </div>
+                        
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Users Id:</strong>
-                            {{ $employee->users_id }}
+                            <strong>Usuario:</strong>
+                            {{ $employee->user->name }}
                         </div>
                         <div class="form-group">
-                            <strong>Gender:</strong>
+                            <strong>Correo Registrado:</strong>
+                            {{ $employee->user->email }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Genero:</strong>
                             {{ $employee->gender }}
                         </div>
                         <div class="form-group">
-                            <strong>Civil Status:</strong>
+                            <strong>Estado Civil:</strong>
                             {{ $employee->civil_status }}
                         </div>
                         <div class="form-group">
-                            <strong>Routes Id:</strong>
-                            {{ $employee->routes_id }}
+                            <strong>EPS:</strong>
+                            {{ $employee->eps }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Telefono:</strong>
+                            {{ $employee->phone }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Hijos:</strong>
+                            {{ $employee->children }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Direccion:</strong>
+                            {{ $employee->home }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Ruta Asignada:</strong>
+                            {{ $employee->route->route_name }}
+                        </div>
+                        <br>
+
+                        <div class="float-right">
+                            <a class="btn btn-primary" href="{{ route('employee.index') }}"> {{ __('Volver') }}</a>
                         </div>
 
                     </div>
+                    
                 </div>
             </div>
         </div>

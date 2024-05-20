@@ -26,9 +26,15 @@ class Employee extends Model
     static $rules = [
 		'users_id' => 'required',
 		'gender' => 'required|string',
+        'document_number' => 'required|string',
 		'civil_status' => 'required|string',
+        'eps' => 'required|string',
+        'phone' => 'required|string',
+        'children' => 'required|string',
+        'home' => 'required|string',
 		'routes_id' => 'required',
     ];
+    
 
     protected $perPage = 20;
 
@@ -37,7 +43,7 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $fillable = ['users_id','gender','civil_status','routes_id'];
+    protected $fillable = ['users_id','gender','document_number','civil_status','eps','phone','children','home','routes_id'];
 
 
     /**

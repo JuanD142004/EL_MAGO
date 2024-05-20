@@ -5,11 +5,12 @@
 @endsection
 
 @section('content')
-@include('barra.index')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Agrega este bloque de estilo -->
 <style>
     @font-face {
         font-family: Metropolis-Bold;
@@ -22,15 +23,15 @@
         <br>
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header ">
+                <div class="card-header">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span id="card_title">
-                                {{ __('Supplier') }}
+                                {{ __('Proveedores') }}
                             </span>
                             <div class="float-right">
-                                <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    {{ __('Crear Nuevo') }}
+                                <a href="{{ route('supplier.create') }}" class="btn btn-dark text-white btn-sm float-right" data-placement="left" >
+                                    <i class="fas fa-plus"></i> {{ __('Crear Nuevo') }}
                                 </a>
                             </div>
                         </div>
@@ -59,7 +60,7 @@
                                 <tbody>
                                     @if(count($suppliers)<=0)
                                     <tr>
-                                        <td colspan="5">No hay resultados</td>
+                                        <td colspan="8">No hay resultados</td>
                                     </tr>
                                     @else
                                     @foreach ($suppliers as $supplier)
@@ -109,22 +110,13 @@
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-<!-- Bootstrap Bundle with Popper -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-
-
-
-
-
-
-
+<script src="{{ asset('js/app.js') }}" defer></script>
 
 <script>
-    $(document).ready(function() {
-        $('#myTable').DataTable({
-            responsive:true,
-             language: {
+$(document).ready(function() {
+    $('#myTable').DataTable({
+        responsive:true,
+        language: {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
             "sZeroRecords":    "No se encontraron resultados",
@@ -132,11 +124,7 @@
             "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
             "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":    "",
             "sSearch":         "Buscar:",
-            "sUrl":            "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
             "oPaginate": {
                 "sFirst":    "Primero",
                 "sLast":     "Último",
@@ -153,30 +141,27 @@
             }
         }
     });
-        });
+});
 
-    function toggleSaleStatus(supplierId, status) {
-        var form = document.getElementById('toggle-form-' + supplierId);
-        var action = status ? 'habilitar' : 'inhabilitar';
+function toggleSaleStatus(supplierId, status) {
+    var form = document.getElementById('toggle-form-' + supplierId);
+    var action = status ? 'habilitar' : 'inhabilitar';
 
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: `Esta acción cambiará el estado del proveedor a ${status ? 'habilitado' : 'inhabilitado'}!`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: `Sí, ${action}`,
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
-        });
-    };
-
-   
-        
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Esta acción cambiará el estado del proveedor a ${status ? 'habilitado' : 'inhabilitado'}!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Sí, ${action}`,
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+}
 </script>
 
 @endsection

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\LoadController;    
+use App\Http\Controllers\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,6 +50,9 @@ Route::resource('employee', App\Http\Controllers\EmployeeController::class);
 Route::patch('/employee/disable/{id}', [App\Http\Controllers\EmployeeController::class, 'disable'])->name('employee.disable');
 Route::patch('/employee/enable/{id}', [App\Http\Controllers\EmployeeController::class, 'enable'])->name('employee.enable');
 Route::patch('/employee/{id}/update_status', [App\Http\Controllers\EmployeeController::class, 'updateStatus'])->name('employee.update_status');
+Route::get('/employee/{id}', [EmployeeController::class, 'show'])->name('employee.show');
+
+
 
 Route::resource('load', App\Http\Controllers\LoadController::class);
 Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
