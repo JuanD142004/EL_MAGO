@@ -42,15 +42,11 @@ class RouteController extends Controller
     public function store(Request $request)
     {
 
-        // $request->validate([
-        //     'route_name' => 'required|string|max:255',
-        //     'departament_id' => 'required|integer',
-        //     'municipality_id' => 'required|integer',
-        // ]);
+      
         $request->validate([
             'route_name' => 'required|string|max:255',
             'departament_id' => 'required|integer',
-            'municipalities' => 'required|string',
+            'municipalities' => 'required',
         ]);
     
         Route::create([
@@ -58,21 +54,6 @@ class RouteController extends Controller
             'departament_id' => $request->departament_id,
             'municipalities' => $request->municipalities,
         ]);
-        // $campos=[
-        //     'municipalities' => 'required|string' ,	
-        //     'route_name	'=> 'required|string',	
-        //     'departament_id'=> 'required|string',	
-        // ];
-        // $mensaje=[
-        //     'municipalities.required'=>'escriba el nombre del producto',
-        //     'route_name.required'=>'escriba el nombre del producto',            
-        //     'departament_id.required'=>'escriba el nombre del producto'
-
-
-        // ];
-        // $this->validate($request,$campos,$mensaje);
-        // $datosroute = request()->except('_token');
-        // Route::create($datosroute);
         return redirect()->route('route.index')
             ->with('success', 'Route created successfully.');
     }
