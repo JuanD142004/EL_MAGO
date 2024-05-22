@@ -14,15 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('routes', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_UNIQUE');
-            $table->string('route_name', 45);
-            $table->integer('departament_id')->index('fk_routes_departament1_idx');
-            $table->string('municipalities', 45);
+            $table->id();
+            $table->string('route_name');
+            $table->unsignedBigInteger('departament_id');
+            $table->text('municipalities'); // o $table->text('municipalities');
             $table->timestamps();
-            $table->tinyInteger('enabled')->nullable();
-
-            $table->primary(['id']);
         });
+        
     }
 
     /**

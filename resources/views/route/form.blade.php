@@ -22,7 +22,7 @@
             </div>
             <div class="mb-3">
                 <label for="municipality_id">{{ __('Municipio') }}</label>
-                <select id="municipalities" name="municipalities" class="form-select select2-multiple @error('municipalities') is-invalid @enderror" aria-label="Default select example" multiple>
+                <select id="municipalities" name="municipalities[]" class="form-select select2-multiple @error('municipalities') is-invalid @enderror" aria-label="Default select example" multiple>
                     <option value="">Selecciona el Municipio</option>
                 </select>
                 

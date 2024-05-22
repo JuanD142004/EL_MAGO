@@ -41,19 +41,18 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-
-      
         $request->validate([
             'route_name' => 'required|string|max:255',
             'departament_id' => 'required|integer',
-            'municipalities' => 'required',
+            'municipalities' => 'required|array',
         ]);
     
         Route::create([
             'route_name' => $request->route_name,
             'departament_id' => $request->departament_id,
-            'municipalities' => $request->municipalities,
+            'municipalities' => json_encode($request->municipalities),
         ]);
+    
         return redirect()->route('route.index')
             ->with('success', 'Route created successfully.');
     }
