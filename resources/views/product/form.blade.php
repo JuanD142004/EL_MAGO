@@ -1,3 +1,4 @@
+
 <div class="box box-info padding-1">
     <div class="box-body">
         
@@ -95,9 +96,10 @@
 
 
 <br>
-    </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">{{ __('Crear Producto') }}</button>
-    </div>
+<div class="box-footer mt20">
+    <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+    <a href="{{ route('product.index') }}" class="btn btn-primary">{{ __('Volver') }}</a>
+</div>
+</div>
     
 </div>

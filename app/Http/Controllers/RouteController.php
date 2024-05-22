@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Route;
 use App\Models\Departament;
+use App\Models\Employee;
 use App\Models\Municipality;
 use Illuminate\Http\Request;
 use App\Http\Requests\RouteRequest;
@@ -94,13 +95,21 @@ class RouteController extends Controller
      */
     public function destroy($id)
     {
-        Route::find($id)->delete();
-
+        // Encuentra la ruta a eliminar
+        $route = Route::find($id);
+    
+        if ($route) {
+            // Elimina los empleados asociados a esa ruta
+            Employee::where('routes_id', $id)->delete();
+    
+            // Luego elimina la ruta
+            $route->delete();
+        }
+    
         return redirect()->route('route.index')
-            ->with('success', 'Route deleted successfully');
+            ->with('success', 'Ruta eliminada');
     }
-
-
+    
 
 
 
