@@ -41,26 +41,25 @@
                                 </div>
                             </div>
 
-                           <div class="row mb-3" style="color: #333; font-family: sans-serif;">
-    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo') }}</label>
+                            <div class="row mb-3" style="color: #333; font-family: sans-serif;">
+                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo') }}</label>
 
-    <div class="col-md-6">
-        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-        @error('email')
-            @if($message === 'The email has already been taken.')
-                <span class="invalid-feedback" role="alert">
-                    <strong>El correo electrónico ya está en uso.</strong>
-                </span>
-            @else
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @endif
-        @enderror
-    </div>
-</div>
-
+                                    @error('email')
+                                        @if($message === 'The email has already been taken.')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>El correo electrónico ya está en uso.</strong>
+                                            </span>
+                                        @else
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @endif
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="row mb-3 " style="color: #333; font-family: sans-serif; align-items: center;">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
@@ -112,14 +111,12 @@
                             </div>
 
                             <div class="col-md-6 offset-md-4 mt-3">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="submit" class="btn btn-primary me-md-2" style="background-color: blue; border: none; font-family: sans-serif;">
-                {{ __('Registrar') }}
-            </button>
-            <button type="button" class="btn btn-primary" style="background-color: blue; border: none; font-family: sans-serif;" onclick="history.back()">Volver</button>
-        </div>
-    </div>
-</div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="submit" class="btn btn-primary me-md-2" style="background-color: blue; border: none; font-family: sans-serif;">
+                                        {{ __('Registrar') }}
+                                    </button>
+                                    <button type="button" class="btn btn-primary" style="background-color: blue; border: none; font-family: sans-serif;" onclick="history.back()">Volver</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -130,6 +127,10 @@
 </div>
 
 <script>
+    function capitalizeFirstLetter(str) {
+        return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
         const togglePassword1 = document.getElementById('togglePassword1');
         const togglePassword2 = document.getElementById('togglePassword2');
@@ -138,6 +139,11 @@
         const registroForm = document.getElementById('registroForm');
         const passwordError = document.getElementById('passwordError');
         const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const nameInput = document.getElementById('name');
+
+        nameInput.addEventListener('blur', function() {
+            nameInput.value = capitalizeFirstLetter(nameInput.value);
+        });
 
         togglePassword1.addEventListener('click', function() {
             const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -189,6 +195,5 @@
         });
     });
 </script>
-
 
 @endsection
