@@ -185,10 +185,10 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('load.index')}}">{{__('Ventas')}}</a>
+                        <a class="nav-link text-white" href="{{route('purchase.index')}}">{{__('Compras')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('load.index')}}">{{__('Compras')}}</a>
+                        <a class="nav-link text-white" href="{{route('sale.index')}}">{{__('Ventas')}}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" 
