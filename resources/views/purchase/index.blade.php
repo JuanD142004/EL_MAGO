@@ -22,6 +22,7 @@ Purchase
                             <button name="boton_excel" class="btn btn-info btn-sm mr-2" onclick="exportToExcel()">
                                 <i class="fas fa-file-excel"></i> {{ __('Exportar a Excel') }}
                             </button>
+
                             <button name="boton_imprimir" class="btn btn-info btn-sm d-print-none" type="button" onclick="printTable()">
                                 <i class="fas fa-print"></i> {{ __('Imprimir') }}
                             </button>
