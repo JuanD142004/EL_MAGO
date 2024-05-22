@@ -1,3 +1,9 @@
+<style>
+    body, input, select, label, button {
+        font-family: sans-serif;
+    }
+</style>
+
 <div class="row padding-1 p-1">
     <div class="col-md-12">
         
@@ -26,6 +32,11 @@
 
     </div>
     <div class="col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+        <div class="d-flex justify-content-start">
+            <button type="submit" class="btn btn-primary me-2">{{ __('Enviar') }}</button>
+            <a href="{{ url()->previous() }}" class="btn btn-default btn-sm" style="background-color: #007bff; color: #fff;">
+                <i class="fas fa-arrow-left"></i> {{ __('Volver') }}
+            </a>
+        </div>
     </div>
 </div>

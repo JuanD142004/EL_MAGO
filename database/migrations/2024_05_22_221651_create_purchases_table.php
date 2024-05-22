@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('total_value', 45);
             $table->string('num_bill', 45);
             $table->timestamps();
+            $table->tinyInteger('enabled')->nullable();
 
             $table->primary(['id']);
         });

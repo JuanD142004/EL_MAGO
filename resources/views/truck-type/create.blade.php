@@ -11,9 +11,7 @@
 <div class="card card-default">
     <div class="card-header d-flex justify-content-between align-items-center">
         <span class="card-title">{{ __('Crear') }} Tipo de Camión</span>
-        <div>
-            <a href="{{ url()->previous() }}" class="btn btn-default btn-sm" style="background-color: #007bff; color: #fff;"><i class="fas fa-arrow-left"></i> {{ __('Atrás') }}</a>
-        </div>
+        
     </div>
     <!-- Aquí va el resto del contenido del formulario -->
 </div>

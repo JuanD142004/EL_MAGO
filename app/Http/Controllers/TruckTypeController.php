@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\TruckType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
 
 class TruckTypeController extends Controller
 {
@@ -21,7 +19,6 @@ class TruckTypeController extends Controller
         return view('truck-type.index', compact('truckTypes', 'busqueda'))
             ->with('i', (request()->input('page', 1) - 1) * $truckTypes->perPage());
     }
-    
 
     public function create()
     {
@@ -36,14 +33,13 @@ class TruckTypeController extends Controller
             'plate' => 'required|unique:truck_types,plate',
             'ability' => 'required',
             'enabled' => 'required',
-        ],
-        [
+        ], [
             'truck_brand.required' => 'El campo Marca de Camión es obligatorio.',
             'plate.required' => 'El campo Placa es obligatorio.',
             'plate.unique' => 'La placa ya está en uso.',
             'ability.required' => 'El campo Capacidad es obligatorio.',
             'enabled.required' => 'El campo Enabled es obligatorio.',
-    ]);
+        ]);
 
         TruckType::create($request->all());
 
@@ -66,18 +62,21 @@ class TruckTypeController extends Controller
     }
 
     public function update(Request $request, TruckType $truckType)
-{
-    
+    {
+        $messages = [
+            'truck_brand.required' => 'El campo Marca de Camión es obligatorio.',
+            'plate.required' => 'El campo Placa es obligatorio.',
+            'plate.unique' => 'La placa ya está en uso.',
+            'ability.required' => 'El campo Capacidad es obligatorio.',
+            'enabled.required' => 'El campo Enabled es obligatorio.',
+        ];
 
-    $messages = [
-        'truck_brand.required' => 'El campo Marca de Camión es obligatorio.',
-        'plate.required' => 'El campo Placa es obligatorio.',
-        'plate.unique' => 'La placa ya está en uso.',
-        'ability.required' => 'El campo Capacidad es obligatorio.',
-        'enabled.required' => 'El campo Enabled es obligatorio.',
-    ];
-
-
+        $request->validate([
+            'truck_brand' => 'required',
+            'plate' => ['required', Rule::unique('truck_types')->ignore($truckType->id)],
+            'ability' => 'required',
+            'enabled' => 'required',
+        ], $messages);
 
         $truckType->update($request->all());
 
@@ -87,13 +86,17 @@ class TruckTypeController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'required|boolean',
+        ]);
+    
         $truckType = TruckType::findOrFail($id);
         $truckType->enabled = $request->input('status');
         $truckType->save();
-
-        
-
-        return redirect()->back()->with('success', 'El Estado del Camión se Actualizó Correctamente');
+    
+        $action = $truckType->enabled ? 'habilitado' : 'inhabilitado';
+    
+        return redirect()->route('truck_type.index')->with('success', "El Camión ha sido $action correctamente.");
     }
 
     public function destroy($id)
@@ -102,5 +105,23 @@ class TruckTypeController extends Controller
 
         return redirect()->route('truck_type.index')
             ->with('success', 'TruckType deleted successfully');
+    }
+
+    public function disable($id)
+    {
+        $truckType = TruckType::findOrFail($id);
+        $truckType->enabled = false;
+        $truckType->save();
+
+        return redirect()->route('truck_type.index')->with('success', 'Tipo de Camión inhabilitado exitosamente');
+    }
+
+    public function enable($id)
+    {
+        $truckType = TruckType::findOrFail($id);
+        $truckType->enabled = true;
+        $truckType->save();
+
+        return redirect()->route('truck_type.index')->with('success', 'Tipo de Camión habilitado exitosamente');
     }
 }

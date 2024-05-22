@@ -16,12 +16,12 @@
     <div class="row">
         <div class="col-md-5">
             <div class="d-flex justify-content-center align-items-center">
-                <p style="font-family: 'Brush Script MT', sans-serif; font-size: 30px; color: white;"><i>Excelencia, Calidad y Compromiso</i></p>
+                <p style="font-family: sans-serif; font-size: 30px; color: white;"><i>Excelencia, Calidad y Compromiso</i></p>
             </div>
         </div>
         <div class="col-md-7">
             <div class="card" style="background: rgba(255, 255, 255, 0.7); border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);">
-                <div class="card-header" style="background: linear-gradient; border-radius: 10px 10px 0 0;  font-family: 'algerian;">{{ __('INICIAR SESIÓN') }}</div>
+                <div class="card-header" style="background: linear-gradient; border-radius: 10px 10px 0 0;  font-family: sans-serif;">{{ __('INICIAR SESIÓN') }}</div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -48,12 +48,12 @@
 
                         <div class="mb-3 form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="form-check-label" for="remember" style="color: #333; font-family: Times New Roman;">
+                            <label class="form-check-label" for="remember" style="color: #333; font-family: sans-serif;">
                                 {{ __('Recordarme') }}
                             </label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="border-radius: 5px; background-color: blue; border: none; font-family: algerian;">
+                        <button type="submit" class="btn btn-primary" style="border-radius: 5px; background-color: blue; border: none; font-family: sans-serif;">
                             {{ __('INICIAR SESIÓN') }}
                         </button>
 
@@ -64,7 +64,7 @@
                         @endif
 
                         @if (Route::has('password.request'))
-                            <a class="btn btn-link mt-3" href="{{ route('password.request') }}" style="color: blue; font-family: Times New Roman; ">
+                            <a class="btn btn-link mt-3" href="{{ route('password.request') }}" style="color: blue; font-family: sans-serif; ">
                                 {{ __('¿Olvidaste tu contraseña?') }}
                             </a>
                         @endif
