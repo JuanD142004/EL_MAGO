@@ -87,10 +87,3 @@ Route::resource('route', App\Http\Controllers\RouteController::class);
 Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
 
 
-
-// Ruta para habilitar/inhabilitar una venta
-Route::put('/sales/{sale}/toggle', [SaleController::class, 'toggle'])->name('sales.toggle');
-Route::resource('sale', App\Http\Controllers\SaleController::class);
-// Rutas para el controlador de detalles de venta y el controlador de ventas
-Route::resource('details_sale', DetailsSaleController::class);
-Route::resource('sales', SaleController::class);
