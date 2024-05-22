@@ -51,7 +51,7 @@
                                             <td>{{ $load->id }}</td>
                             
 											<td>{{ $load->date }}</td>
-											<td>{{ $load->product->product_name }}</td>
+											<td>{{ $load->product_id}}</td>
 											<td>{{ $load->amount }}</td>
 											<td>{{ $load->route->route_name }}</td>
                                             <td>{{ $load->truckType->truck_brand }}</td>
