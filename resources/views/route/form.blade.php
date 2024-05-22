@@ -45,9 +45,7 @@
         const municipalities = document.getElementById('municipalities');
     
         const getMunicipalities = async (departaments_id) => {
-            console.log(departaments_id); // Verifica el valor de departaments_id
             const response = await fetch(`/route/create/departament/${departaments_id}/municipalities`);
-    
             const data = await response.json();
     
             let options = '';
@@ -62,7 +60,7 @@
             $('#municipalities').select2({
                 placeholder: "Selecciona el Municipio",
                 allowClear: true,
-                tags: false // Esto evita que los usuarios escriban sus propias opciones
+                tags: false
             }).on('change', function() {
                 // Manejar cambios en las opciones seleccionadas
             });
@@ -77,6 +75,7 @@
             getMunicipalities(e.target.value);
         });
     });
+    
     
 </script>
 <script>

@@ -13,15 +13,15 @@ class RouteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $busqueda = $request->busqueda;
-        $routes = Route::where('route_name', 'LIKE', '%' . $busqueda . '%')
-                            ->orderBy('id', 'asc')
-                            ->paginate(10);
+        $routes = Route::all();
+        foreach ($routes as $route) {
+            $route->municipalities = $route->municipalities ? json_decode($route->municipalities) : [];
+        }
     
-        return view('route.index', compact('routes', 'busqueda'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+        return view('route.index', compact('routes'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
     
 
@@ -56,7 +56,6 @@ class RouteController extends Controller
         return redirect()->route('route.index')
             ->with('success', 'Route created successfully.');
     }
-    
     
 
     /**
