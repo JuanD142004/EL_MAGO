@@ -50,24 +50,33 @@
                                         <td>{{ $route->route_name }}</td>
                                         <td>{{ $route->departament->name }}</td>
                                         <td>
-                                            <ul>
-                                                @if(is_array($route->municipalities))
-                                                    @foreach ($route->municipalities as $municipality)
-                                                        <li>{{ $municipality }}</li>
-                                                    @endforeach
-                                                @else
-                                                    <li>No municipalities</li>
-                                                @endif
-                                            </ul>
+                                            <div style="display: flex;">
+                                                <ul style="flex-grow: 1; margin-bottom: 0;">
+                                                    @if(is_array($route->municipalities))
+                                                        @foreach ($route->municipalities as $municipality)
+                                                            <li>{{ $municipality }}</li>
+                                                        @endforeach
+                                                    @else
+                                                        <li>No municipalities</li>
+                                                    @endif
+                                                </ul>
+                                                <form action="{{ route('update_status', $route->id) }}" method="POST" style="margin-left: 1px;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    @if ($route->enabled)
+                                                        <button type="submit" class="btn btn-sm btn-warning" name="status" value="0"><i class="fa fa-fw fa-times"></i> Inhabilitar</button>
+                                                    @else
+                                                        <button type="submit" class="btn btn-sm btn-success" name="status" value="1"><i class="fa fa-fw fa-check"></i> Habilitar</button>
+                                                    @endif
+                                                </form>
+                                            </div>
                                         </td>
                                         <td>
-                                            <form action="{{ route('route.destroy', $route->id) }}" method="POST">
-                                                <a class="btn btn-primary btn-sm" href="{{ route('route.show', $route->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                <a class="btn btn-success btn-sm" href="{{ route('route.edit', $route->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                            </form>
+                                            @if ($route->enabled)
+                                                <a class="btn btn-sm btn-success" href="{{ route('route.edit', $route->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                            @else
+                                                <button class="btn btn-sm btn-success" disabled><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -80,5 +89,3 @@
     </div>
 </div>
 @endsection
-
-

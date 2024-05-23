@@ -75,10 +75,9 @@ class RouteController extends Controller
     public function edit($id)
     {
         $route = Route::find($id);
-        $departaments = Departament::all();
-        return view('route.edit', compact('route','departaments'));
-    }
 
+        return view('route.edit', compact('route'));
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -87,29 +86,18 @@ class RouteController extends Controller
         $route->update($request->validated());
 
         return redirect()->route('route.index')
-            ->with('success', 'Route updated successfully');
+            ->with('success', 'route updated successfully');
     }
+    public function updateStatus(Request $request, $id)
+{
+    $route = Route::findOrFail($id);
+    $route->enabled = $request->input('status');
+    $route->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        // Encuentra la ruta a eliminar
-        $route = Route::find($id);
-    
-        if ($route) {
-            // Elimina los empleados asociados a esa ruta
-            Employee::where('routes_id', $id)->delete();
-    
-            // Luego elimina la ruta
-            $route->delete();
-        }
-    
-        return redirect()->route('route.index')
-            ->with('success', 'Ruta eliminada');
-    }
-    
+    return redirect()->back()->with('success', 'Truck status updated successfully.');
+}
+
+ 
 
 
 
