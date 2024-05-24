@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\LoadController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\DetailsPurchaseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +60,7 @@ Route::patch('purchase/{id}/update_status', [PurchaseController::class, 'updateS
 Route::post('/details-purchase', [DetailsPurchaseController::class, 'store'])->name('details-purchase.store');
 Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
 Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+Route::patch('/purchase/{purchase}/annul', [PurchaseController::class, 'annul'])->name('purchase.annul');
 
 
 

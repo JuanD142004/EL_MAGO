@@ -49,12 +49,36 @@ class PurchaseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PurchaseRequest $request)
+    public function store(Request $request)
     {
-        Purchase::create($request->validated());
 
-        return redirect()->route('purchase.index')
-            ->with('success', 'Purchase created successfully.');
+
+        // Acceder a los datos enviados desde el formulario
+        $datos = $request->input('data');
+
+        // Crear una nueva compra
+        $compra = new Purchase();
+        $compra->sppliers_id = $datos['nombre_proveedor'];
+        $compra->date = $datos['fecha'];
+        $compra->total_value = $datos['ValorTotal'];
+        $compra->num_bill = $datos['NumeroFactura'];
+        $compra->save();
+
+
+        // Recorrer los detalles de la compra y guardarlos en la base de datos
+        foreach ($datos['detalles'] as $detalle) {
+            $detalleCompra = new DetailsPurchase();
+            $detalleCompra->products_id = $detalle['Producto'];
+            $detalleCompra->purcahse_lot = $detalle['Lote'];
+            $detalleCompra->amount = $detalle['Cantidad'];
+            $detalleCompra->unit_value = $detalle['ValorUnitario'];
+            $detalleCompra->purchases_id = $compra->id; // Asociar el detalle con la compra creada
+            $detalleCompra->save();
+        }
+
+        // Retornar una respuesta de redirección
+        return redirect()->route('purchases.index')
+            ->with('success', 'Registro creado exitosamente');
     }
 
     /**
@@ -88,20 +112,15 @@ class PurchaseController extends Controller
             ->with('success', 'Purchase updated successfully');
 
     }
-    public function updateStatus(Request $request, $id)
+    public function annul($id)
     {
-                $request->validate([
-                    'status' => 'required|boolean', // Asegura que 'status' sea un valor booleano
-                ]);
-        
-                $purchase = Purchase::findOrFail($id);
-                $purchase->enabled = $request->input('status');
-                $purchase->save();
-        
-                $action = $purchase->enabled ? 'habilitado' : 'inhabilitado';
-        
-                return redirect()->back()->with('success', "La compra ha sido $action correctamente.");
-            }
+        $purchase = Purchase::findOrFail($id);
+        $purchase->status = 'Anulado';
+        $purchase->save();
+    
+        return redirect()->route('purchase.index')
+                        ->with('success', 'Compra anulada correctamente');
+    }
     
 
     public function destroy($id)
