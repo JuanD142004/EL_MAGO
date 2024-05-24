@@ -32,6 +32,23 @@
             /* font-family: 'arial', cursive; */
         }
     </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+       .site-container {
+            min-height: calc(100vh - 60px); /* Ajusta el valor según el tamaño del header y footer */
+        }
+
+       .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+        }
+    </style>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -154,10 +171,10 @@
                         <a class="nav-link text-white" href="{{ route('product.index') }}">{{ __('Productos') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('truck_type.index') }}">{{ __('Tipo de Camion') }}</a>
+                        <a class="nav-link text-white" href="{{ route('truck_type.index') }}"><i class="fa-solid fa-truck"></i>{{ __('Tipo de Camion') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('load.index')}}">{{__('Carga')}}</a>
+                        <a class="nav-link text-white" href="{{route('load.index')}}"><i class="fa-solid fa-truck-moving"></i>{{__('Carga')}}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" role="button" 
@@ -171,10 +188,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('load.index')}}">{{__('Ventas')}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('load.index')}}">{{__('Compras')}}</a>
+                        <a class="nav-link text-white" href="{{route('sale.index')}}">{{__('Ventas')}}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" 
@@ -199,19 +213,26 @@
             @yield('content')
         </main>
         {{-- <div class="container"> --}}
-            <footer class="d-flex flex-wrap justify-content-between align-items-center py-2 px-4 my-2 border-top">
-              <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <img src="{{asset('img/logo.png')}}" alt="Logo" style="max-width: 30px;margin: 0% 4%">
-                </a>
-                <span class="text-muted">&copy; 2024 Distribuciones el Mago, Diseñado por <b>Developer Programer</b></span>
-              </div>
-          
-              <ul class="nav col-md-4 justify-content-end list-unstyled d-flex ">
-                <li class="ms-3"><a class="text-muted" tooltip="tooltip" title="Twitter" href="#"><i class="fa-brands fa-x-twitter fa-xl"></i></a></li>
-                <li class="ms-3"><a class="text-muted" tooltip="tooltip" title="Instagram" href="#"><i class="fa-brands fa-instagram fa-xl"></i></a></li>
-                <li class="ms-3"><a class="text-muted" tooltip="tooltip" title="facebook" href="#"><i class="fa-brands fa-facebook fa-xl"></i></a></li>
-              </ul>
+
+        <br>
+        <br>
+        <br>
+        <br>
+            <footer class="footer">
+                <div class="d-flex flex-wrap justify-content-between align-items-center py-2 px-4 my-2 border-top">
+                <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                        <img src="{{asset('img/logo.png')}}" alt="Logo" style="max-width: 30px;margin: 0% 4%">
+                    </a>
+                    <span class="text-muted">&copy; 2024 Distribuciones el Mago, Diseñado por <b>Developer Programer</b></span>
+                </div>
+            
+                <ul class="nav col-md-4 justify-content-end list-unstyled d-flex ">
+                    <li class="ms-3"><a class="text-muted" tooltip="tooltip" title="Twitter" href="#"><i class="fa-brands fa-x-twitter fa-xl"></i></a></li>
+                    <li class="ms-3"><a class="text-muted" tooltip="tooltip" title="Instagram" href="#"><i class="fa-brands fa-instagram fa-xl"></i></a></li>
+                    <li class="ms-3"><a class="text-muted" tooltip="tooltip" title="facebook" href="#"><i class="fa-brands fa-facebook fa-xl"></i></a></li>
+                </ul>
+                </div>
             </footer>
         {{-- </div> --}}
     </div>

@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\auth;
 use App\Http\Controllers\LoadController;    
 use App\Http\Controllers\RouteController;
-
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\DetailsSaleController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
 /*
@@ -103,3 +104,12 @@ Route::get('/employee/{id}', [EmployeeController::class, 'show'])->name('employe
 Route::resource('load', App\Http\Controllers\LoadController::class);
 Route::resource('route', App\Http\Controllers\RouteController::class);  
 Route::post('/enviar-formulario', [LoadController::class, 'enviarFormulario'])->name('tu.ruta.de.envio');
+
+
+
+// Ruta para habilitar/inhabilitar una venta
+Route::put('/sales/{sale}/toggle', [SaleController::class, 'toggle'])->name('sales.toggle');
+Route::resource('sale', App\Http\Controllers\SaleController::class);
+// Rutas para el controlador de detalles de venta y el controlador de ventas
+Route::resource('details_sale', DetailsSaleController::class);
+Route::resource('sales', SaleController::class);

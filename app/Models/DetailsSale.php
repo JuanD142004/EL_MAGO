@@ -23,13 +23,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DetailsSale extends Model
 {
-    
+    protected $table = 'details_sale'; // Nombre de la tabla
+
     static $rules = [
-		'products_id' => 'required',
-		'price_unit' => 'required',
-		'amount' => 'required',
-		'discount' => 'required',
-		'sales_id' => 'required',
+        'products_id' => 'required',
+        'price_unit' => 'required',
+        'amount' => 'required',
+        'discount' => 'required',
+        'sales_id' => 'required',
     ];
 
     protected $perPage = 20;
