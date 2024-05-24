@@ -7,8 +7,8 @@
             {!! $errors->first('nit', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="supplier_name">{{ __('Supplier Name') }}</label>
-            <input type="text" name="supplier_name" class="form-control @error('supplier_name') is-invalid @enderror" value="{{ old('supplier_name', $supplier->supplier_name) }}" id="supplier_name" placeholder="Supplier Name">
+            <label for="supplier_name">{{ __('Nombre Proveedor') }}</label>
+            <input type="text" name="supplier_name" class="form-control @error('supplier_name') is-invalid @enderror" value="{{ old('supplier_name', $supplier->supplier_name) }}" id="supplier_name" placeholder="Nombres y Apellidos">
             {!! $errors->first('supplier_name', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

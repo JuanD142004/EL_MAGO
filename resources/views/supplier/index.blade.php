@@ -12,12 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- Agrega este bloque de estilo -->
-<style>
-    @font-face {
-        font-family: Metropolis-Bold;
-        src: url('{{ URL::asset("fonts/Metropolis-Bold.tff") }}');
-    }
-</style>
+
 
 <div class="container-fluid">
     <div class="row">
