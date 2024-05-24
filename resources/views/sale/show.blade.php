@@ -1,50 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $sale->name ?? __("Show Sale") }}</title>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Font Awesome from a CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
+@section('template_title')
+{{ $sale->name ?? __("Mostrar Venta") }}
+@endsection
 
-<body>
-    <div class="container">
-        <section class="content">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                            <h4 class="m-0">{{ __("Show Sale") }}</h4>
-                            <a class="btn btn-primary mb-3 float-right" href="{{ route('sales.index') }}">
-                                <i class="fas fa-chevron-left"></i> {{ __("Atrás") }}
-                            </a>
+@section('content')
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+    .card {
+        width: 100%;
+        margin: auto;
+    }
+
+    .card-header h4 {
+        font-size: 1.5rem;
+    }
+
+    .btn-primary {
+        font-size: 1.2rem;
+    }
+
+    .table th,
+    .table td {
+        font-size: 1.1rem;
+    }
+
+    .alert {
+        font-size: 1.1rem;
+        color: #856404;
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+    }
+
+    h5 {
+        font-size: 1.3rem;
+    }
+
+    .details-table-container {
+        margin-top: 20px;
+    }
+
+    .table-details th,
+    .table-details td {
+        padding: 15px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h4 class="m-0">{{ __("Mostrar Venta") }}</h4>
+                    <a class="btn btn-primary mb-3 float-right" href="{{ route('sales.index') }}">
+                        <i class="fas fa-chevron-left"></i> {{ __("Atrás") }}
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    @if (!$sale->enabled)
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <div>
+                            <strong>{{ __("¡Atención!") }}</strong> {{ __("Esta venta ha sido cancelada.") }}
                         </div>
+                    </div>
+                    @endif
 
-                        <div class="card-body">
-                            @if (!$sale->enabled)
-                            <div class="alert alert-danger" role="alert">
-                                {{ __("Esta venta está anulada.") }}
-                            </div>
-                            @endif
-
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>{{ __('Detalles de la Venta') }}</h5>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tbody>
                                         <tr>
-                                            <th>{{ __("Customer") }}</th>
+                                            <th>{{ __("Cliente") }}</th>
                                             <td><strong>{{ $sale->customer->id }}</strong> - {{ $sale->customer->customer_name }}</td>
                                         </tr>
-
                                         <tr>
-                                            <th>{{ __("Price Total") }}</th>
+                                            <th>{{ __("Total Precio") }}</th>
                                             <td>{{ $sale->price_total }}</td>
                                         </tr>
                                         <tr>
-                                            <th>{{ __("Payment Method") }}</th>
+                                            <th>{{ __("Método de Pago") }}</th>
                                             <td>{{ $sale->payment_method }}</td>
                                         </tr>
                                     </tbody>
@@ -52,23 +93,20 @@
                             </div>
                         </div>
 
-                        <div class="card-header bg-light">
-                            <h4 class="m-0">{{ __('Details Sales') }}</h4>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
+                        <div class="col-md-8">
+                            <h5>{{ __('Detalles de Productos') }}</h5>
+                            <div class="table-responsive details-table-container">
+                                <table class="table table-striped table-bordered table-details">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th>{{ __("Product") }}</th>
-                                            <th>{{ __("Amount") }}</th>
-                                            <th>{{ __("Discount") }}</th>
+                                            <th>{{ __("Producto") }}</th>
+                                            <th>{{ __("Cantidad") }}</th>
+                                            <th>{{ __("Descuento") }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sale->detailsSales as $detailsSale)
-                                        <tr>
+                                        @foreach($sale->detailsSales as $index => $detailsSale)
+                                        <tr class="{{ $index % 2 === 0 ? 'even' : 'odd' }}">
                                             <td>{{ $detailsSale->product->product_name ?? 'N/A' }}</td>
                                             <td>{{ $detailsSale->amount }}</td>
                                             <td>{{ $detailsSale->discount }}</td>
@@ -78,11 +116,11 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-</body>
+                    </div> <!-- End of row -->
+                </div> <!-- End of card body -->
+            </div> <!-- End of card -->
+        </div> <!-- End of col-md-12 -->
+    </div> <!-- End of row -->
+</div> <!-- End of container -->
 
-</html>
+@endsection

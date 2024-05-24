@@ -6,7 +6,20 @@ Venta
 
 @section('content')
 
-<div class="container-fluid">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<style>
+  body,
+  input,
+  select,
+  label,
+  button {
+    font-family: sans-serif;
+  }
+</style>
+
+<div class="container-fluid mt-4">
   <div class="row">
     <div class="col-sm-12">
       <div class="card">
@@ -16,12 +29,6 @@ Venta
               {{ __('Gestionar Ventas') }}
             </h5>
             <div class="float-right">
-              <button class="btn btn-info btn-sm mr-2" onclick="exportToExcel()">
-                <i class="fas fa-file-excel"></i> {{ __('Exportar a Excel') }}
-              </button>
-              <button class="btn btn-info btn-sm d-print-none" type="button" onclick="printTable()">
-                <i class="fas fa-print"></i> {{ __('Imprimir') }}
-              </button>
               <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm ml-2 d-print-none" data-placement="left">
                 <i class="fas fa-plus-circle mr-1"></i> {{ __('Crear Nuevo') }}
               </a>
@@ -35,7 +42,7 @@ Venta
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table id="salesTable" class="table table-striped table-hover">
+            <table id="salesTable" class="table table-striped table-hover dataTable">
               <thead class="thead-light">
                 <tr>
                   <th>No</th>
@@ -43,9 +50,10 @@ Venta
                   <th>Total Precio</th>
                   <th>Método de Pago</th>
                   <th class="d-print-none">Acciones</th>
+                  <th style="display: none;">Estado</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="salesTableBody">
                 @php $i = 0; @endphp
                 @foreach ($sales as $sale)
                 <tr>
@@ -58,7 +66,7 @@ Venta
                       <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
                         <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
                       </a>
-                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', {{ $sale->enabled }})" {{ $sale->enabled ? '' : 'disabled' }}>
+                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', {{ $sale->enabled }})">
                         <i class="fa fa-fw {{ $sale->enabled ? 'fa-ban' : 'fa-times-circle' }}"></i> {{ $sale->enabled ? __('Anular') : __('Anulado') }}
                       </button>
                       <form id="toggle-form-{{ $sale->id }}" action="{{ route('sales.toggle', $sale->id) }}" method="POST" style="display: none;">
@@ -67,6 +75,7 @@ Venta
                       </form>
                     </div>
                   </td>
+                  <td style="display: none;">{{ $sale->enabled ? 1 : 0 }}</td>
                 </tr>
                 @endforeach
               </tbody>
@@ -80,63 +89,45 @@ Venta
     </div>
   </div>
 </div>
-
-<!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<!-- SweetAlert2 JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- XLSX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
 <script>
-  function printTable() {
-    var printContents = document.getElementById("salesTable").outerHTML; // Obtén el HTML de la tabla
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-  }
+  $(document).ready(function() {
+    sortSalesTable();
 
-  function exportToExcel() {
-    var currentDate = new Date();
-    var dateString = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    var fileName = 'ventas_' + dateString + '.xlsx';
+    window.toggleSaleStatus = function(saleId, status) {
+      var form = document.getElementById('toggle-form-' + saleId);
+      var action = status ? 'inhabilitar' : 'habilitar';
 
-    var data = [];
-    var table = document.getElementById('salesTable');
-    var rows = table.rows;
-    for (var i = 0; i < rows.length; i++) {
-      var rowData = [];
-      for (var j = 0; j < rows[i].cells.length - 1; j++) {
-        rowData.push(rows[i].cells[j].innerText);
-      }
-      data.push(rowData);
-    }
-
-    var ws = XLSX.utils.aoa_to_sheet(data);
-    var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet JS");
-    XLSX.writeFile(wb, fileName);
-  }
-
-  function toggleSaleStatus(saleId, enabled) {
-    if (enabled) {
       Swal.fire({
         title: '¿Estás seguro?',
-        text: "¡Esta acción anulará la venta!",
+        text: `Esta acción cambiará el estado de la venta a ${status ? 'inhabilitado' : 'habilitado'}.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, anular',
+        confirmButtonText: `Sí, ${action}`,
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          var form = document.getElementById('toggle-form-' + saleId);
           form.submit();
         }
       });
     }
+  });
+
+  function sortSalesTable() {
+    var tbody = document.getElementById('salesTableBody');
+    var rows = Array.from(tbody.getElementsByTagName('tr'));
+
+    rows.sort((a, b) => {
+      var aStatus = parseInt(a.cells[5].innerText);
+      var bStatus = parseInt(b.cells[5].innerText);
+      return bStatus - aStatus; // Cambiado para que los anulados se muestren al final
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
   }
 </script>
 
