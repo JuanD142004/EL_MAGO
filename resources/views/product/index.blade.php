@@ -6,14 +6,18 @@
 @endsection
 <link href="/path/to/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 @section('content')
-<br>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css">
-
-
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+<style>
+    @font-face {
+        font-family: Metropolis-Bold;
+        src: url('{{ URL::asset("fonts/Metropolis-Bold.tff") }}');
+    }
+</style>
+<br>
 <div class="container-fluid">
    <div class="row">
     <div class="col-sm-12">
@@ -53,7 +57,7 @@
                             <tbody>
                                 @if(count($products) <= 0)
                                 <tr>
-                                    <td colspan="5">No hay resultados</td>
+                                    <td colspan="4">No hay resultados</td>
                                 </tr>
                                 @else
                                 @foreach ($products as $product)
@@ -85,7 +89,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4">{{$products->appends(['busqueda'=>$busqueda])}}</td>
+                                    <td colspan="8">{{$products->appends(['busqueda'=>$busqueda])}}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -96,21 +100,24 @@
         </div>
     </div>
 </div>
-@endsection
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable({
-            "language": {
+            responsive: true,
+            language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
@@ -118,24 +125,12 @@
                 "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
                 "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
                 "oPaginate": {
                     "sFirst": "Primero",
                     "sLast": "Último",
                     "sNext": "Siguiente",
                     "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
                 }
             }
         });
@@ -161,3 +156,5 @@
         });
     }
 </script>
+
+@endsection

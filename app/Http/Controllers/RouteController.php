@@ -73,11 +73,15 @@ class RouteController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {
-        $route = Route::find($id);
+{
+    $route = Route::findOrFail($id);
+    $departaments = Departament::all();
+    $municipalities = Municipality::all();
+    $route->municipalities = json_decode($route->municipalities, true);
 
-        return view('route.edit', compact('route'));
-    }
+    return view('route.edit', compact('route', 'departaments', 'municipalities'));
+}
+
     /**
      * Update the specified resource in storage.
      */

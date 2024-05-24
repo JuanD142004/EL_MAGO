@@ -16,6 +16,7 @@
         src: url('{{ URL::asset("fonts/Metropolis-Bold.tff") }}');
     }
 </style>
+<br>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
