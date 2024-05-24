@@ -8,7 +8,7 @@
 <br>
     <section class="content container-fluid">
         <div class="">
-            <div class="col-md-12">
+            <div class="col-md-12"style="display: flex; justify-content: center;">
 
                 <div class="card card-default">
                     <div class="card-header">

@@ -18,8 +18,8 @@
 </style>
 <br>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-20 mx-auto my-3" style="display: flex; justify-content: center;">
+        <div class="row justify-content-center">
+            <div class="col-md-8"style=" justify-content: center;">
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">

@@ -55,7 +55,7 @@ class RouteController extends Controller
         ]);
     
         return redirect()->route('route.index')
-            ->with('success', 'Route created successfully.');
+            ->with('success', 'Ruta creada exitosamente.');
     }
     
 
@@ -98,7 +98,7 @@ class RouteController extends Controller
     $route->enabled = $request->input('status');
     $route->save();
 
-    return redirect()->back()->with('success', 'Truck status updated successfully.');
+    return redirect()->back()->with('success', 'Ruta actualizada con exito.');
 }
 
  
