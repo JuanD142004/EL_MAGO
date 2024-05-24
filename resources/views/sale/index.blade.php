@@ -66,7 +66,7 @@ Venta
                       <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
                         <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
                       </a>
-                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', {{ $sale->enabled }})">
+                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
                         <i class="fa fa-fw {{ $sale->enabled ? 'fa-ban' : 'fa-times-circle' }}"></i> {{ $sale->enabled ? __('Anular') : __('Anulado') }}
                       </button>
                       <form id="toggle-form-{{ $sale->id }}" action="{{ route('sales.toggle', $sale->id) }}" method="POST" style="display: none;">
