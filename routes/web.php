@@ -69,6 +69,9 @@ Route::patch('/route/disable/{id}', [App\Http\Controllers\RouteController::class
 Route::patch('/route/enable/{id}', [App\Http\Controllers\RouteController::class, 'enable'])->name('route.enable');
 // Ruta para actualizar el estado de la ruta
 Route::patch('/route/{id}/update_status', [App\Http\Controllers\RouteController::class, 'updateStatus'])->name('update_status');
+// web.php
+Route::patch('route/update_status/{id}', [RouteController::class, 'updateStatus'])->name('update_status');
+
 
 Auth::routes();
 

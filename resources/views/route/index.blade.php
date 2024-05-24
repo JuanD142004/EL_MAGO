@@ -33,7 +33,7 @@
 
                 <div class="card-body bg-white">
                     <div class="table-responsive">
-                        <table id="route-table" class="table table-striped table-hover">
+                        <table id="routetable" class="table table-striped table-hover">
                             <thead class="thead">
                                 <tr>
                                     <th>No</th>
@@ -60,14 +60,15 @@
                                                         <li>No municipalities</li>
                                                     @endif
                                                 </ul>
-                                                <form action="{{ route('update_status', $route->id) }}" method="POST" style="margin-left: 1px;">
+                                                <form id="toggle-form-{{ $route->id }}" action="{{ route('update_status', $route->id) }}" method="POST" style="margin-left: 1px;">
                                                     @csrf
                                                     @method('PATCH')
                                                     @if ($route->enabled)
-                                                        <button type="submit" class="btn btn-sm btn-warning" name="status" value="0"><i class="fa fa-fw fa-times"></i> Inhabilitar</button>
+                                                        <button type="button" class="btn btn-sm btn-warning" onclick="toggleSaleStatus({{ $route->id }}, false)"><i class="fa fa-fw fa-times"></i> Inhabilitar</button>
                                                     @else
-                                                        <button type="submit" class="btn btn-sm btn-success" name="status" value="1"><i class="fa fa-fw fa-check"></i> Habilitar</button>
+                                                        <button type="button" class="btn btn-sm btn-success" onclick="toggleSaleStatus({{ $route->id }}, true)"><i class="fa fa-fw fa-check"></i> Habilitar</button>
                                                     @endif
+                                                    <input type="hidden" name="status" value="{{ $route->enabled ? '0' : '1' }}">
                                                 </form>
                                             </div>
                                         </td>
@@ -83,9 +84,27 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+                    
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                    function toggleSaleStatus(routeId, status) {
+                        var form = document.getElementById('toggle-form-' + routeId);
+                        var action = status ? 'habilitar' : 'inhabilitar';
+                    
+                        Swal.fire({
+                            title: '¿Estás seguro?',
+                            text: `¡Esta acción cambiará el estado del producto a ${status ? 'habilitado' : 'inhabilitado'}!`,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: `Sí, ${action}`,
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
+                    }
+                    </script>
+                    @endsection
