@@ -10,9 +10,7 @@
         <div class="row">
              <div class="col-md-12">
     <div class="float-right mb-3">
-        <a href="{{ route('route.index') }}" class="btn btn-primary btn-sm" data-placement="right">
-            {{ __('Volver') }}
-        </a>
+      
     </div>
 </div>
             <div class="col-md-12">
@@ -32,5 +30,6 @@
                 </div>
             </div>
         </div>
+       
     </section>
 @endsection

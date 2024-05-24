@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Route;
 use App\Models\Departament;
+use App\Models\Employee;
 use App\Models\Municipality;
 use Illuminate\Http\Request;
 use App\Http\Requests\RouteRequest;
@@ -13,15 +14,15 @@ class RouteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $busqueda = $request->busqueda;
-        $routes = Route::where('route_name', 'LIKE', '%' . $busqueda . '%')
-                            ->orderBy('id', 'asc')
-                            ->paginate(10);
+        $routes = Route::all();
+        foreach ($routes as $route) {
+            $route->municipalities = $route->municipalities ? json_decode($route->municipalities) : [];
+        }
     
-        return view('route.index', compact('routes', 'busqueda'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+        return view('route.index', compact('routes'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
     
 
@@ -41,42 +42,21 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $request->validate([
-        //     'route_name' => 'required|string|max:255',
-        //     'departament_id' => 'required|integer',
-        //     'municipality_id' => 'required|integer',
-        // ]);
         $request->validate([
             'route_name' => 'required|string|max:255',
             'departament_id' => 'required|integer',
-            'municipalities' => 'required|string',
+            'municipalities' => 'required|array',
         ]);
     
         Route::create([
             'route_name' => $request->route_name,
             'departament_id' => $request->departament_id,
-            'municipalities' => $request->municipalities,
+            'municipalities' => json_encode($request->municipalities),
         ]);
-        // $campos=[
-        //     'municipalities' => 'required|string' ,	
-        //     'route_name	'=> 'required|string',	
-        //     'departament_id'=> 'required|string',	
-        // ];
-        // $mensaje=[
-        //     'municipalities.required'=>'escriba el nombre del producto',
-        //     'route_name.required'=>'escriba el nombre del producto',            
-        //     'departament_id.required'=>'escriba el nombre del producto'
-
-
-        // ];
-        // $this->validate($request,$campos,$mensaje);
-        // $datosroute = request()->except('_token');
-        // Route::create($datosroute);
-        return redirect()->route('route.index')
-            ->with('success', 'Route created successfully.');
-    }
     
+        return redirect()->route('route.index')
+            ->with('success', 'Ruta creada exitosamente.');
+    }
     
 
     /**
@@ -93,11 +73,14 @@ class RouteController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {
-        $route = Route::find($id);
-        $departaments = Departament::all();
-        return view('route.edit', compact('route','departaments'));
-    }
+{
+    $route = Route::findOrFail($id);
+    $departaments = Departament::all();
+    $municipalities = Municipality::all();
+    $route->municipalities = json_decode($route->municipalities, true);
+
+    return view('route.edit', compact('route', 'departaments', 'municipalities'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -107,21 +90,18 @@ class RouteController extends Controller
         $route->update($request->validated());
 
         return redirect()->route('route.index')
-            ->with('success', 'Route updated successfully');
+            ->with('success', 'route updated successfully');
     }
+    public function updateStatus(Request $request, $id)
+{
+    $route = Route::findOrFail($id);
+    $route->enabled = $request->input('status');
+    $route->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        Route::find($id)->delete();
+    return redirect()->back()->with('success', 'Ruta actualizada con exito.');
+}
 
-        return redirect()->route('route.index')
-            ->with('success', 'Route deleted successfully');
-    }
-
-
+ 
 
 
 

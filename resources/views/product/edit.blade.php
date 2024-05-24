@@ -4,11 +4,9 @@
     {{ __('Update') }} Product
 @endsection
 @section('content')
+<br>
     <section class="content container-fluid">
         <div class="float-right mb-3">
-            <a href="{{ route('product.index') }}" class="btn btn-primary btn-sm" data-placement="right">
-                {{ __('Volver') }}
-            </a>
         </div>
         <div class="">
             <div class="col-md-12">

@@ -72,6 +72,15 @@ Route::resource('municipality', App\Http\Controllers\MunicipalityController::cla
 
 //Rutas para Ruta
 Route::get('/route/create/departament/{departament}/municipalities', [App\Http\Controllers\DepartamentController::class, 'municipalities']);
+// Ruta para inhabilitar la ruta
+Route::patch('/route/disable/{id}', [App\Http\Controllers\RouteController::class, 'disable'])->name('route.disable');
+
+// Ruta para habilitar un tipo ruta
+Route::patch('/route/enable/{id}', [App\Http\Controllers\RouteController::class, 'enable'])->name('route.enable');
+// Ruta para actualizar el estado de la ruta
+Route::patch('/route/{id}/update_status', [App\Http\Controllers\RouteController::class, 'updateStatus'])->name('update_status');
+// web.php
+Route::patch('route/update_status/{id}', [RouteController::class, 'updateStatus'])->name('update_status');
 
 
 Auth::routes();

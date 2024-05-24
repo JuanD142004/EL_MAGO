@@ -1,3 +1,4 @@
+
 <div class="box box-info padding-1">
     <div class="box-body">
         
@@ -66,7 +67,8 @@
     <label for="unit_of_measurement">{{ __('Unidad de Medida') }}</label>
     <select name="unit_of_measurement" class="form-control @error('unit_of_measurement') is-invalid @enderror" id="unit_of_measurement" required>
         <option value="">Selecciona la Unidad de Medida</option>
-        <option value="Tonelada" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Tonelada' ? 'selected' : '' }}>Tonelada</option>
+        <option value="Tonelada" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Tonelada' ? 'selected' : '' }}>Tonelada(1000kg)</option>
+        <option value="Bulto" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Bulto' ? 'selected' : '' }}>Bulto(40kg)</option>
         <option value="Kilogramo" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Kilogramo' ? 'selected' : '' }}>Kilogramo</option>
         <option value="Libra" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Libra' ? 'selected' : '' }}>Libra</option>
         <!-- Agrega más opciones según sea necesario -->
@@ -95,9 +97,10 @@
 
 
 <br>
-    </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">{{ __('Crear Producto') }}</button>
-    </div>
+<div class="box-footer mt20">
+    <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+    <a href="{{ route('product.index') }}" class="btn btn-primary">{{ __('Volver') }}</a>
+</div>
+</div>
     
 </div>
