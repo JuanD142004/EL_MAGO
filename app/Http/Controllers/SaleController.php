@@ -7,6 +7,8 @@ use App\Models\DetailsSale;
 use App\Models\Product;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Form;
+
 use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller

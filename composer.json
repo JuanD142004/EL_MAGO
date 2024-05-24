@@ -12,12 +12,12 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "*",
-        "laravelcollective/html": "^6.4",
+        "laravelcollective/html": "*",
         "laraveles/spanish": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
-        "ibex/crud-generator": "^1.6",
+        "ibex/crud-generator": "*",
         "kitloong/laravel-migrations-generator": "^6.11",
         "laravel-lang/common": "*",
         "laravel/pint": "^1.0",

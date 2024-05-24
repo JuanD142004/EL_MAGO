@@ -11,13 +11,6 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<style>
-    @font-face {
-        font-family: Metropolis-Bold;
-        src: url('{{ URL::asset("fonts/Metropolis-Bold.tff") }}');
-    }
-</style>
-<br>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">

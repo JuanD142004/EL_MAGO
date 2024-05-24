@@ -4,6 +4,8 @@ use App\Http\Controllers\DepartamentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\DetailsSaleController;
 use App\Models\Departament;
 use App\Models\Municipality;
 
@@ -27,3 +29,9 @@ Route::put('/customers/{id}/disable', [CustomerController::class, 'disable'])->n
 
 Route::resource('customer', CustomerController::class);
 
+// Ruta para habilitar/inhabilitar una venta
+Route::put('/sales/{sale}/toggle', [SaleController::class, 'toggle'])->name('sales.toggle');
+
+// Rutas para el controlador de detalles de venta y el controlador de ventas
+Route::resource('details_sale', DetailsSaleController::class);
+Route::resource('sales', SaleController::class);

@@ -25,6 +25,8 @@ class SupplierController extends Controller
     {
         $request->validate([
             'nit' => 'required|unique:suppliers,nit',
+            
+            'supplier_name'=>'required:suppliers,supplier_name',
             'cell_phone' => 'required|unique:suppliers,cell_phone',
             'mail' => 'required|email|unique:suppliers,mail',
             // otras reglas de validación
