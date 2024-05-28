@@ -13,7 +13,28 @@
 
 <!-- Agrega este bloque de estilo -->
 
+    <style>
+        body{
+        background-image: url('/img/El_mago.jpg');
+        background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+        background-position: center; /* Centra la imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        background-attachment: fixed;
+        height: 100vh; /* Ajusta la altura al 100% de la ventana */
+        width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+    }
 
+
+    .card {
+            background-color: rgba(255, 255, 255, 0.6); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
+    </style>
+<body>
 <div class="container-fluid">
     <div class="row">
         <br>
@@ -61,7 +82,7 @@
                                     @else
                                     @foreach ($suppliers as $supplier)
                                     <tr>
-                                        <td>{{ $supplier->id}}</td>
+                                        <td>{{ ++$i}}</td>
                                         <td>{{ $supplier->nit }}</td>
                                         <td>{{ $supplier->supplier_name }}</td>
                                         <td>{{ $supplier->cell_phone }}</td>
@@ -129,14 +150,6 @@
                     "sLast":     "Último",
                     "sNext":     "Siguiente",
                     "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
                 }
             }
         });
@@ -164,3 +177,4 @@
     </script>
 
 @endsection
+</body>

@@ -20,7 +20,7 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-        $sales = Sale::with('customer')->paginate(10);
+        $sales = Sale::with('customer')->paginate(1000);
 
         return view('sale.index', compact('sales'));
     }

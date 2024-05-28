@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+    <style>
+        body{
+        background-image: url('/img/El_mago.jpg');
+        background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+        background-position: center; /* Centra la imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        height: 100vh; /* Ajusta la altura al 100% de la ventana */
+        width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+    }
+    </style>
+<body>
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -47,3 +58,4 @@
         </div>
     </section>
 @endsection
+</body>

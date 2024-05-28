@@ -5,32 +5,26 @@ Venta
 @endsection
 
 @section('content')
-
+<br>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 
-<style>
-  body,
-  input,
-  select,
-  label,
-  button {
-    font-family: sans-serif;
-  }
-</style>
 
-<div class="container-fluid mt-4">
+
+
+<div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
-            <h5 class="m-0">
-              {{ __('Gestionar Ventas') }}
-            </h5>
+            <span id="card_title">{{ __('Ventas') }}</span>
             <div class="float-right">
               <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm ml-2 d-print-none" data-placement="left">
-                <i class="fas fa-plus-circle mr-1"></i> {{ __('Crear Nuevo') }}
+                <i class="fas fa-plus"></i> {{ __('Crear Nuevo') }}
               </a>
             </div>
           </div>
@@ -50,11 +44,10 @@ Venta
                   <th>Total Precio</th>
                   <th>Método de Pago</th>
                   <th class="d-print-none">Acciones</th>
-                  <th style="display: none;">Estado</th>
+                  <th>Anular</th>
                 </tr>
               </thead>
-              <tbody id="salesTableBody">
-                @php $i = 0; @endphp
+              <tbody>
                 @foreach ($sales as $sale)
                 <tr>
                   <td>{{ ++$i }}</td>
@@ -66,40 +59,67 @@ Venta
                       <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
                         <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
                       </a>
-                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
+                      
+                    </div>
+                    <td>
+                    <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
                         <i class="fa fa-fw {{ $sale->enabled ? 'fa-ban' : 'fa-times-circle' }}"></i> {{ $sale->enabled ? __('Anular') : __('Anulado') }}
                       </button>
                       <form id="toggle-form-{{ $sale->id }}" action="{{ route('sales.toggle', $sale->id) }}" method="POST" style="display: none;">
                         @csrf
                         @method('PUT')
                       </form>
-                    </div>
+                    </td>
                   </td>
-                  <td style="display: none;">{{ $sale->enabled ? 1 : 0 }}</td>
                 </tr>
                 @endforeach
               </tbody>
             </table>
-            <div class="pagination-container">
-              {!! $sales->links() !!}
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+  <script src="{{ asset('js/app.js') }}" defer></script>
 
 <script>
-  $(document).ready(function() {
-    sortSalesTable();
+    $(document).ready(function() {
+        $('#salesTable').DataTable({
+            responsive: true,
+            language: {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                }
+            }
+        });
+    });
 
-    window.toggleSaleStatus = function(saleId, status) {
+   window.toggleSaleStatus = function(saleId, status) {
       var form = document.getElementById('toggle-form-' + saleId);
       var action = status ? 'inhabilitar' : 'habilitar';
-
       Swal.fire({
         title: '¿Estás seguro?',
         text: `Esta acción cambiará el estado de la venta a ${status ? 'inhabilitado' : 'habilitado'}.`,
@@ -114,8 +134,8 @@ Venta
           form.submit();
         }
       });
-    }
-  });
+    };
+  
 
   function sortSalesTable() {
     var tbody = document.getElementById('salesTableBody');

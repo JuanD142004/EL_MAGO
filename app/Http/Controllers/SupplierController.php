@@ -29,6 +29,7 @@ class SupplierController extends Controller
             'supplier_name'=>'required:suppliers,supplier_name',
             'cell_phone' => 'required|unique:suppliers,cell_phone',
             'mail' => 'required|email|unique:suppliers,mail',
+            'address' => 'required:suppliers,address',
             // otras reglas de validación
         ], [
             'nit.required' => 'El NIT es obligatorio.',
@@ -38,6 +39,7 @@ class SupplierController extends Controller
             'mail.required' => 'El correo electrónico es obligatorio.',
             'mail.email' => 'El correo electrónico debe ser una dirección válida.',
             'mail.unique' => 'El correo electrónico ya está registrado.',
+            'address.required' => 'La direccion es obligatorio.',
             // otros mensajes de validación
         ]);
     

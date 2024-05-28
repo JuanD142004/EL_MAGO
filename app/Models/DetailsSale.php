@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DetailsSale extends Model
 {
-    protected $table = 'details_sale'; // Nombre de la tabla
+    protected $table = 'details_sales'; // Nombre de la tabla
 
     static $rules = [
         'products_id' => 'required',
@@ -40,7 +40,11 @@ class DetailsSale extends Model
      *
      * @var array
      */
-    protected $fillable = ['products_id','price_unit','amount','discount','sales_id'];
+    protected $fillable = ['products_id','price_unit','amount','discount','sales_id','enabled'];
+
+    protected $attributes = [
+        'enabled' => true,
+    ];
 
 
     /**

@@ -50,6 +50,8 @@ class EmployeeController extends Controller
     }
     $validatedData = $request->validate([
         'users_id' => 'required|exists:users,id',
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
         'document_number' => 'required|string|max:255',
         'gender' => 'required|string|max:10',
         'civil_status' => 'required|string|max:255',
@@ -63,7 +65,7 @@ class EmployeeController extends Controller
     $employee = new Employee($validatedData);
     $employee->save();
 
-    return redirect()->route('employee.index')->with('success', 'Employee created successfully.');
+    return redirect()->route('employee.index')->with('success', 'Empleado Creado con Exito.');
     }
     public function show($id)
     {

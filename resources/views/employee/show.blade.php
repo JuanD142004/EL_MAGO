@@ -1,71 +1,86 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $employee->name ?? __('Show') . " " . __('Employee') }}
+    {{ $employee->name ?? __('Mostrar') . " " . __('Empleado') }}
 @endsection
 
 @section('content')
 <br>
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-            
-                <div class="card">
-                    <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">Empleado {{ $employee->user->name }}</span>
-                        </div>
-                        
-                    </div>
-
-                    <div class="card-body">
-                        
-                        <div class="form-group">
+    <style>
+        body {
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+        }
+        .card {
+        background-color: rgba(255, 255, 255, 0.8);
+        /* Cambiar el valor de 0.8 para ajustar la opacidad */
+    }
+    </style>
+<body>
+<section class="content container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-lg">
+                <div class="card-header text-black d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Empleado: {{ $employee->user->name }}</h5>
+                    <a class="btn btn-light" href="{{ route('employee.index') }}">{{ __('Volver') }}</a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3 text-center">
                             <strong>Usuario:</strong>
-                            {{ $employee->user->name }}
+                            <p class="text-muted">{{ $employee->user->name }}</p>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6 mb-3 text-center">
                             <strong>Correo Registrado:</strong>
-                            {{ $employee->user->email }}
+                            <p class="text-muted">{{ $employee->user->email }}</p>
                         </div>
-                        <div class="form-group">
-                            <strong>Genero:</strong>
-                            {{ $employee->gender }}
+                        <div class="col-md-6 mb-3 text-center">
+                            <strong>Nombres:</strong>
+                            <p class="text-muted">{{ $employee->name }}</p>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6 mb-3 text-center">
+                            <strong>Apellidos:</strong>
+                            <p class="text-muted">{{ $employee->surname }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3 text-center">
+                            <strong>Género:</strong>
+                            <p class="text-muted">{{ $employee->gender }}</p>
+                        </div>
+                        <div class="col-md-6 mb-3 text-center">
                             <strong>Estado Civil:</strong>
-                            {{ $employee->civil_status }}
+                            <p class="text-muted">{{ $employee->civil_status }}</p>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6 mb-3 text-center">
                             <strong>EPS:</strong>
-                            {{ $employee->eps }}
+                            <p class="text-muted">{{ $employee->eps }}</p>
                         </div>
-                        <div class="form-group">
-                            <strong>Telefono:</strong>
-                            {{ $employee->phone }}
+                        <div class="col-md-6 mb-3 text-center">
+                            <strong>Teléfono:</strong>
+                            <p class="text-muted">{{ $employee->phone }}</p>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6 mb-3 text-center">
                             <strong>Hijos:</strong>
-                            {{ $employee->children }}
+                            <p class="text-muted">{{ $employee->children }}</p>
                         </div>
-                        <div class="form-group">
-                            <strong>Direccion:</strong>
-                            {{ $employee->home }}
+                        <div class="col-md-6 mb-3 text-center">
+                            <strong>Dirección:</strong>
+                            <p class="text-muted">{{ $employee->home }}</p>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6 mb-3 text-center">
                             <strong>Ruta Asignada:</strong>
-                            {{ $employee->route->route_name }}
+                            <p class="text-muted">{{ $employee->route->route_name }}</p>
                         </div>
-                        <br>
-
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('employee.index') }}"> {{ __('Volver') }}</a>
-                        </div>
-
                     </div>
-                    
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
+</body>
