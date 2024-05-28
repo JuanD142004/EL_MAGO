@@ -36,7 +36,10 @@ class Route extends Model
      *
      * @var array
      */
-    protected $fillable = ['route_name', 'departament_id', 'municipalities'];
+    protected $fillable = ['route_name', 'departament_id', 'municipalities','enabled'];
+    protected $attributes = [
+        'enabled' => true,
+    ];
 
 
     /**
