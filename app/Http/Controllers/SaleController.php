@@ -71,7 +71,7 @@ class SaleController extends Controller
             }
 
             // Retornar una respuesta de éxito
-            return response()->json(['success' => true, 'message' => 'Registro creado exitosamente']);
+            return redirect()->route('sale.index')->with('success', 'Venta  creada exitosamente.');
         } catch (\Exception $e) {
             // Manejar cualquier excepción que ocurra durante el proceso
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);

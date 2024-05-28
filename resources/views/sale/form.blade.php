@@ -344,8 +344,6 @@
 
 
 <script>
-    /no utilizar por nada del mundo/
-
     function enviarDetalles() {
         const detalles = [];
         const customerId = document.querySelector('select[name="customers_id"]').value;
