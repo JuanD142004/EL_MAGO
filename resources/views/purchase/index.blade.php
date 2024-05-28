@@ -62,15 +62,14 @@ Purchase
                                 <td>{{ $purchase->num_bill }}</td>
 
 
-
                                 <td>
                                     <form class="frData" action="{{ route('purchase.destroy', $purchase->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-sm btn-primary {{ $purchase->enabled ? 'enable' : '' }}" href="{{ route('purchase.show', $purchase->id) }}">
+                                        <a class="btn btn-sm btn-primary {{ $purchase->disable ? 'disabled' : '' }}" href="{{ route('purchase.show', $purchase->id) }}">
                                             <i class="bi bi-eye-fill"></i><span class="tooltiptext">Mostrar</span>
                                         </a>
-                                        <button type="submit" class="btn btn-danger btn-sm {{ $purchase->enabled ? 'enable' : '' }}">
+                                        <button type="submit" class="btn btn-danger btn-sm {{ $purchase->disable ? 'disabled' : '' }}">
                                             <i class="bi bi-x-circle"></i><span class="tooltiptext">Anular</span>
                                         </button>
                                     </form>

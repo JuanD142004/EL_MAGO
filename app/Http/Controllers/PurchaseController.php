@@ -119,6 +119,7 @@ class PurchaseController extends Controller
         }
 
         // Anula la compra (asumiendo que 'disable' representa el estado de anulación)
+        $purchase->disable = true;
         $purchase->save();
 
         // Redirige con un mensaje de éxito
