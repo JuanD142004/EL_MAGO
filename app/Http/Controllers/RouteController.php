@@ -29,12 +29,12 @@ class RouteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+  public function create()
 {
-    $routes = new Route();
+    $route = new Route();
     $departaments = Departament::all();
-    // $municipalities = Municipality::all(); // Agrega esta línea para obtener la lista de municipios
-    return view('route.create', compact('routes', 'departaments'));
+    $municipalities = Municipality::all(); // Agrega esta línea para obtener la lista de municipios
+    return view('route.create', compact('route', 'departaments', 'municipalities'));
 }
 
     /**
@@ -73,15 +73,15 @@ class RouteController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-{
-    $route = Route::findOrFail($id);
-    $departaments = Departament::all();
-    $municipalities = Municipality::all();
-    $route->municipalities = json_decode($route->municipalities, true);
-
-    return view('route.edit', compact('route', 'departaments', 'municipalities'));
-}
-
+    {
+        $route = Route::findOrFail($id);
+        $departaments = Departament::all();
+        $municipalities = Municipality::all();
+        $route->municipalities = json_decode($route->municipalities, true);
+    
+        return view('route.edit', compact('route', 'departaments', 'municipalities'));
+    }
+    
     /**
      * Update the specified resource in storage.
      */
@@ -90,7 +90,7 @@ class RouteController extends Controller
         $route->update($request->validated());
 
         return redirect()->route('route.index')
-            ->with('success', 'route updated successfully');
+            ->with('success', 'Ruta modificada con exito');
     }
     public function updateStatus(Request $request, $id)
 {

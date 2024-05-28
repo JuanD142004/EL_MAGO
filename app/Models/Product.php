@@ -34,7 +34,10 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['product_name', 'brand', 'price_unit', 'unit_of_measurement', 'suppliers_id'];
+    protected $fillable = ['product_name', 'brand', 'price_unit', 'unit_of_measurement', 'suppliers_id','enabled'];
+    protected $attributes = [
+        'enabled' => true,
+    ];
 
 
     /**

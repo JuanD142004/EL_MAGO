@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 
+
 /**
  * Class ProductController
  * @package App\Http\Controllers
@@ -44,10 +45,27 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->validated());
+        $request->validate([
+            'product_name' => 'required|unique:products,product_name',
+            'brand' => 'required',
+            'price_unit' => 'required|required',
+            'unit_of_measurement' => 'required',
+            'suppliers_id' => 'required|exists:suppliers,id',
+            // otras reglas de validación
+        ], [
+            'product_name.required' => 'El nombre del producto es obligatorio.',
+            'product_name.unique' => 'El nombre del producto ya está registrado.',
+            'brand.required' => 'La marca es obligatoria.',
+            'price_unit.required' => 'El precio unitario es obligatorio.',
+            'unit_of_measurement.required' => 'La unidad de medida es obligatoria.',
+            'suppliers_id.required' => 'El proveedor es obligatorio.',
+            'suppliers_id.exists' => 'El proveedor seleccionado no es válido.',
+            // otros mensajes de validación
+        ]);
 
+        $product = Product::create($request->all());
         return redirect()->route('product.index')
-            ->with('success', 'Product created successfully.');
+            ->with('success', 'Producto creado con éxito.');
     }
 
     /**
