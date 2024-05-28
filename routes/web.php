@@ -117,3 +117,23 @@ Route::resource('sales', SaleController::class);
 
 
 
+
+Auth::routes();
+
+// Rutas para las compras 
+Route::resource('purchase',App\Http\Controllers\PurchaseController::class);
+Route::resource('details_purchase', App\Http\Controllers\DetailsPurchaseController::class);
+Route::patch('purchase/{id}/update_status', [PurchaseController::class, 'updateStatus'])->name('purchase.update_status');
+Route::post('/details-purchase', [DetailsPurchaseController::class, 'store'])->name('details-purchase.store');
+Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
+Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+Route::patch('/purchase/{purchase}/annul', [PurchaseController::class, 'annul'])->name('purchase.annul');
+Route::post('/toggle-purchase-status/{id}', 'PurchaseController@toggleStatus')->name('toggle.purchase.status');
+
+
+
+
+// ruta para la barra de busqueda
+Route::get('/purchase/search', [PurchaseController::class, 'search'])->name('purchase.search');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

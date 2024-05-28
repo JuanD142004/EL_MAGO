@@ -66,10 +66,9 @@ class RegisterController extends Controller
 protected function extendPasswordValidator()
 {
     Validator::extend('strong_password', function ($attribute, $value, $parameters, $validator) {
-        return preg_match('/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[0-9])/', $value);
+        return preg_match('/[!@#$%^&*(),.?":{}|<>]/', $value);
     });
 }
-
     
 
     /**
