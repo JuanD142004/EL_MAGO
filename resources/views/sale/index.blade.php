@@ -66,9 +66,15 @@ Venta
                       <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
                         <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
                       </a>
-                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill {{ $sale->enabled ? 'btn-danger' : 'btn-secondary' }}" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
-                        <i class="fa fa-fw {{ $sale->enabled ? 'fa-ban' : 'fa-times-circle' }}"></i> {{ $sale->enabled ? __('Anular') : __('Anulado') }}
+                      @if($sale->enabled)
+                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill btn-danger" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
+                        <i class="fa fa-fw fa-ban"></i> {{ __('Anular') }}
                       </button>
+                      @else
+                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill btn-secondary" disabled>
+                        <i class="fa fa-fw fa-times-circle"></i> {{ __('Anulado') }}
+                      </button>
+                      @endif
                       <form id="toggle-form-{{ $sale->id }}" action="{{ route('sales.toggle', $sale->id) }}" method="POST" style="display: none;">
                         @csrf
                         @method('PUT')
@@ -98,11 +104,11 @@ Venta
 
     window.toggleSaleStatus = function(saleId, status) {
       var form = document.getElementById('toggle-form-' + saleId);
-      var action = status ? 'inhabilitar' : 'habilitar';
+      var action = status ? 'Anular' : 'Anulado';
 
       Swal.fire({
         title: '¿Estás seguro?',
-        text: `Esta acción cambiará el estado de la venta a ${status ? 'inhabilitado' : 'habilitado'}.`,
+        text: `Esta acción cambiará el estado de la venta a ${status ? 'Anular' : 'Anulado'}.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -124,7 +130,7 @@ Venta
     rows.sort((a, b) => {
       var aStatus = parseInt(a.cells[5].innerText);
       var bStatus = parseInt(b.cells[5].innerText);
-      return bStatus - aStatus; // Cambiado para que los anulados se muestren al final
+      return bStatus - aStatus;
     });
 
     rows.forEach(row => tbody.appendChild(row));

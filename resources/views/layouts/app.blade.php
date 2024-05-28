@@ -28,11 +28,6 @@
 
     <!-- Custom CSS -->
     <style>
-        *{
-            /* font-family: 'arial', cursive; */
-        }
-    </style>
-    <style>
         body {
             margin: 0;
             padding: 0;

@@ -25,7 +25,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-user-group fa-2xl"></i>                                        
+                                            <i class="fa-solid fa-user-group fa-2xl"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -60,9 +60,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -97,21 +95,35 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>hola</th>
-                                        <th>hola</th>
-                                        <th>hola</th>
-                                        <th>hola</th>
-                                        <th>hola</th>
+                                        <th>Proveedor</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
                                     </tr>
-                                    
+
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>hola</td>
-                                        <td>hola</td>
-                                        <td>hola</td>
-                                        <td>hola</td>
-                                        <td>hola</td>
+                                        <td>Proveedor A</td>
+                                        <td>2024-05-27</td>
+                                        <td>$1000</td>
+                                        <td>Producto X</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Proveedor B</td>
+                                        <td>2024-05-26</td>
+                                        <td>$1500</td>
+                                        <td>Producto Y</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Proveedor C</td>
+                                        <td>2024-05-25</td>
+                                        <td>$2000</td>
+                                        <td>Producto Z</td>
+                                        <td>20</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -121,21 +133,35 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>hola</th>
-                                        <th>hola</th>
-                                        <th>hola</th>
-                                        <th>hola</th>
-                                        <th>hola</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
                                     </tr>
-                                    
+
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>hola</td>
-                                        <td>hola</td>
-                                        <td>hola</td>
-                                        <td>hola</td>
-                                        <td>hola</td>
+                                        <td>Cliente A</td>
+                                        <td>2024-05-27</td>
+                                        <td>$2000</td>
+                                        <td>Producto X</td>
+                                        <td>5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cliente B</td>
+                                        <td>2024-05-26</td>
+                                        <td>$2500</td>
+                                        <td>Producto Y</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cliente C</td>
+                                        <td>2024-05-25</td>
+                                        <td>$3000</td>
+                                        <td>Producto Z</td>
+                                        <td>10</td>
                                     </tr>
                                 </tbody>
                             </table>
