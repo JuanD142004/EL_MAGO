@@ -72,32 +72,32 @@
                 <div class="box box-info padding-1">
                     <div class="box-body">
                         <h2>Formulario de Compras</h2>
-                        <form id="mainForm" action="{{ route('purchases.store') }}" method="POST">
+                        <form id="mainForm">
                             @csrf
                             <div class="form-group">
                                 {{ Form::label('suppliers_id', 'Nombre del Proveedor') }}
-                                {{ Form::select('suppliers_id', $suppliers->pluck('supplier_name', 'id'), null, ['class' => 'form-control' . ($errors->has('suppliers_id') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona un proveedor']) }}
+                                {{ Form::select('suppliers_id', $suppliers->pluck('supplier_name', 'id'), null, ['class' => 'form-control' . ($errors->has('suppliers_id') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona un proveedor','required']) }}
                                 {!! $errors->first('suppliers_id', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('date', 'Fecha') }}
-                                {{ Form::date('date', \Carbon\Carbon::now(), ['class' => 'form-control' . ($errors->has('date') ? ' is-invalid' : ''), 'placeholder' => 'Fecha']) }}
+                                {{ Form::date('date', \Carbon\Carbon::now(), ['class' => 'form-control' . ($errors->has('date') ? ' is-invalid' : ''), 'placeholder' => 'Fecha','required']) }}
                                 {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('total_value', 'Precio Total') }}
-                                {{ Form::text('total_value', old('total_value'), ['class' => 'form-control' . ($errors->has('total_value') ? ' is-invalid' : ''), 'placeholder' => 'Precio Total', 'readonly' => 'readonly','style' => 'background-color: #f8f9fa; cursor: not-allowed;']) }}
+                                {{ Form::text('total_value', old('total_value'), ['class' => 'form-control' . ($errors->has('total_value') ? ' is-invalid' : ''), 'placeholder' => 'Precio Total', 'readonly','required' => 'readonly','style' => 'background-color: #f8f9fa; cursor: not-allowed;']) }}
                                 {!! $errors->first('total_value', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('num_bill', 'Número de Factura') }}
-                                {{ Form::text('num_bill', old('num_bill'), ['class' => 'form-control' . ($errors->has('num_bill') ? ' is-invalid' : ''), 'placeholder' => 'Número de Factura']) }}
+                                {{ Form::text('num_bill', old('num_bill'), ['class' => 'form-control' . ($errors->has('num_bill') ? ' is-invalid' : ''), 'placeholder' => 'Número de Factura','required']) }}
                                 {!! $errors->first('num_bill', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
                     </div>
                     <div class="box-footer" style="margin: 20px;">
                         <button type="button" class="btn btn-success" onclick="enviarDetalles()">Enviar</button>
-                        <a type="submit" class="btn btn-primary" href="{{ route('purchases.index') }}">Volver</a>
+                        <a class="btn btn-primary" href="{{ route('purchases.index') }}">Volver</a>
                     </div>
                 </div>
                 </form>
@@ -113,7 +113,7 @@
                 <div class="box box-info padding-1">
                     <div class="box-body">
                         <h2>Formulario de Detalles de Compras</h2>
-                        <form id="detailsForm" action="{{ route('details_purchase.store') }}" method="POST">
+                        <form id="detailsForm">
                             @csrf
                             <div class="table-responsive">
                                 <table class="table" id="detalle-table">
@@ -129,19 +129,19 @@
                                     <tbody id="selectedProductsBody">
                                         <tr class="product-row-template">
                                             <td>
-                                                {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto']) }}
+                                                {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto','required']) }}
                                                 {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
-                                                {{ Form::text('purchase_lot[]', null, ['class' => 'form-control purchase-lot', 'placeholder' => 'Lote']) }}
+                                                {{ Form::text('purchase_lot[]', null, ['class' => 'form-control purchase-lot', 'placeholder' => 'Lote','required']) }}
                                                 {!! $errors->first('purchase_lot', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
-                                                {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad']) }}
+                                                {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad','required']) }}
                                                 {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
-                                                {{ Form::text('unit_value[]', null, ['class' => 'form-control unit-value', 'placeholder' => 'Valor Unitario']) }}
+                                                {{ Form::text('unit_value[]', null, ['class' => 'form-control unit-value', 'placeholder' => 'Valor Unitario','required']) }}
                                                 {!! $errors->first('unit_value', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
@@ -166,6 +166,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 
     <script>
+        const purchaseStoreRoute = "{{ route('purchases.store') }}";
+        const purchaseIndexRoute = "{{ route('purchases.index') }}";
+        const csrfToken = "{{ csrf_token() }}";
+
         document.addEventListener('DOMContentLoaded', function() {
             var agregarDetalleButton = document.getElementById('agregarDetalle');
             if (agregarDetalleButton) {
@@ -202,12 +206,42 @@
                     calcularTotalCompra();
                 });
             });
+
+            row.querySelectorAll('input.unit-value').forEach(function(input) {
+                input.addEventListener('input', function(event) {
+                    let value = event.target.value;
+                    value = value.replace(/[^\d.,]/g, '');
+                    value = formatCurrency(value);
+                    event.target.value = value;
+                });
+            });
         }
+
+        function formatCurrency(value) {
+            let number = parseFloat(value.replace(/[,.]/g, '').replace(',', '.'));
+            if (!isNaN(number)) {
+                number = Math.max(0, Math.min(number, 1000000000));
+                return number.toLocaleString('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    maximumFractionDigits: 0
+                });
+            } else {
+                return '';
+            }
+        }
+
+        
 
         function eliminarDetalle(button) {
             var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-            calcularTotalCompra();
+            // Verificar si la fila es la primera antes de eliminarla
+            if (row.previousElementSibling) {
+                row.parentNode.removeChild(row);
+                calcularTotalCompra();
+            } else {
+                alert("No puedes eliminar el primer detalle.");
+            }
         }
 
         function calcularTotalCompra() {
@@ -215,14 +249,22 @@
             var total = 0;
 
             rows.forEach(function(row) {
-                var cantidad = parseFloat(row.querySelector('.amount').value) || 0;
-                var valorUnitario = parseFloat(row.querySelector('.unit-value').value) || 0;
+                var cantidad = parseFloat(row.querySelector('.amount').value.replace(/[,.]/g, '').replace(',', '.')) || 0;
+                var valorUnitario = parseFloat(row.querySelector('.unit-value').value.replace(/[,.]/g, '').replace(',', '.')) || 0;
                 var subtotal = cantidad * valorUnitario;
                 total += subtotal;
             });
 
-            document.querySelector('input[name="total_value"]').value = total.toFixed(2);
+            // Formatear el total como moneda en pesos colombianos sin decimales
+            var formattedTotal = total.toLocaleString('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                maximumFractionDigits: 0
+            });
+            document.querySelector('input[name="total_value"]').value = formattedTotal;
         }
+
+       
 
         function enviarDetalles() {
             const detalles = [];
@@ -252,7 +294,23 @@
                 NumeroFactura: NumeroFactura,
                 detalles: detalles
             };
-            console.log(data);
+
+            $.ajax({
+                url: purchaseStoreRoute,
+                method: 'POST',
+                data: {
+                    _token: csrfToken,
+                    ...data
+                },
+                success: function(response) {
+                    alert('Compra registrada con éxito');
+                    window.location.href = purchaseIndexRoute;
+                },
+                error: function(error) {
+                    console.log(error);
+                    alert('Hubo un error al registrar la compra');
+                }
+            });
         }
     </script>
 </body>

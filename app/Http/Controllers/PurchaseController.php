@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
-
 /**
  * Class PurchaseController
  * @package App\Http\Controllers
@@ -20,30 +19,31 @@ class PurchaseController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        //$purchases = Purchase::paginate();
-       
-        $search = trim($request->get('search'));
-        $purchases = Purchase::with('Supplier')
-            ->where('suppliers_id', 'LIKE', '%' . $search . '%')
-            ->paginate(10);
+{
+    $search = trim($request->get('search'));
+    
+    // Cambiamos la consulta para cargar las compras con sus proveedores
+    $purchases = Purchase::with('supplier')
+        ->whereHas('supplier', function ($query) use ($search) {
+            $query->where('supplier_name', 'LIKE', '%' . $search . '%');
+        })
+        ->paginate(10);
 
-        return view('purchase.index', compact('purchases'))
-            ->with('i', (request()->input('page', 1) - 1) * $purchases->perPage());
-    }
+    return view('purchase.index', compact('purchases'))
+        ->with('i', (request()->input('page', 1) - 1) * $purchases->perPage());
+}
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        
         $purchase = new Purchase();
         $products = Product::all();
         $suppliers = Supplier::all();
         $detailsPurchase = new DetailsPurchase();
         return view('purchase.create', compact('purchase', 'detailsPurchase', 'products', 'suppliers'));
-
     }
 
     /**
@@ -51,25 +51,22 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        // Acceder a los datos enviados desde el formulario
-        $datos = $request->input('data');
+        $datos = $request->all();
 
         // Crear una nueva compra
         $compra = new Purchase();
-        $compra->sppliers_id = $datos['nombre_proveedor'];
+        $compra->suppliers_id = $datos['nombre_proveedor'];
         $compra->date = $datos['fecha'];
         $compra->total_value = $datos['ValorTotal'];
         $compra->num_bill = $datos['NumeroFactura'];
+        $compra->enabled = true; // Asegurar que la compra está habilitada
         $compra->save();
-
 
         // Recorrer los detalles de la compra y guardarlos en la base de datos
         foreach ($datos['detalles'] as $detalle) {
             $detalleCompra = new DetailsPurchase();
             $detalleCompra->products_id = $detalle['Producto'];
-            $detalleCompra->purcahse_lot = $detalle['Lote'];
+            $detalleCompra->purchase_lot = $detalle['Lote'];
             $detalleCompra->amount = $detalle['Cantidad'];
             $detalleCompra->unit_value = $detalle['ValorUnitario'];
             $detalleCompra->purchases_id = $compra->id; // Asociar el detalle con la compra creada
@@ -77,7 +74,7 @@ class PurchaseController extends Controller
         }
 
         // Retornar una respuesta de redirección
-        return redirect()->route('purchases.index')
+        return redirect()->route('purchase.index')
             ->with('success', 'Registro creado exitosamente');
     }
 
@@ -87,8 +84,9 @@ class PurchaseController extends Controller
     public function show($id)
     {
         $purchase = Purchase::find($id);
+        $detailsPurchases = DetailsPurchase::where('purchases_id', $id)->get();
 
-        return view('purchase.show', compact('purchase'));
+        return view('purchase.show', compact('purchase', 'detailsPurchases'));
     }
 
     /**
@@ -100,7 +98,7 @@ class PurchaseController extends Controller
 
         return view('purchase.edit', compact('purchase'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -109,31 +107,21 @@ class PurchaseController extends Controller
         $purchase->update($request->validated());
 
         return redirect()->route('purchase.index')
-            ->with('success', 'Purchase updated successfully');
-
+            ->with('success', 'Compra actualizada exitosamente');
     }
-    public function annul($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        $purchase->status = 'Anulado';
-        $purchase->save();
-    
-        return redirect()->route('purchase.index')
-                        ->with('success', 'Compra anulada correctamente');
-    }
-    
 
     public function destroy($id)
     {
+        // Encuentra la compra con el ID dado
         $purchase = Purchase::find($id);
+        if (!$purchase) {
+            return redirect()->route('purchases.index')->with('error', 'La compra no existe');
+        }
 
-        if ($purchase) {
-            $purchase->delete();
-            return redirect()->route('purchase.index')->with('success', 'Purchase deleted successfully');
-        } else {
-            return redirect()->route('purchase.index')->with('error', 'Purchase not found');
+        // Anula la compra (asumiendo que 'disable' representa el estado de anulación)
+        $purchase->save();
 
+        // Redirige con un mensaje de éxito
+        return redirect()->route('purchases.index')->with('success', 'La compra ha sido anulada con éxito');
     }
-}
-
 }

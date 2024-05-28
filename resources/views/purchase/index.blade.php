@@ -60,19 +60,20 @@ Purchase
                                 <td>{{ $purchase->date }}</td>
                                 <td>{{ $purchase->total_value }}</td>
                                 <td>{{ $purchase->num_bill }}</td>
+
+
+
                                 <td>
-                                    @if ($purchase->status != 'Anulado')
-                                    <form id="annul-form-{{ $purchase->id }}" action="{{ route('purchase.annul', $purchase->id) }}" method="POST">
+                                    <form class="frData" action="{{ route('purchase.destroy', $purchase->id) }}" method="POST">
                                         @csrf
-                                        @method('PATCH')
-                                        <button type="button" class="btn btn-sm btn-danger" onclick="annulPurchase('{{ $purchase->id }}')">
-                                            <i class="fa fa-fw fa-times"></i> {{ __('Anular') }}
+                                        @method('DELETE')
+                                        <a class="btn btn-sm btn-primary {{ $purchase->enabled ? 'enable' : '' }}" href="{{ route('purchase.show', $purchase->id) }}">
+                                            <i class="bi bi-eye-fill"></i><span class="tooltiptext">Mostrar</span>
+                                        </a>
+                                        <button type="submit" class="btn btn-danger btn-sm {{ $purchase->enabled ? 'enable' : '' }}">
+                                            <i class="bi bi-x-circle"></i><span class="tooltiptext">Anular</span>
                                         </button>
                                     </form>
-                                    @endif
-                                    <a class="btn btn-sm btn-success" href="{{ route('purchase.show', $purchase->id) }}">
-                                        <i class="fa fa-fw fa-eye"></i> {{ __('Show') }}
-                                    </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -119,21 +120,35 @@ Purchase
         });
     });
 
-    function annulPurchase(purchaseId) {
-        var form = document.getElementById('annul-form-' + purchaseId);
-
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¡No podrás revertir esta acción!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, anular',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
+    function togglePurchaseStatus(purchaseId, currentStatus) {
+        // Confirmar con el usuario antes de realizar la acción
+        if (!confirm('¿Estás seguro de anular esta compra?')) {
+            return;
+        }
+        // Realizar una solicitud AJAX para actualizar el estado de la compra
+        $.ajax({
+            url: '/toggle-purchase-status/' + purchaseId,
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                current_status: currentStatus
+            },
+            success: function(response) {
+                // Si la solicitud es exitosa, actualizar el estado del botón y recargar la página si es necesario
+                if (response.success) {
+                    var button = document.getElementById('toggle-button-' + purchaseId);
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-secondary');
+                    button.innerHTML = '<i class="fa fa-fw fa-times-circle"></i> Anulado';
+                    button.disabled = true;
+                    alert('La compra se ha anulado correctamente.');
+                } else {
+                    alert('Hubo un error al anular la compra.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Error de servidor. Por favor, inténtalo de nuevo más tarde.');
             }
         });
     }

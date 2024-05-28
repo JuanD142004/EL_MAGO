@@ -47,7 +47,7 @@ class Purchase extends Model
      */
     public function detailsPurchases()
     {
-        return $this->hasMany(\App\Models\DetailsPurchase::class, 'id', 'purchases_id');
+        return $this->hasMany(\App\Models\DetailsPurchase::class, 'purchases_id', 'id');
     }
     
 
