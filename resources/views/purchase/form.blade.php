@@ -97,7 +97,7 @@
                     </div>
                     <div class="box-footer" style="margin: 20px;">
                         <button type="button" class="btn btn-success" onclick="enviarDetalles()">Enviar</button>
-                        <a class="btn btn-primary" href="{{ route('purchases.index') }}">Volver</a>
+                        <a class="btn btn-primary" href="{{ route('purchase.index') }}">Volver</a>
                     </div>
                 </div>
                 </form>
@@ -129,19 +129,19 @@
                                     <tbody id="selectedProductsBody">
                                         <tr class="product-row-template">
                                             <td>
-                                                {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto','required']) }}
+                                                {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto']) }}
                                                 {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
-                                                {{ Form::text('purchase_lot[]', null, ['class' => 'form-control purchase-lot', 'placeholder' => 'Lote','required']) }}
+                                                {{ Form::text('purchase_lot[]', null, ['class' => 'form-control purchase-lot', 'placeholder' => 'Lote']) }}
                                                 {!! $errors->first('purchase_lot', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
-                                                {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad','required']) }}
+                                                {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad']) }}
                                                 {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
-                                                {{ Form::text('unit_value[]', null, ['class' => 'form-control unit-value', 'placeholder' => 'Valor Unitario','required']) }}
+                                                {{ Form::text('unit_value[]', null, ['class' => 'form-control unit-value', 'placeholder' => 'Valor Unitario']) }}
                                                 {!! $errors->first('unit_value', '<div class="invalid-feedback">:message</div>') !!}
                                             </td>
                                             <td>
@@ -306,10 +306,6 @@
                     alert('Compra registrada con éxito');
                     window.location.href = purchaseIndexRoute;
                 },
-                error: function(error) {
-                    console.log(error);
-                    alert('Hubo un error al registrar la compra');
-                }
             });
         }
     </script>
