@@ -50,7 +50,7 @@ Venta
               <tbody>
                 @foreach ($sales as $sale)
                 <tr>
-                  <td>{{ ++$i }}</td>
+                  <td>{{ $sale->id }}</td>
                   <td>{{ $sale->customer->id }} - {{ $sale->customer->customer_name }}</td>
                   <td>{{ $sale->price_total }}</td>
                   <td>{{ $sale->payment_method }}</td>
