@@ -21,6 +21,9 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
+        $purchases = Purchase::paginate(10000); // 10 es el número de elementos por página, puedes ajustarlo según tus necesidades
+        return view('purchase.index', compact('purchases'));
+
         $search = trim($request->get('search'));
 
         // Cambiamos la consulta para cargar las compras con sus proveedores
