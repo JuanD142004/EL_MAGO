@@ -11,7 +11,28 @@
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    body{
+    background-image: url('/img/imagenproductos.png');
+    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed;
+    height: 100vh; /* Ajusta la altura al 100% de la ventana */
+    width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+}
 
+.card {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
+    border: none; /* Sin bordes para la tarjeta */
+}
+
+.table {
+    background-color: rgba(255, 255, 255, 0.5) !important; /* Fondo blanco con 50% de opacidad */
+}
+
+</style>
+<body>
 <div class="container-fluid">
    <div class="row">
     <div class="col-sm-12">
@@ -161,3 +182,4 @@ $(document).ready(function() {
 </script>
 
 @endsection
+</body>
