@@ -8,6 +8,7 @@ use App\Models\DetailsPurchase;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class PurchaseController
@@ -19,20 +20,19 @@ class PurchaseController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $search = trim($request->get('search'));
-    
-    // Cambiamos la consulta para cargar las compras con sus proveedores
-    $purchases = Purchase::with('supplier')
-        ->whereHas('supplier', function ($query) use ($search) {
-            $query->where('supplier_name', 'LIKE', '%' . $search . '%');
-        })
-        ->paginate(10);
+    {
+        $search = trim($request->get('search'));
 
-    return view('purchase.index', compact('purchases'))
-        ->with('i', (request()->input('page', 1) - 1) * $purchases->perPage());
-}
+        // Cambiamos la consulta para cargar las compras con sus proveedores
+        $purchases = Purchase::with('supplier')
+            ->whereHas('supplier', function ($query) use ($search) {
+                $query->where('supplier_name', 'LIKE', '%' . $search . '%');
+            })
+            ->paginate(10);
 
+        return view('purchase.index', compact('purchases'))
+            ->with('i', (request()->input('page', 1) - 1) * $purchases->perPage());
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -51,31 +51,51 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->all();
+        // Validar los datos de la solicitud
+        $validator = Validator::make($request->all(), [
+            'nombre_proveedor' => 'required|exists:suppliers,id',
+            'fecha' => 'required|date',
+            'ValorTotal' => 'required|numeric|min:0',
+            'NumeroFactura' => 'required|string|max:255',
+            'detalles' => 'required|array',
+            'detalles.*.Producto' => 'required|exists:products,id',
+            'detalles.*.Lote' => 'required|string|max:255',
+            'detalles.*.Cantidad' => 'required|numeric|min:1',
+            'detalles.*.ValorUnitario' => 'required|numeric|min:0',
+        ]);
 
-        // Crear una nueva compra
-        $compra = new Purchase();
-        $compra->suppliers_id = $datos['nombre_proveedor'];
-        $compra->date = $datos['fecha'];
-        $compra->total_value = $datos['ValorTotal'];
-        $compra->num_bill = $datos['NumeroFactura'];
-        $compra->enabled = true; // Asegurar que la compra está habilitada
-        $compra->save();
-
-        // Recorrer los detalles de la compra y guardarlos en la base de datos
-        foreach ($datos['detalles'] as $detalle) {
-            $detalleCompra = new DetailsPurchase();
-            $detalleCompra->products_id = $detalle['Producto'];
-            $detalleCompra->purchase_lot = $detalle['Lote'];
-            $detalleCompra->amount = $detalle['Cantidad'];
-            $detalleCompra->unit_value = $detalle['ValorUnitario'];
-            $detalleCompra->purchases_id = $compra->id; // Asociar el detalle con la compra creada
-            $detalleCompra->save();
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
         }
 
-        // Retornar una respuesta de redirección
-        return redirect()->route('purchase.index')
-            ->with('success', 'Registro creado exitosamente');
+        try {
+            $datos = $request->all();
+
+            // Crear una nueva compra
+            $compra = new Purchase();
+            $compra->suppliers_id = $datos['nombre_proveedor'];
+            $compra->date = $datos['fecha'];
+            $compra->total_value = $datos['ValorTotal'];
+            $compra->num_bill = $datos['NumeroFactura'];
+            $compra->enabled = true; // Asegurar que la compra está habilitada
+            $compra->save();
+
+            // Recorrer los detalles de la compra y guardarlos en la base de datos
+            foreach ($datos['detalles'] as $detalle) {
+                $detalleCompra = new DetailsPurchase();
+                $detalleCompra->products_id = $detalle['Producto'];
+                $detalleCompra->purchase_lot = $detalle['Lote'];
+                $detalleCompra->amount = $detalle['Cantidad'];
+                $detalleCompra->unit_value = $detalle['ValorUnitario'];
+                $detalleCompra->purchases_id = $compra->id; // Asociar el detalle con la compra creada
+                $detalleCompra->save();
+            }
+
+            // Retornar una respuesta de éxito
+            return response()->json(['success' => true, 'message' => 'Compra registrada con éxito']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Ocurrió un error al registrar la compra', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**

@@ -9,6 +9,9 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DetailsPurchaseController;
+use App\Http\Controllers\PurchaseController;
+
 
 /*
 |--------------------------------------------------------------------------

@@ -94,13 +94,13 @@
                                 {{ Form::text('num_bill', old('num_bill'), ['class' => 'form-control' . ($errors->has('num_bill') ? ' is-invalid' : ''), 'placeholder' => 'Número de Factura','required']) }}
                                 {!! $errors->first('num_bill', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
-                    </div>
-                    <div class="box-footer" style="margin: 20px;">
-                        <button type="button" class="btn btn-success" onclick="enviarDetalles()">Enviar</button>
-                        <a class="btn btn-primary" href="{{ route('purchase.index') }}">Volver</a>
+                            <div class="box-footer" style="margin: 20px;">
+                                <button type="button" class="btn btn-success" onclick="enviarDetalles()">Enviar</button>
+                                <a class="btn btn-primary" href="{{ route('purchase.index') }}">Volver</a>
+                            </div>
+                        </form> <!-- Mueve esta etiqueta de cierre aquí -->
                     </div>
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -198,7 +198,7 @@
         function addEventListeners(row) {
             row.querySelectorAll('input.amount, input.unit-value').forEach(function(input) {
                 input.addEventListener('input', function() {
-                    if (isNaN(input.value) || input.value < 0) {
+                    if (isNaN(input.value.replace(/[^\d]/g, '')) || input.value < 0) {
                         input.classList.add('is-invalid');
                     } else {
                         input.classList.remove('is-invalid');
@@ -209,8 +209,7 @@
 
             row.querySelectorAll('input.unit-value').forEach(function(input) {
                 input.addEventListener('input', function(event) {
-                    let value = event.target.value;
-                    value = value.replace(/[^\d.,]/g, '');
+                    let value = event.target.value.replace(/[^\d]/g, ''); // Solo números
                     value = formatCurrency(value);
                     event.target.value = value;
                 });
@@ -218,9 +217,9 @@
         }
 
         function formatCurrency(value) {
-            let number = parseFloat(value.replace(/[,.]/g, '').replace(',', '.'));
+            if (!value) return '';
+            let number = parseInt(value.replace(/[^\d]/g, ''));
             if (!isNaN(number)) {
-                number = Math.max(0, Math.min(number, 1000000000));
                 return number.toLocaleString('es-CO', {
                     style: 'currency',
                     currency: 'COP',
@@ -230,8 +229,6 @@
                 return '';
             }
         }
-
-        
 
         function eliminarDetalle(button) {
             var row = button.parentNode.parentNode;
@@ -249,8 +246,8 @@
             var total = 0;
 
             rows.forEach(function(row) {
-                var cantidad = parseFloat(row.querySelector('.amount').value.replace(/[,.]/g, '').replace(',', '.')) || 0;
-                var valorUnitario = parseFloat(row.querySelector('.unit-value').value.replace(/[,.]/g, '').replace(',', '.')) || 0;
+                var cantidad = parseFloat(row.querySelector('.amount').value.replace(/[^\d]/g, '')) || 0;
+                var valorUnitario = parseFloat(row.querySelector('.unit-value').value.replace(/[^\d]/g, '')) || 0;
                 var subtotal = cantidad * valorUnitario;
                 total += subtotal;
             });
@@ -264,15 +261,13 @@
             document.querySelector('input[name="total_value"]').value = formattedTotal;
         }
 
-       
-
         function enviarDetalles() {
             const detalles = [];
             document.querySelectorAll('#detalle-table tbody tr').forEach(function(detalle) {
                 const Producto = detalle.querySelector('select[name^="products_id"]').value;
                 const Lote = detalle.querySelector('input[name^="purchase_lot"]').value;
-                const Cantidad = detalle.querySelector('input[name^="amount"]').value;
-                const ValorUnitario = detalle.querySelector('input[name^="unit_value"]').value;
+                const Cantidad = detalle.querySelector('input[name^="amount"]').value.replace(/[^\d]/g, '');
+                const ValorUnitario = detalle.querySelector('input[name^="unit_value"]').value.replace(/[^\d]/g, '');
 
                 detalles.push({
                     Producto: Producto,
@@ -284,7 +279,7 @@
 
             const Proveedor = document.querySelector('select[name="suppliers_id"]').value;
             const fecha = document.querySelector('input[name="date"]').value;
-            const Valortotal = document.querySelector('input[name="total_value"]').value;
+            const Valortotal = document.querySelector('input[name="total_value"]').value.replace(/[^\d]/g, '');
             const NumeroFactura = document.querySelector('input[name="num_bill"]').value;
 
             const data = {
@@ -296,8 +291,8 @@
             };
 
             $.ajax({
+                type: "POST",
                 url: purchaseStoreRoute,
-                method: 'POST',
                 data: {
                     _token: csrfToken,
                     ...data
@@ -306,6 +301,10 @@
                     alert('Compra registrada con éxito');
                     window.location.href = purchaseIndexRoute;
                 },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', textStatus, errorThrown);
+                    alert('Ocurrió un error al registrar la compra. Por favor, inténtalo de nuevo.');
+                }
             });
         }
     </script>
