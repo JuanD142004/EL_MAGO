@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('loads', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_UNIQUE');
-            $table->date('date');
-            $table->integer('routes_id')->index('fk_load_routes1_idx');
-            $table->integer('truck_types_id')->index('fk_load_truck_types1_idx');
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('role', 45)->nullable();
+            $table->rememberToken();
             $table->timestamps();
-
-            $table->primary(['id']);
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loads');
+        Schema::dropIfExists('users');
     }
 };

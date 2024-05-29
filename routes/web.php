@@ -56,7 +56,11 @@ Route::patch('/truck_type/{id}/update_status', [App\Http\Controllers\TruckTypeCo
   Route::resource('details_load', DetailsLoadController::class);
   Route::get('/details-loads', [DetailsLoadController::class, 'index'])->name('details-loads.index');
   Route::delete('/details_loads/{id}', [DetailsLoadController::class, 'destroy'])->name('details_loads.destroy');
+  Route::post('/details', 'DetailController@store')->name('details.store');
 
+
+  Route::get('/details-loads/crear', [DetailsLoadController::class, 'crear'])->name('details-loads.crear');
+  Route::get('details-loads/{id}', 'DetailsLoadController@show')->name('details-loads.show');
 
   Route::get('/loads/create', [LoadController::class, 'create'])->name('loads.create');
   Route::delete('/loads/{id}', [LoadController::class, 'destroy'])->name('loads.destroy');
@@ -66,6 +70,10 @@ Route::patch('/truck_type/{id}/update_status', [App\Http\Controllers\TruckTypeCo
   Route::get('/loads', [LoadController::class, 'index'])->name('loads.index');
   Route::patch('/loads/{load}', [LoadController::class, 'update'])->name('loads.update');
   Route::patch('/load/{id}/update_status', [LoadController::class, 'updateStatus'])->name('load.update_status');
+  Route::get('/loads/create/{loadId}', 'LoadController@create')->name('loads.create');
+  Route::get('loads/create/{loadId?}', 'LoadController@create')->name('loads.create');
+  
+
 
 
 

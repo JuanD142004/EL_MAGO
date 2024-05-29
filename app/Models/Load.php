@@ -35,33 +35,23 @@ class Load extends Model
     ];
 
     protected $dates = [
-        'date', // Asegúrate de incluir 'date' aquí
+        'date',
         'disabled_at',
     ];
 
-    protected $perPage = 20;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function route()
     {
         return $this->belongsTo(Route::class, 'routes_id', 'id');
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function truckType()
     {
         return $this->belongsTo(TruckType::class, 'truck_types_id', 'id');
     }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
     public function detailsLoads()
     {
         return $this->hasMany(DetailsLoad::class, 'loads_id', 'id');
     }
 }
+

@@ -20,8 +20,8 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('loads.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  <i class="fas fa-plus"></i>  {{ __('Create New') }}
+                                <a href="{{ route('loads.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
+                                  <i class="fas fa-plus"></i> {{ __('Create New') }}
                                 </a>
                             </div>
                         </div>
@@ -39,8 +39,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Date</th>
-                                        <th>Routes Id</th>
-                                        <th>Truck Types Id</th>
+                                        <th>Route Name</th>
+                                        <th>Truck Type</th>
                                         <th>Estado de la carga</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -50,7 +50,7 @@
                                         <tr>
                                             <td>{{ $load->id }}</td>
                                             <td>{{ $load->date }}</td>
-                                            <td>{{ $load->route->route_name  }}</td>
+                                            <td>{{ $load->route->route_name }}</td>
                                             <td>{{ $load->truckType->truck_brand }}</td>
                                             <td>
                                                 <form id="toggle-form-{{ $load->id }}" action="{{ route('load.update_status', $load) }}" method="POST">
@@ -63,13 +63,18 @@
                                                 </form>
                                             </td>
                                             <td>
-                                                <form action="{{ route('load.destroy',$load->id) }}" method="POST">
+                                                <form action="{{ route('load.destroy', $load->id) }}" method="POST">
                                                     @if($load->enabled)
-                                                        <a class="btn btn-sm btn-success" href="{{ route('load.edit',$load->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                        <a class="btn btn-sm btn-success" href="{{ route('load.edit', $load->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @else
                                                         <button type="button" class="btn btn-sm btn-success disabled" disabled><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</button>
-                                                     @endif
+                                                    @endif
                                                     @csrf
+                                                    @method('DELETE')
+                                                    <td>
+                                                         <a class="btn btn-sm btn-primary" href="{{ route('load.show', $load->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}</a>
+                                                    </td>
+
                                                 </form>
                                             </td>
                                         </tr>
@@ -79,63 +84,42 @@
                         </div>
                     </div>
                 </div>
-               
             </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    <!-- Incluye los estilos y scripts de DataTables desde el CDN oficial -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    
-    <!-- Otros scripts necesarios -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap5.min.js"></script>
 
-
-
-
-    
     <script>
-    $(document).ready(function() {
-                $('#myTable').DataTable({
-                    responsive: true,
-                    language: {
-                        "sProcessing":     "Procesando...",
-                        "sLengthMenu":     "Mostrar _MENU_ registros",
-                        "sZeroRecords":    "No se encontraron resultados",
-                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                        "sSearch":         "Buscar:",
-                        "oPaginate": {
-                            "sFirst":    "Primero",
-                            "sLast":     "Último",
-                            "sNext":     "Siguiente",
-                            "sPrevious": "Anterior"
-                        }
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
                     }
-                });
+                }
             });
-
+        });
 
         function toggleSaleStatus(loadId, status, loadDate) {
             var form = document.getElementById('toggle-form-' + loadId);
@@ -145,7 +129,7 @@
             var loadDateObject = new Date(loadDate);
 
             var differenceInMilliseconds = now - loadDateObject;
-            var differenceInHours = differenceInMilliseconds / (1000 * 60 * 60); // Convertir a horas
+            var differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
 
             if (differenceInHours >= 24 || loadDateObject < now.setHours(now.getHours() - 24)) {
                 Swal.fire({

@@ -22,8 +22,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DetailsLoad extends Model
 {
-    
-
     protected $perPage = 20;
 
     /**
@@ -33,13 +31,12 @@ class DetailsLoad extends Model
      */
     protected $fillable = ['amount', 'products_id', 'loads_id'];
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function loadDetails()
+    public function loadRelation()
     {
-        return $this->belongsTo(\App\Models\Load::class, 'loads_id', 'id');
+        return $this->belongsTo(Load::class, 'loads_id', 'id');
     }
     
     /**
@@ -47,8 +44,6 @@ class DetailsLoad extends Model
      */
     public function product()
     {
-        return $this->belongsTo(\App\Models\Product::class, 'products_id', 'id');
+        return $this->belongsTo(Product::class, 'products_id', 'id');
     }
-    
-
 }

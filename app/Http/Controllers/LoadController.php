@@ -5,119 +5,119 @@ namespace App\Http\Controllers;
 use App\Models\Load;
 use App\Models\Route;
 use App\Models\TruckType;
+use App\Models\DetailsLoad;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
-/**
- * Class LoadController
- * @package App\Http\Controllers
- */
 class LoadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $loads = Load::paginate();
+        $loads = Load::with('detailsLoads')->paginate();
 
         return view('load.index', compact('loads'))
             ->with('i', (request()->input('page', 1) - 1) * $loads->perPage());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        $currentLoad = Load::latest()->first(); 
         $load = new Load();
         $routes = Route::all();
         $truckTypes = TruckType::all();
+        $products = Product::all();
+        $detailsLoad = DetailsLoad::all(); 
 
-        return view('load.create', compact('load', 'routes', 'truckTypes'));
+        return view('load.create', compact('currentLoad', 'load', 'routes', 'truckTypes', 'detailsLoad', 'products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'date' => 'required|date',
-            'routes_id' => 'required|integer',
-            'truck_types_id' => 'required|integer',
-        ]);
+        try {
+            // Obtener los datos enviados desde el formulario
+            $data = $request->input('data');
 
-        $load = new Load();
-        $load->date = $request->input('date');
-        $load->routes_id = $request->input('routes_id');
-        $load->truck_types_id = $request->input('truck_types_id');
-        $load->enabled = true;
-        $load->disabled_at = now()->addHours(24);
+            // Crear una nueva venta
+            $load = new Load();
+            $load->id = $data['id'];
+            $load->date = $data['date'];
+            $load->routes_id = $data['routes_id'];
+            $load->truck_types_id = $data['truck_types_id'];
+            $load->enabled = true; // Marcar la venta como habilitada
+            $load->save();
 
-        $load->save();
+            // Recorrer y guardar los detalles de la venta en la base de datos
+            foreach ($data['detalles'] as $detalle) {
+                $detalleCarga = new DetailsLoad();
+                $detalleCarga->id = $detalle['id'];
+                $detalleCarga->amount = $detalle['amount'];
+                $detalleCarga->products_id = $detalle['products_id']; // Valor predeterminado de descuento
+                $detalleCarga->loads_id = $detalle['loads_id'];
+                $detalleCarga->load_id = $load->id; // Asociar el detalle con la venta creada
+                $detalleCarga->save();
+            }
 
-        return redirect()->route('loads.index')
-                         ->with('success', 'Carga creada exitosamente.');
+            // Retornar una respuesta de éxito
+            return redirect()->route('load.index')->with('success', 'Venta  creada exitosamente.');
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción que ocurra durante el proceso
+            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $load = Load::findOrFail($id);
-
-        return view('load.show', compact('load'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $load = Load::findOrFail($id);
         $routes = Route::all();
         $truckTypes = TruckType::all();
+        $detailsLoads = DetailsLoad::where('loads_id', $id)->get();
 
-        // Obtener la fecha y hora actuales
         $currentTime = now();
-
-        // Verificar si han pasado menos de 24 horas desde la creación
         $createdAt = $load->created_at;
         $differenceInHours = $currentTime->diffInHours($createdAt);
-
-        // Verificar si la fecha de la carga es anterior a la fecha y hora actuales
         $isPastDate = $load->date < $currentTime->format('Y-m-d');
 
-        // Verificar si han pasado 24 horas desde la creación o si la fecha de la carga es anterior a la fecha actual
         if ($differenceInHours >= 24 || $isPastDate) {
             return redirect()->route('loads.index')
                              ->with('error', 'No puedes editar esta carga porque han pasado más de 24 horas desde su registro o la fecha de la carga ya ha pasado.');
         }
 
-        return view('load.edit', compact('load', 'routes', 'truckTypes'));
+        return view('load.edit', compact('load', 'routes', 'truckTypes', 'detailsLoads'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Load $load)
     {
         $request->validate([
             'date' => 'required|date',
             'routes_id' => 'required|integer',
             'truck_types_id' => 'required|integer',
+            'details_loads' => 'required|array',
+            'details_loads.*.amount' => 'required|numeric',
+            'details_loads.*.products_id' => 'required|integer',
         ]);
+
+        foreach ($request->input('details_loads') as $key => $detail) {
+            $request->merge([
+                "details_loads.$key.amount" => is_array($detail['amount']) ? '' : (string)$detail['amount'],
+                "details_loads.$key.products_id" => is_array($detail['products_id']) ? '' : (string)$detail['products_id'],
+            ]);
+        }
 
         $load->update($request->all());
 
-        return redirect()->route('loads.index')
-                         ->with('success', 'Carga actualizada exitosamente.');
+        $load->detailsLoads()->delete();
+
+        foreach ($request->input('details_loads') as $detail) {
+            $detailLoad = new DetailsLoad();
+            $detailLoad->amount = $detail['amount'];
+            $detailLoad->products_id = $detail['products_id'];
+            $detailLoad->loads_id = $load->id;
+            $detailLoad->save();
+        }
+
+        return redirect()->route('loads.index')->with('success', 'Carga actualizada exitosamente.');
     }
 
-    /**
-     * Update the status of the load.
-     */
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
@@ -138,9 +138,6 @@ class LoadController extends Controller
         return redirect()->route('loads.index')->with('success', "La carga ha sido $action correctamente.");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         Load::findOrFail($id)->delete();
@@ -148,4 +145,14 @@ class LoadController extends Controller
         return redirect()->route('loads.index')
                          ->with('success', 'Carga eliminada exitosamente');
     }
+
+    public function show($id)
+{
+    $load = Load::findOrFail($id);
+    
+    return view('load.show', compact('load'));
 }
+
+}
+
+
