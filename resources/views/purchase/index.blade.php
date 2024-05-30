@@ -5,9 +5,35 @@ Purchase
 @endsection
 
 @section('content')
+<br>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/dataTables.bootstrap5.min.css">
+
+    <style>
+        .btn-dark-blue {
+            background-color: #004085; /* Azul oscuro personalizado */
+            border-color: #003768;     /* Bordes del mismo azul oscuro o un poco más oscuro */
+            color: #fff;               /* Texto blanco */
+        }
+
+        .btn-dark-blue:hover,
+        .btn-dark-blue:focus,
+        .btn-dark-blue:active {
+            background-color: #004085; /* Mantener el color al hacer hover, focus o active */
+            border-color: #003768;
+            color: #fff;               /* Mantener el color del texto */
+            opacity: 1;                /* Asegurar que no se aplique ningún cambio de opacidad */
+        }
+
+        .btn-dark-blue.disabled, 
+        .btn-dark-blue:disabled {
+            background-color: #004085; /* Mantener el color cuando está deshabilitado */
+            border-color: #003768;
+            opacity: 0.65; /* Opcional: un poco de transparencia para indicar deshabilitado */
+        }
+
+    </style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
@@ -66,12 +92,14 @@ Purchase
                                     <form class="frData" action="{{ route('purchase.destroy', $purchase->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-sm btn-primary {{ $purchase->disable ? 'disabled' : '' }}" href="{{ route('purchase.show', $purchase->id) }}">
+                                        <a class="btn btn-sm btn-dark-blue {{ $purchase->disable ? 'disabled' : '' }}" href="{{ route('purchase.show', $purchase->id) }}">
                                             <i class="bi bi-eye-fill"></i><span class="tooltiptext">Mostrar</span>
                                         </a>
-                                        <button type="submit" class="btn btn-danger btn-sm {{ $purchase->disable ? 'disabled' : '' }}">
+
+                                        <button type="submit" class="btn btn-sm {{ $purchase->disable ? 'btn-warning disabled' : 'btn-success' }}">
                                             <i class="bi bi-x-circle"></i><span class="tooltiptext">Anular</span>
                                         </button>
+
                                     </form>
                                 </td>
                             </tr>
@@ -81,7 +109,6 @@ Purchase
                 </div>
             </div>
         </div>
-        {!! $purchases->links() !!}
     </div>
 </div>
 
