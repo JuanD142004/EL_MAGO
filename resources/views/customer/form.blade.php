@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con Comic Sans MS</title>
+    <link href="https://fonts.bunny.net/css?family=Comic+Sans+MS" rel="stylesheet">
+    <style>
+        /* Aplicando la fuente Comic Sans MS a los elementos del formulario */
+        .form-label,
+        .form-control,
+        select {
+            font-family:  sans-serif;
+            font-size: 14px; /* Aumenta el tamaño de la fuente */
+        }
+    </style>
+</head>
+<body>
 <div class="row padding-1 p-1">
     
     <div class="col-md-12">
@@ -12,8 +30,8 @@
             {!! $errors->first('company_name', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="location" class="form-label">{{ __('Ubicación') }}</label>
-            <input type="text" name="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location', optional($customer)->location) }}" id="location" placeholder="Ubicación">
+            <label for="location" class="form-label">{{ __('Dirección') }}</label>
+            <input type="text" name="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location', optional($customer)->location) }}" id="location" placeholder="Dirección">
             {!! $errors->first('location', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
@@ -53,3 +71,5 @@
         
     </div>
 </div>
+</body>
+</html>

@@ -85,6 +85,20 @@ class CustomerController extends Controller
     return redirect()->route('customer.index')
         ->with('success', 'Cliente actualizado correctamente');
 }
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|boolean', // Asegura que 'status' sea un valor booleano
+    ]);
+
+    $customer = Customer::findOrFail($id);
+    $customer->enabled = $request->input('status');
+    $customer->save();
+
+    $action = $customer->enabled ? 'habilitado' : 'inhabilitado';
+
+    return redirect()->route('customer.index')->with('success', "El cliente ha sido $action correctamente.");
+}
 
 
     public function destroy($id)

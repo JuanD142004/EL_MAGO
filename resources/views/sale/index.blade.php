@@ -43,8 +43,8 @@ Venta
                   <th>Cliente</th>
                   <th>Total Precio</th>
                   <th>Método de Pago</th>
-                  <th class="d-print-none">Acciones</th>
-                  <th>Anular</th>
+                  <th>Mostrar</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,10 +55,11 @@ Venta
                   <td>{{ $sale->price_total }}</td>
                   <td>{{ $sale->payment_method }}</td>
                   <td class="d-print-none">
-                    <div class="btn-group" role="group" aria-label="Acciones">
-                      <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
-                        <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
-                      </a>
+                    <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
+                      <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
+                    </a>
+                  </td>
+                  <td>
                       @if($sale->enabled)
                       <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill btn-danger" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
                         <i class="fa fa-fw fa-ban"></i> {{ __('Anular') }}
@@ -73,7 +74,6 @@ Venta
                         @method('PUT')
                       </form>
                     </td>
-                  </td>
                 </tr>
                 @endforeach
               </tbody>
@@ -86,7 +86,6 @@ Venta
 </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
@@ -94,7 +93,6 @@ Venta
   <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
 
 <script>
