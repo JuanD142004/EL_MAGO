@@ -102,7 +102,7 @@
                                     <i class="fas fa-chevron-left"></i> {{ __("Atrás") }}
                                 </a>
                             </div>
-                        </form>
+
                     </div>
                 </div>
             </div>
@@ -114,57 +114,56 @@
                     <div class="box-body">
                         <h2>Formulario de Detalles de Venta</h2>
                         <!-- Segundo formulario como tabla -->
-                        <form id="detailsForm" action="{{ route('details_sale.store') }}" method="POST">
-                            @csrf
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID del Producto</th>
-                                            <th>Precio</th>
-                                            <th>Cantidad</th>
-                                            <th>Descuento</th>
-                                            <th>Total</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="selectedProductsBody">
-                                        <tr class="product-row-template">
-                                            <td>
-                                                {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto']) }}
-                                                {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
-                                            <td>
-                                                {{ Form::text('price_unit[]', null, ['class' => 'form-control price-unit', 'readonly' => 'readonly']) }}
-                                            </td>
-                                            <td>
-                                                {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, "")']) }}
-                                                {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
 
-                                            <td>
-                                                {{ Form::text('discount[]', null, ['class' => 'form-control discount', 'placeholder' => 'Descuento', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, "")']) }}
-                                                {!! $errors->first('discount', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
+                        @csrf
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID del Producto</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Descuento</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="selectedProductsBody">
+                                    <tr class="product-row-template">
+                                        <td>
+                                            {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto']) }}
+                                            {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
+                                        </td>
+                                        <td>
+                                            {{ Form::text('price_unit[]', null, ['class' => 'form-control price-unit', 'readonly' => 'readonly']) }}
+                                        </td>
+                                        <td>
+                                            {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, "")']) }}
+                                            {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
+                                        </td>
+                                        <td>
+                                            {{ Form::text('discount[]', null, ['class' => 'form-control discount', 'placeholder' => 'Descuento', 'oninput' => 'this.value = this.value.replace(/[^0-9]/g, "")']) }}
+                                            {!! $errors->first('discount', '<div class="invalid-feedback">:message</div>') !!}
+                                        </td>
+                                        <td>
+                                            {{ Form::text('total_price[]', null, ['class' => 'form-control total-price', 'readonly' => 'readonly']) }}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm remove-product-btn d-none">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
 
-                                            <td>
-                                                {{ Form::text('total_price[]', null, ['class' => 'form-control total-price', 'readonly' => 'readonly']) }}
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-sm remove-product-btn d-none">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box-footer mt20">
-                                <button type="button" class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
-                                <!-- <a class="btn btn-primary" href="{{ route('details_sale.index') }}">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer mt20">
+                            <button type="button" class="btn btn-primary" id="addProductBtn">Agregar Producto</button>
+                            <!-- <a class="btn btn-primary" href="{{ route('details_sale.index') }}">
                                     <i class="fas fa-chevron-left"></i> {{ __("Atrás") }}
                                 </a> -->
-                            </div>
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -339,24 +338,22 @@
         const initialRow = document.querySelector('.product-row-template');
         addRemoveButtonHandler(initialRow);
     });
-</script>
 
-
-
-<script>
     function enviarDetalles() {
         const detalles = [];
         const customerId = document.querySelector('select[name="customers_id"]').value;
-        const priceTotal = document.querySelector('input[name="price_total"]').value;
+        const priceTotal = document.querySelector('input[name="price_total"]').value.replace(/[^\d]/g, ''); // Remover formateo
         const paymentMethod = document.querySelector('select[name="payment_method"]').value;
 
-        document.querySelectorAll('#selectedProductsBody tr').forEach(function(detalle) {
-            const productId = detalle.querySelector('select[name^="products_id"]').value;
-            const amount = detalle.querySelector('input[name^="amount"]').value;
-            const discount = detalle.querySelector('input[name^="discount"]').value;
+        document.querySelectorAll('select[name^="products_id"]').forEach((select, index) => {
+            const productId = select.value;
+            const priceUnit = document.querySelectorAll('input[name^="price_unit"]')[index].value.replace(/[^\d]/g, ''); // Remover formateo
+            const amount = document.querySelectorAll('input[name^="amount"]')[index].value;
+            const discount = document.querySelectorAll('input[name^="discount"]')[index].value.replace(/[^\d]/g, ''); // Remover formateo
 
             detalles.push({
                 products_id: productId,
+                price_unit: priceUnit,
                 amount: amount,
                 discount: discount
             });
@@ -368,7 +365,8 @@
             payment_method: paymentMethod,
             detalles: detalles
         };
-        //  console.log(data)
+
+        // Perform the AJAX request
         $.ajax({
             type: "POST",
             url: "{{ route('sales.store') }}",
@@ -377,17 +375,16 @@
                 data: data
             },
             success: function(response) {
-                // Manejar la respuesta del servidor si es necesario
                 console.log(response);
+                window.location.href = "{{ route('sales.index') }}";
             },
             error: function(err) {
-                // Manejar errores si los hay
                 console.error(err);
             }
         });
-        window.location.href = "{{ route('sales.index') }}";
     }
 </script>
+
 </body>
 
 </html>

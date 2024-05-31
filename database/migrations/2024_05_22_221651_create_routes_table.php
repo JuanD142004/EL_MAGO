@@ -13,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('customers_id')->index('fk_sales_customers1_idx');
-            $table->string('price_total', 45);
-            $table->string('payment_method', 45);
+        
+        Schema::create('routes', function (Blueprint $table) {
+            $table->id();
+            $table->string('route_name');
+            $table->unsignedBigInteger('departament_id');
+            $table->text('municipalities'); // o $table->text('municipalities');
             $table->timestamps();
-            $table->tinyInteger('enabled')->nullable();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
+        
+        
     }
 
     /**
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('routes');
     }
 };

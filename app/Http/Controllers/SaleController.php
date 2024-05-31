@@ -55,7 +55,7 @@ class SaleController extends Controller
             // Crear una nueva venta
             $venta = new Sale();
             $venta->customers_id = $data['customers_id'];
-            $venta->price_total = $data['price_total'];
+            $venta->price_total = preg_replace('/[^\d]/', '', $data['price_total']); // Remover formateo
             $venta->payment_method = $data['payment_method'];
             $venta->enabled = true; // Marcar la venta como habilitada
             $venta->save();
@@ -64,6 +64,7 @@ class SaleController extends Controller
             foreach ($data['detalles'] as $detalle) {
                 $detalleVenta = new DetailsSale();
                 $detalleVenta->products_id = $detalle['products_id'];
+                $detalleVenta->price_unit = preg_replace('/[^\d]/', '', $detalle['price_unit']); // Remover formateo
                 $detalleVenta->amount = $detalle['amount'];
                 $detalleVenta->discount = $detalle['discount'] ?? 0; // Valor predeterminado de descuento
                 $detalleVenta->sales_id = $venta->id; // Asociar el detalle con la venta creada
@@ -71,12 +72,14 @@ class SaleController extends Controller
             }
 
             // Retornar una respuesta de éxito
-            return redirect()->route('sale.index')->with('success', 'Venta  creada exitosamente.');
+            return redirect()->route('sales.index')->with('success', 'Venta creada exitosamente.');
         } catch (\Exception $e) {
             // Manejar cualquier excepción que ocurra durante el proceso
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
+
+
 
     /**
      * Display the specified resource.

@@ -1,78 +1,277 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Título</title>
+    <title>Formulario de Carga</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 
-    <!-- Agrega el CSS de flatpickr -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .form-container {
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remove-product-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 32px;
+            width: 32px;
+            border: none;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-product-btn:hover {
+            background-color: #c82333;
+        }
+
+        .remove-product-btn i {
+            pointer-events: none;
+        }
+    </style>
 </head>
+
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-info padding-1">
+                    <div class="box-body">
+                        <h2>Formulario de Carga</h2>
+                        <form id="loadForm" method="POST">
+                            @csrf
+                            <td>
+                                <div class="form-group">
+                                    <label for="date">{{ __('Fecha') }}</label>
+                                    {{ Form::text('date', old('date', optional($load->date)->format('Y-m-d')), ['class' => 'form-control ' . ($errors->has('date') ? 'is-invalid' : ''), 'id' => 'date', 'placeholder' => 'Fecha']) }}
+                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </td>
 
-<div class="row padding-1 p-1">
-    <div class="col-md-12">
-        
-        <div class="form-group mb-2 mb20">
-            <label for="date" class="form-label">{{ __('Fecha') }}</label>
-            <input type="text" name="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date', optional($load)->date ? $load->date->format('Y-m-d') : '') }}" id="date" placeholder="Fecha">
-            {!! $errors->first('date', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="form-group mb-2 mb20">
-            <label for="products_id" class="form-label">{{ __('ID de Producto') }}</label>
-            <select name="products_id" class="form-control @error('products_id') is-invalid @enderror" id="products_id">
-                <option value="">Selecciona el producto</option>
-                    @foreach($products as $product)
-                <option value="{{ $product->id }}" {{ old('products_id', optional($load)->products_id) == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
-                    @endforeach
-            </select>
+                            <td>
+                                <div class="form-group">
+                                    <label for="routes_id">{{ __('ID de Ruta') }}</label>
+                                    {{ Form::select('routes_id', $routes->pluck('route_name', 'id'), old('routes_id', optional($load)->routes_id), ['class' => 'form-control ' . ($errors->has('routes_id') ? 'is-invalid' : ''), 'id' => 'routes_id', 'placeholder' => 'Selecciona la ruta']) }}
+                                    {!! $errors->first('routes_id', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </td>
 
-            {!! $errors->first('products_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="form-group mb-2 mb20">
-            <label for="amount" class="form-label">{{ __('Cantidad') }}</label>
-            <input type="text" name="amount" class="form-control @error('amount') is-invalid @enderror" value="{{ old('amount', $load?->amount) }}" id="amount" placeholder="Cantidad">
-            {!! $errors->first('amount', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="form-group mb-2 mb20">
-            <label for="routes_id" class="form-label">{{ __('ID de Ruta') }}</label>
-           <select name="routes_id" class="form-control @error('routes_id') is-invalid @enderror" id="routes_id">
-                <option value="">Selecciona la ruta</option>
-                    @foreach($routes as $route)
-                <option value="{{ $route->id }}" {{ old('routes_id', optional($load)->routes_id) == $route->id ? 'selected' : '' }}>{{ $route->route_name }}</option>
-                    @endforeach
-            </select>
-            {!! $errors->first('routes_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="form-group mb-2 mb20">
-            <label for="truck_types_id" class="form-label">{{ __('ID de Tipo de Camión') }}</label>
-           <select name="truck_types_id" class="form-control @error('truck_types_id') is-invalid @enderror" id="truck_types_id">
-                <option value="">Selecciona el tipo de camión</option>
-                    @foreach($truckTypes as $truckType)
-                <option value="{{ $truckType->id }}" {{ old('truck_types_id', $load->truck_types_id) == $truckType->id ? 'selected' : '' }}>
-                    {{ $truckType->truck_brand }}
-                </option>
-                     @endforeach
-            </select>
-            {!! $errors->first('truck_types_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
+                            <td>
+                                <div class="form-group">
+                                    <label for="truck_types_id">{{ __('ID de Tipo de Camión') }}</label>
+                                    {{ Form::select('truck_types_id', $truckTypes->pluck('truck_brand', 'id'), old('truck_types_id', optional($load)->truck_types_id), ['class' => 'form-control ' . ($errors->has('truck_types_id') ? 'is-invalid' : ''), 'id' => 'truck_types_id', 'placeholder' => 'Selecciona el tipo de camión']) }}
+                                    {!! $errors->first('truck_types_id', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </td>
 
+                            <div class="form-group btn-container">
+                                <button type="submit" class="btn btn-success">{{ __('Enviar') }}</button>
+                                <a href="{{ url()->previous() }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-arrow-left"></i> {{ __('Atrás') }}
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-container">
+                <div class="box box-info padding-1">
+                    <div class="box-body">
+                        <h2>Detalles de la Carga</h2>
+                        <form id="detailsForm">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __('Amount') }}</th>
+                                            <th>{{ __('ID de Producto') }}</th>
+                                            <th>{{ __('Acciones') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="productos">
+                                        <tr>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ Form::text('amount[]', old('amount'), ['class' => 'form-control ' . ($errors->has('amount') ? 'is-invalid' : ''), 'placeholder' => 'Amount']) }}
+                                                    {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), old('products_id'), ['class' => 'form-control ' . ($errors->has('products_id') ? 'is-invalid' : ''), 'placeholder' => 'Selecciona el producto']) }}
+                                                    {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm remove-product-btn d-none">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box-footer mt20">
+                                <button type="button" class="btn btn-primary" id="agregarProducto">Agregar Producto</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
-    </div>
-</div>
-<!-- Agrega el JavaScript de flatpickr -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<!-- Inicializa flatpickr -->
-<script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
     flatpickr('#date', {
-        dateFormat: 'Y-m-d', // Formato de fecha deseado
-        minDate: 'today', // Solo permite seleccionar a partir de hoy
-        maxDate: 'today', // Solo permite seleccionar hasta hoy
-        // Otros ajustes opcionales pueden ir aquí
+        dateFormat: 'Y-m-d',
+        defaultDate: 'today',
+        minDate: 'today',
+        allowInput: true,
+        clickOpens: true,
+        onClose: function(selectedDates, dateStr, instance) {
+            if (selectedDates.length && selectedDates[0].getDate() !== new Date().getDate()) {
+                instance.setDate('today', true);
+            }
+        }
     });
-</script>
 
-</body>
-</html>
+    document.getElementById('agregarProducto').addEventListener('click', function() {
+        const nuevaFila = document.createElement('tr');
+
+        nuevaFila.innerHTML = `
+            <td>
+                <div class="form-group">
+                    <input type="text" name="amount[]" class="form-control" placeholder="Amount">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <select name="products_id[]" class="form-control">
+                        @foreach ($products as $product)
+                            <option value="{{ $product->id }}">{{ $product->product_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm remove-product-btn">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        `;
+
+        document.querySelector('.productos').appendChild(nuevaFila);
+    });
+
+    document.querySelector('.productos').addEventListener('click', function(event) {
+        if (event.target.closest('.remove-product-btn')) {
+            event.target.closest('tr').remove();
+        }
+    });
+
+    document.querySelector('form[action="{{ route('loads.store') }}"]').addEventListener('submit', function(event) {
+        event.preventDefault();
+        enviarDetalles();
+    });
+
+    function enviarDetalles() {
+        const detalles = [];
+        const date = document.querySelector('input[name="date"]').value;
+        const routes_id = document.querySelector('select[name="routes_id"]').value;
+        const truck_types_id = document.querySelector('select[name="truck_types_id"]').value;
+
+        document.querySelectorAll('.productos tr').forEach(function(detalle) {
+            const amount = detalle.querySelector('input[name^="amount"]').value;
+            const products_id = detalle.querySelector('select[name^="products_id"]').value;
+
+            if (amount && products_id) {
+                detalles.push({
+                    amount: amount,
+                    products_id: products_id
+                });
+            }
+        });
+
+        const data = {
+            date: date,
+            routes_id: routes_id,
+            truck_types_id: truck_types_id,
+            detalles: detalles
+        };
+
+        fetch("{{ route('loads.store') }}", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(response => {
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: 'La carga se ha guardado correctamente.'
+                }).then(() => {
+                    window.location.href = "{{ route('loads.index') }}";
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.error || 'Hubo un problema al guardar la carga.'
+                });
+            }
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al guardar la carga.'
+            });
+            console.error(err);
+        });
+    }
+});
+
+    </script>
+   

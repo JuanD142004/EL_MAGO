@@ -23,8 +23,6 @@ class LoadRequest extends FormRequest
     {
         return [
 			'date' => 'required',
-			'products_id' => 'required',
-			'amount' => 'required|string',
 			'routes_id' => 'required',
 			'truck_types_id' => 'required',
         ];

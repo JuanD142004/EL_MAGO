@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('loads', function (Blueprint $table) {
+        Schema::create('truck_types', function (Blueprint $table) {
             $table->integer('id', true)->unique('id_UNIQUE');
-            $table->date('date');
-            $table->integer('routes_id')->index('fk_load_routes1_idx');
-            $table->integer('truck_types_id')->index('fk_load_truck_types1_idx');
+            $table->string('truck_brand', 45);
+            $table->string('plate', 10);
+            $table->string('ability', 45);
             $table->timestamps();
             $table->tinyInteger('enabled')->nullable();
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loads');
+        Schema::dropIfExists('truck_types');
     }
 };

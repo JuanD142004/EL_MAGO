@@ -40,12 +40,7 @@ class DetailsSale extends Model
      *
      * @var array
      */
-    protected $fillable = ['products_id','price_unit','amount','discount','sales_id','enabled'];
-
-    protected $attributes = [
-        'enabled' => true,
-    ];
-
+    protected $fillable = ['products_id', 'price_unit', 'amount', 'discount', 'sales_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -54,7 +49,7 @@ class DetailsSale extends Model
     {
         return $this->hasOne('App\Models\Product', 'id', 'products_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -62,6 +57,4 @@ class DetailsSale extends Model
     {
         return $this->hasOne('App\Models\Sale', 'id', 'sales_id');
     }
-    
-
 }
