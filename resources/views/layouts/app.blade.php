@@ -98,7 +98,7 @@
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" "text-dark" href="{{ route('supplier.index') }}">{{ __('Proveedores') }}</a>
                             <a class="dropdown-item" "text-dark" href="{{ route('employee.index') }}">{{ __('Empleados') }}</a>
-                            <a class="dropdown-item" "text-dark" href="{{ route('user.index') }}">{{ __('Usuarios') }}</a>
+                            {{--  <a class="dropdown-item" "text-dark" href="{{ route('user.index') }}">{{ __('Usuarios') }}</a>  --}}
                             <a class="dropdown-item" "text-dark" href="{{route('customer.index')}}">{{__('Clientes')}}</a>
                         </div>
                     </li>

@@ -27,7 +27,9 @@ class CustomerController extends Controller
             ->orWhereHas('route', function($query) use ($busqueda) {
                 $query->where('route_name', 'LIKE', '%' . $busqueda . '%');
             })
-            ->orderBy('id', 'asc')
+            ->orderBy('created_at', 'asc') // Luego los más recientes
+            ->orderBy('enabled', 'desc') // Los no anulados primero
+            
             ->paginate(10);
 
         // Pasar los datos a la vista

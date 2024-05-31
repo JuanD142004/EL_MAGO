@@ -21,19 +21,17 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
-        $purchases = Purchase::paginate(10000); // 10 es el número de elementos por página, puedes ajustarlo según tus necesidades
-        return view('purchase.index', compact('purchases'));
+        $search = $request->get('search', '');
 
-        $search = trim($request->get('search'));
-
-        // Cambiamos la consulta para cargar las compras con sus proveedores
         $purchases = Purchase::with('supplier')
             ->whereHas('supplier', function ($query) use ($search) {
                 $query->where('supplier_name', 'LIKE', '%' . $search . '%');
             })
-            ->paginate(10);
+            ->orderBy('disable', 'asc') // Los no anulados primero
+            ->orderBy('created_at', 'desc') // Luego los más recientes
+            ->paginate(10000);
 
-        return view('purchase.index', compact('purchases'))
+        return view('purchase.index', compact('purchases', 'search'))
             ->with('i', (request()->input('page', 1) - 1) * $purchases->perPage());
     }
 
@@ -95,11 +93,25 @@ class PurchaseController extends Controller
             }
 
             // Retornar una respuesta de éxito
-            return response()->json(['success' => true, 'message' => 'Compra registrada con éxito']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Ocurrió un error al registrar la compra', 'error' => $e->getMessage()], 500);
+            return redirect()->route('purchase.index')->with('success', 'Compra  creada exitosamente.');
+        } catch (\Exception $e){
+            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
+    // PurchaseController.php
+    public function toggleStatus(Request $request, $id)
+    {
+        try {
+            $purchase = Purchase::findOrFail($id);
+            $purchase->disable = !$purchase->disable;
+            $purchase->save();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+        }
+    }
+
 
     /**
      * Display the specified resource.
@@ -122,6 +134,7 @@ class PurchaseController extends Controller
         return view('purchase.edit', compact('purchase'));
     }
 
+
     /**
      * Update the specified resource in storage.
      */
@@ -132,6 +145,7 @@ class PurchaseController extends Controller
         return redirect()->route('purchase.index')
             ->with('success', 'Compra actualizada exitosamente');
     }
+
 
     public function destroy($id)
     {
@@ -149,3 +163,4 @@ class PurchaseController extends Controller
         return redirect()->route('purchases.index')->with('success', 'La compra ha sido anulada con éxito');
     }
 }
+
