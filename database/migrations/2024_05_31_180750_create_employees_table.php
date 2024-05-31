@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('users_id')->index('fk_employees_users1_idx');
-            $table->string('name', 45);
-            $table->string('surname', 45);
             $table->integer('document_number');
             $table->string('gender', 45);
             $table->string('civil_status', 45);

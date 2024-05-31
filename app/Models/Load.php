@@ -3,62 +3,54 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * Class Load
  *
- * @property $id
- * @property $date
- * @property $products_id
- * @property $amount
- * @property $routes_id
- * @property $truck_types_id
- * @property $created_at
- * @property $updated_at
+ * @property int $id
+ * @property string $date
+ * @property int $routes_id
+ * @property int $truck_types_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property bool $enabled
+ * @property Carbon|null $disabled_at
  *
- * @property Product $product
  * @property Route $route
  * @property TruckType $truckType
+ * @property DetailsLoad[] $detailsLoads
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Load extends Model
 {
-    
+    protected $fillable = [
+        'date', 'routes_id', 'truck_types_id', 'enabled', 'disabled_at'
+    ];
 
-    protected $perPage = 20;
+    protected $casts = [
+        'enabled' => 'boolean',
+        'disabled_at' => 'datetime',
+    ];
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['date', 'products_id', 'amount', 'routes_id', 'truck_types_id'];
+    protected $dates = [
+        'date',
+        'disabled_at',
+    ];
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function product()
-    {
-        return $this->belongsTo(\App\Models\Product::class, 'products_id', 'id');
-    }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function route()
     {
-        return $this->belongsTo(\App\Models\Route::class, 'routes_id', 'id');
+        return $this->belongsTo(Route::class, 'routes_id', 'id');
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function truckType()
     {
-        return $this->belongsTo(\App\Models\TruckType::class, 'truck_types_id', 'id');
+        return $this->belongsTo(TruckType::class, 'truck_types_id', 'id');
     }
-    
 
+    public function detailsLoads()
+    {
+        return $this->hasMany(DetailsLoad::class, 'loads_id', 'id');
+    }
 }

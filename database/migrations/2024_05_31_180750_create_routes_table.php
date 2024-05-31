@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        
         Schema::create('routes', function (Blueprint $table) {
-            $table->id();
-            $table->string('route_name');
-            $table->unsignedBigInteger('departament_id');
-            $table->text('municipalities'); // o $table->text('municipalities');
+            $table->integer('id', true)->unique('id_UNIQUE');
+            $table->string('route_name', 45);
+            $table->integer('departament_id')->index('fk_routes_departament1_idx');
+            $table->text('municipalities')->nullable();
             $table->timestamps();
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
+            $table->tinyInteger('enabled')->nullable();
+
+            $table->primary(['id']);
         });
-        
-        
     }
 
     /**

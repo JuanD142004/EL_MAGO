@@ -100,6 +100,7 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th>{{ __("Producto") }}</th>
+                                            <th>{{ __("Precio Unitario") }}</th>
                                             <th>{{ __("Cantidad") }}</th>
                                             <th>{{ __("Descuento") }}</th>
                                         </tr>
@@ -108,6 +109,7 @@
                                         @foreach($sale->detailsSales as $index => $detailsSale)
                                         <tr class="{{ $index % 2 === 0 ? 'even' : 'odd' }}">
                                             <td>{{ $detailsSale->product->product_name ?? 'N/A' }}</td>
+                                            <td>{{ $detailsSale->price_unit }}</td>
                                             <td>{{ $detailsSale->amount }}</td>
                                             <td>{{ $detailsSale->discount }}</td>
                                         </tr>
