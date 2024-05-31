@@ -1,212 +1,190 @@
 @extends('layouts.app')
 
 @section('template_title')
-Purchase
+    Purchase
 @endsection
 
 @section('content')
-<br>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/dataTables.bootstrap5.min.css">
+    <br>
+    <script>
+        window.csrfToken = '{{ csrf_token() }}';
+    </script>
+
+    <!-- CSS Dependencies -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         .btn-dark-blue {
-            background-color: #004085; /* Azul oscuro personalizado */
-            border-color: #003768;     /* Bordes del mismo azul oscuro o un poco más oscuro */
-            color: #fff;               /* Texto blanco */
+            background-color: #004085;
+            border-color: #003768;
+            color: #fff;
         }
 
         .btn-dark-blue:hover,
         .btn-dark-blue:focus,
         .btn-dark-blue:active {
-            background-color: #004085; /* Mantener el color al hacer hover, focus o active */
+            background-color: #004085;
             border-color: #003768;
-            color: #fff;               /* Mantener el color del texto */
-            opacity: 1;                /* Asegurar que no se aplique ningún cambio de opacidad */
+            color: #fff;
+            opacity: 1;
         }
 
         .btn-dark-blue.disabled, 
         .btn-dark-blue:disabled {
-            background-color: #004085; /* Mantener el color cuando está deshabilitado */
+            background-color: #004085;
             border-color: #003768;
-            opacity: 0.65; /* Opcional: un poco de transparencia para indicar deshabilitado */
+            opacity: 0.65;
         }
-
     </style>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span id="card_title">
-                            {{ __('Purchase') }}
-                        </span>
 
-                        <div class="float-right">
-                            <button name="boton_excel" class="btn btn-info btn-sm mr-2" onclick="exportToExcel()">
-                                <i class="fas fa-file-excel"></i> {{ __('Exportar a Excel') }}
-                            </button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span id="card_title">
+                                {{ __('Compras') }}
+                            </span>
 
-                            <button name="boton_imprimir" class="btn btn-info btn-sm d-print-none" type="button" onclick="printTable()">
-                                <i class="fas fa-print"></i> {{ __('Imprimir') }}
-                            </button>
-
-                            <a href="{{ route('purchase.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                {{ __('Create New') }}
-                            </a>
+                            <div class="float-right">
+                                <a href="{{ route('purchase.create') }}" class="btn btn-primary btn-sm float-right"
+                                    data-placement="left">
+                                    {{ __('Crear Nuevo') }}
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success m-4">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
                 </div>
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success m-4">
-                    <p>{{ $message }}</p>
-                </div>
-                @endif
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="myTable">
-                        <thead class="thead">
-                            <tr>
-                                <th>No</th>
-                                <th>Supplier</th>
-                                <th>Date</th>
-                                <th>Total Value</th>
-                                <th>Num Bill</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($purchases as $purchase)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $purchase->supplier->supplier_name }}</td>
-                                <td>{{ $purchase->date }}</td>
-                                <td>{{ $purchase->total_value }}</td>
-                                <td>{{ $purchase->num_bill }}</td>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="myTable">
+                            <thead class="thead">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Supplier</th>
+                                    <th>Date</th>
+                                    <th>Total Value</th>
+                                    <th>Num Bill</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($purchases as $purchase)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $purchase->supplier->supplier_name }}</td>
+                                        <td>{{ $purchase->date }}</td>
+                                        <td>{{ $purchase->total_value }}</td>
+                                        <td>{{ $purchase->num_bill }}</td>
+                                        <td>
+                                            <form id="form-anular-{{ $purchase->id }}" class="frData"
+                                                action="{{ route('purchase.destroy', $purchase->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a class="btn btn-sm btn-dark-blue"
+                                                    href="{{ route('purchase.show', $purchase->id) }}">
+                                                    <i class="bi bi-eye-fill"></i><span class="tooltiptext">Mostrar</span>
+                                                </a>
 
-
-                                <td>
-                                    <form class="frData" action="{{ route('purchase.destroy', $purchase->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a class="btn btn-sm btn-dark-blue {{ $purchase->disable ? 'disabled' : '' }}" href="{{ route('purchase.show', $purchase->id) }}">
-                                            <i class="bi bi-eye-fill"></i><span class="tooltiptext">Mostrar</span>
-                                        </a>
-
-                                        <button type="submit" class="btn btn-sm {{ $purchase->disable ? 'btn-warning disabled' : 'btn-success' }}">
-                                            <i class="bi bi-x-circle"></i><span class="tooltiptext">Anular</span>
-                                        </button>
-
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                <button id="toggle-button-{{ $purchase->id }}" type="button"
+                                                    class="btn btn-sm {{ $purchase->disable ? 'btn-warning disabled' : 'btn-success' }}"
+                                                    onclick="togglePurchaseStatus({{ $purchase->id }}, '{{ $purchase->disable }}')"
+                                                    {{ $purchase->disable ? 'disabled' : '' }}>
+                                                    <i class="bi bi-x-circle"></i>
+                                                    <span class="tooltiptext">{{ $purchase->disable ? 'Anulado' : 'Anular' }}</span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- XLSX JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable({
-            responsive: true,
-            language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sSearch": "Buscar:",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                responsive: true,
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
                 }
-            }
+            });
         });
-    });
 
-    function togglePurchaseStatus(purchaseId, currentStatus) {
-        // Confirmar con el usuario antes de realizar la acción
-        if (!confirm('¿Estás seguro de anular esta compra?')) {
-            return;
-        }
-        // Realizar una solicitud AJAX para actualizar el estado de la compra
-        $.ajax({
-            url: '/toggle-purchase-status/' + purchaseId,
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                current_status: currentStatus
-            },
-            success: function(response) {
-                // Si la solicitud es exitosa, actualizar el estado del botón y recargar la página si es necesario
-                if (response.success) {
-                    var button = document.getElementById('toggle-button-' + purchaseId);
-                    button.classList.remove('btn-danger');
-                    button.classList.add('btn-secondary');
-                    button.innerHTML = '<i class="fa fa-fw fa-times-circle"></i> Anulado';
-                    button.disabled = true;
-                    alert('La compra se ha anulado correctamente.');
-                } else {
-                    alert('Hubo un error al anular la compra.');
+        function togglePurchaseStatus(purchaseId, currentStatus) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Quieres anular esta compra?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, anular',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/toggle-purchase-status/' + purchaseId,
+                        type: 'POST',
+                        data: {
+                            _token: window.csrfToken,
+                            current_status: currentStatus
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire('Anulado', 'La compra se ha anulado correctamente.', 'success')
+                                .then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire('Error', 'Hubo un error al anular la compra.', 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            Swal.fire('Error', 'Error de servidor. Por favor, inténtalo de nuevo más tarde.', 'error');
+                        }
+                    });
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                alert('Error de servidor. Por favor, inténtalo de nuevo más tarde.');
-            }
-        });
-    }
-
-    function printTable() {
-        var printContents = document.getElementById("myTable").outerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
-
-    function exportToExcel() {
-        var currentDate = new Date();
-        var dateString = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-        var fileName = 'compras_' + dateString + '.xlsx';
-
-        var data = [];
-        var table = document.getElementById('myTable');
-        var rows = table.rows;
-        for (var i = 0; i < rows.length; i++) {
-            var rowData = [];
-            for (var j = 0; j < rows[i].cells.length - 1; j++) {
-                rowData.push(rows[i].cells[j].innerText);
-            }
-            data.push(rowData);
+            });
         }
-
-        var ws = XLSX.utils.aoa_to_sheet(data);
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet JS");
-        XLSX.writeFile(wb, fileName);
-    }
-</script>
+    </script>
 @endsection

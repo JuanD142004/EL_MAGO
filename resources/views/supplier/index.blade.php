@@ -75,11 +75,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($suppliers)<=0)
-                                    <tr>
-                                        <td colspan="8">No hay resultados</td>
-                                    </tr>
-                                    @else
                                     @foreach ($suppliers as $supplier)
                                     <tr>
                                         <td>{{ ++$i}}</td>
@@ -107,7 +102,6 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                    @endif
                                 </tbody>
                             </table>
                         </div>
