@@ -101,6 +101,7 @@ class PurchaseController extends Controller
     // PurchaseController.php
     public function toggleStatus(Request $request, $id)
     {
+        
         try {
             $purchase = Purchase::findOrFail($id);
             $purchase->disable = !$purchase->disable;
@@ -110,6 +111,11 @@ class PurchaseController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
+        $purchase = Purchase::findOrFail($id);
+        $purchase->disable = !$purchase->disable;
+        $purchase->save();
+
+        return response()->json(['success' => true]);
     }
 
 
