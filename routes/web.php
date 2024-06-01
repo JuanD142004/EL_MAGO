@@ -119,6 +119,7 @@ Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.
 Route::patch('/purchase/{purchase}/annul', [PurchaseController::class, 'annul'])->name('purchase.annul');
 Route::post('/toggle-purchase-status/{id}', 'PurchaseController@toggleStatus')->name('toggle.purchase.status');
 Route::post('/toggle-purchase-status/{id}', [PurchaseController::class, 'toggleStatus'])->name('purchase.toggleStatus');
+Route::post('/toggle-purchase-status/{id}', [PurchaseController::class, 'toggleStatus']);
 
 Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
 

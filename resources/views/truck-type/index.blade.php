@@ -87,11 +87,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(count($truckTypes) <= 0)
-                                    <tr>
-                                        <td colspan="6">No hay resultados</td>
-                                    </tr>
-                                @else
                                     @foreach ($truckTypes as $truckType)
                                         <tr>
                                             <td>{{ ++$i }}</td>
@@ -124,7 +119,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endif
                             </tbody>
                         </table>
                     </div>

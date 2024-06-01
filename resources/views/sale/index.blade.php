@@ -12,6 +12,29 @@ Venta
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 
+  <style>
+    .btn-dark-blue {
+            background-color: #004085;
+            border-color: #003768;
+            color: #fff;
+        }
+
+        .btn-dark-blue:hover,
+        .btn-dark-blue:focus,
+        .btn-dark-blue:active {
+            background-color: #004085;
+            border-color: #003768;
+            color: #fff;
+            opacity: 1;
+        }
+
+        .btn-dark-blue.enabled, 
+        .btn-dark-blue:enabled {
+            background-color: #004085;
+            border-color: #003768;
+            opacity: 0.65;
+        }
+  </style>
 
 
 
@@ -55,25 +78,25 @@ Venta
                   <td>{{ $sale->price_total }}</td>
                   <td>{{ $sale->payment_method }}</td>
                   <td class="d-print-none">
-                    <a class="btn btn-primary rounded-pill mr-2" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
-                      <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
-                    </a>
+                      <a class="btn btn-sm btn-dark-blue" href="{{ route('sales.show', $sale->id) }}" {{ $sale->enabled ? '' : 'disabled' }}>
+                          <i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}
+                      </a>
                   </td>
                   <td>
                       @if($sale->enabled)
-                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill btn-danger" onclick="toggleSaleStatus('{{ $sale->id }}', '{{ $sale->enabled }}')">
-                        <i class="fa fa-fw fa-ban"></i> {{ __('Anular') }}
-                      </button>
+                          <button type="button" id="toggle-button-{{ $sale->id }}" class="btn btn-sm btn-success" onclick="toggleSaleStatus('{{ $sale->id }}', {{ $sale->enabled ? 'false' : 'true' }})">
+                              <i class="fa fa-fw fa-ban"></i> {{ __('Anular') }}
+                          </button>
                       @else
-                      <button type="button" id="toggle-button-{{ $sale->id }}" class="btn rounded-pill btn-secondary" disabled>
-                        <i class="fa fa-fw fa-times-circle"></i> {{ __('Anulado') }}
-                      </button>
+                          <button type="button" id="toggle-button-{{ $sale->id }}" class="btn btn-sm btn-warning" disabled>
+                              <i class="fa fa-fw fa-times-circle"></i> {{ __('Anulado') }}
+                          </button>
                       @endif
                       <form id="toggle-form-{{ $sale->id }}" action="{{ route('sales.toggle', $sale->id) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('PUT')
+                          @csrf
+                          @method('PUT')
                       </form>
-                    </td>
+                  </td>
                 </tr>
                 @endforeach
               </tbody>
