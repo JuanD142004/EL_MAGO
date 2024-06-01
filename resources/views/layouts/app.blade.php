@@ -20,7 +20,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -123,7 +124,7 @@
                         <a class="nav-link text-white" href="{{ route('sale.index') }}"> <i class="fa-solid fa-sack-dollar"></i>{{__('Ventas')}}</a>
                     </li>  
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('purchase.index') }}"> <i class="fa-solid fa-sack-dollar"></i>{{__('Compras')}}</a>
+                        <a class="nav-link text-white" href="{{ route('purchase.index') }}"> <i class="fa-solid fa-money-bill-trend-up"></i>{{__('Compras')}}</a>
                     </li> 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><i class="bi bi-person-circle"></i>

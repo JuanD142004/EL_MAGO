@@ -44,7 +44,7 @@ class MunicipalityController extends Controller
     {
         Municipality::create($request->validated());
 
-        return redirect()->route('municipalities.index')
+        return redirect()->route('municipality.index')
             ->with('success', 'Municipality created successfully.');
     }
 

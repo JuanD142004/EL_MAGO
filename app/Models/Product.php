@@ -61,7 +61,7 @@ class Product extends Model
      */
     public function detailsSales()
     {
-        return $this->hasMany(\App\Models\DetailsSale::class, 'id', 'products_id');
+        return $this->hasMany('App\Models\DetailsSale','id', 'products_id');
     }
     
     /**

@@ -37,7 +37,7 @@ class DepartamentController extends Controller
     {
         Departament::create($request->validated());
 
-        return redirect()->route('departaments.index')
+        return redirect()->route('departament.index')
             ->with('success', 'Departament created successfully.');
     }
 
@@ -68,7 +68,7 @@ class DepartamentController extends Controller
     {
         $departament->update($request->validated());
 
-        return redirect()->route('departaments.index')
+        return redirect()->route('departament.index')
             ->with('success', 'Departament updated successfully');
     }
     
@@ -92,7 +92,7 @@ class DepartamentController extends Controller
     {
         Departament::find($id)->delete();
 
-        return redirect()->route('departaments.index')
+        return redirect()->route('departament.index')
             ->with('success', 'Departament deleted successfully');
     }
     
