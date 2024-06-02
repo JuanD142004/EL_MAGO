@@ -5,10 +5,34 @@
 @endsection
 
 @section('content')
+<br>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body{
+        background-image: url('/img/El_mago.jpg');
+        background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+        background-position: center; /* Centra la imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        background-attachment: fixed;
+        height: 100vh; /* Ajusta la altura al 100% de la ventana */
+        width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+        
+        overflow-x: hidden; /* Evita el desbordamiento horizontal */
+    }
+
+
+    .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -16,12 +40,12 @@
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span id="card_title">
-                                {{ __('Load') }}
+                                {{ __('Carga') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('loads.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                  <i class="fas fa-plus"></i> {{ __('Create New') }}
+                                <a href="{{ route('loads.create') }}" class="btn btn-dark text-white btn-sm float-right" data-placement="left">
+                                  <i class="fas fa-plus"></i> {{ __('Crear Nuevo') }}
                                 </a>
                             </div>
                         </div>
@@ -43,6 +67,7 @@
                                         <th>Truck Type</th>
                                         <th>Estado de la carga</th>
                                         <th>Acciones</th>
+                                        <th>Mostrar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,13 +115,14 @@
 @endsection
 
 @section('scripts')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
 
     <script>
         $(document).ready(function() {

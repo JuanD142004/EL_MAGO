@@ -142,9 +142,10 @@
                 </div>
             </div>
         </div>
-        <div class="box-footer mt20">
+        <br>
+        <div class="form-group btn-container">
             <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
-            <a href="{{ route('employee.index') }}" class="btn btn-primary">{{ __('Volver') }}</a>
+            <a href="{{ route('employee.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> {{ __('Volver') }}</a>
         </div>
     </div>
 

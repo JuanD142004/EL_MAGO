@@ -1,3 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario en Dos Filas</title>
+    <style>
+        body {
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-container .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box-footer {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-container .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box-footer {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body></body>
 <div class="box box-info padding-1">
     <div class="box-body">
         
@@ -12,25 +74,26 @@
             {!! $errors->first('supplier_name', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="cell_phone">{{ __('Cell Phone') }}</label>
-            <input type="text" name="cell_phone" class="form-control @error('cell_phone') is-invalid @enderror" value="{{ old('cell_phone', $supplier->cell_phone) }}" id="cell_phone" placeholder="Cell Phone">
+            <label for="cell_phone">{{ __('Telefono') }}</label>
+            <input type="text" name="cell_phone" class="form-control @error('cell_phone') is-invalid @enderror" value="{{ old('cell_phone', $supplier->cell_phone) }}" id="cell_phone" placeholder="Telefono">
             {!! $errors->first('cell_phone', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="mail">{{ __('Mail') }}</label>
+            <label for="mail">{{ __('Correo Electronico') }}</label>
             <input type="text" name="mail" class="form-control @error('mail') is-invalid @enderror" value="{{ old('mail', $supplier->mail) }}" id="mail" placeholder="Mail">
             {!! $errors->first('mail', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="address">{{ __('Address') }}</label>
-            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $supplier->address) }}" id="address" placeholder="Address">
+            <label for="address">{{ __('Direccion') }}</label>
+            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $supplier->address) }}" id="address" placeholder="Ubicacion y direccion">
             {!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 <br>
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
-        <a href="{{ route('supplier.index') }}" class="btn btn-primary">{{ __('Volver') }}</a>
+    <div class="form-group btn-container">
+        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+        <a href="{{ route('supplier.index') }}" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> {{ __('Volver') }}</a>
 
     </div>
 </div>
+</body>

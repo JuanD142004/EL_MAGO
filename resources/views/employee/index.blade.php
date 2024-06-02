@@ -19,6 +19,7 @@
         background-attachment: fixed;
         height: 100vh; /* Ajusta la altura al 100% de la ventana */
         width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+        overflow-x: hidden; /* Evita el desbordamiento horizontal */
     }
 
 
@@ -29,6 +30,27 @@
 
         .table {
             background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
+        .btn-dark-blue {
+            background-color: #004085;
+            border-color: #003768;
+            color: #fff;
+        }
+
+        .btn-dark-blue:hover,
+        .btn-dark-blue:focus,
+        .btn-dark-blue:active {
+            background-color: #004085;
+            border-color: #003768;
+            color: #fff;
+            opacity: 1;
+        }
+
+        .btn-dark-blue.enabled, 
+        .btn-dark-blue:enabled {
+            background-color: #004085;
+            border-color: #003768;
+            opacity: 0.65;
         }
     </style>
 <body>
@@ -105,9 +127,9 @@
                                             </td>
                                             <td>
                                                 @if ($employee->enabled)
-                                                    <a class="btn btn-sm btn-success" href="{{ route('employee.show', $employee->id) }}"><i class="bi bi-eye"></i>  {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-dark-blue" href="{{ route('employee.show', $employee->id) }}"><i class="fa fa-fw fa-eye"></i>  {{ __('Mostrar') }}</a>
                                                 @else
-                                                    <button class="btn btn-sm btn-success" disabled><i class="bi bi-eye"></i> {{ __('Mostrar') }}</button>
+                                                    <button class="btn btn-sm btn-dark-blue" disabled><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</button>
                                                 @endif
                                             </td>
                                         </tr>

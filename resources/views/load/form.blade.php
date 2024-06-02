@@ -97,7 +97,7 @@
                             <div class="form-group btn-container">
                                 <button type="submit" class="btn btn-success">{{ __('Enviar') }}</button>
                                 <a href="{{ url()->previous() }}" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-arrow-left"></i> {{ __('Atrás') }}
+                                    <i class="fas fa-arrow-left"></i> {{ __('Volver') }}
                                 </a>
                             </div>
                         </form>

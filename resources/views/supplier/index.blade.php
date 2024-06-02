@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Supplier
+    Proveedores
 @endsection
 
 @section('content')
 <br>
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
@@ -22,11 +23,13 @@
         background-attachment: fixed;
         height: 100vh; /* Ajusta la altura al 100% de la ventana */
         width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+        
+        overflow-x: hidden; /* Evita el desbordamiento horizontal */
     }
 
 
     .card {
-            background-color: rgba(255, 255, 255, 0.6); /* Fondo blanco con 80% de opacidad */
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con 80% de opacidad */
             border: none; /* Sin bordes para la tarjeta */
         }
 

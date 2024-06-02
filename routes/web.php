@@ -77,12 +77,14 @@ Route::resource('route', RouteController::class);
 Route::patch('/route/disable/{id}', [RouteController::class, 'disable'])->name('route.disable');
 Route::patch('/route/enable/{id}', [RouteController::class, 'enable'])->name('route.enable');
 Route::patch('/route/{id}/update_status', [RouteController::class, 'updateStatus'])->name('route.update_status');
+Route::post('/route/update-status/{id}', [RouteController::class, 'updateStatus'])->name('update_status');
+
 
 // Rutas para empleados
 Route::resource('employee', EmployeeController::class);
 Route::patch('/employee/disable/{id}', [EmployeeController::class, 'disable'])->name('employee.disable');
 Route::patch('/employee/enable/{id}', [EmployeeController::class, 'enable'])->name('employee.enable');
-Route::patch('/employee/{id}/update_status', [EmployeeController::class, 'updateStatus'])->name('employee.update_status');
+Route::patch('/employee/{id}/update_status', [EmployeeController::class, 'updateStatus' ])->name('employee.update_status');
 Route::get('/employee/{id}', [EmployeeController::class, 'show'])->name('employee.show');
 
 // Rutas para cargas
@@ -96,7 +98,7 @@ Route::get('/loads/{id}/edit', [LoadController::class, 'edit'])->name('loads.edi
 Route::post('/loads', [LoadController::class, 'store'])->name('loads.store');
 Route::get('/loads', [LoadController::class, 'index'])->name('loads.index');
 Route::patch('/loads/{load}', [LoadController::class, 'update'])->name('loads.update');
-Route::patch('/load/{id}/update_status', [LoadController::class, 'updateStatus'])->name('load.update_status');
+Route::patch('/loads/{id}/update_status', [LoadController::class, 'updateStatus'])->name('load.update_status');
 
 // Rutas para ventas y detalles de ventas
 Route::put('/sales/{sale}/toggle', [SaleController::class, 'toggle'])->name('sales.toggle');
