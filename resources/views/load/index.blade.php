@@ -27,15 +27,13 @@
         background-attachment: fixed;
         height: 100vh; /* Ajusta la altura al 100% de la ventana */
         width: 100vw; /* Ajusta el ancho al 100% de la ventana */
-        
         overflow-x: hidden; /* Evita el desbordamiento horizontal */
     }
 
-
     .card {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con 80% de opacidad */
-            border: none; /* Sin bordes para la tarjeta */
-        }
+        background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con 80% de opacidad */
+        border: none; /* Sin bordes para la tarjeta */
+    }
 
         .table {
             background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
