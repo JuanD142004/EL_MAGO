@@ -8,6 +8,26 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        body{
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed;
+            height: 100vh; /* Ajusta la altura al 100% de la ventana */
+            width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
+
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
         .form-container {
             margin: auto;
             margin-top: 20px;

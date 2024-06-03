@@ -13,6 +13,26 @@ Venta
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 
   <style>
+    body{
+      background-image: url('/img/El_mago.jpg');
+      background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+      background-position: center; /* Centra la imagen */
+      background-repeat: no-repeat; /* Evita que la imagen se repita */
+      background-attachment: fixed;
+      height: 100vh; /* Ajusta la altura al 100% de la ventana */
+      width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+      overflow-x: hidden; /* Evita el desbordamiento horizontal */
+      }
+
+
+      .card {
+          background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+          border: none; /* Sin bordes para la tarjeta */
+      }
+
+      .table {
+          background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+      }
     .btn-dark-blue {
             background-color: #004085;
             border-color: #003768;
@@ -46,7 +66,7 @@ Venta
           <div class="d-flex justify-content-between align-items-center">
             <span id="card_title">{{ __('Ventas') }}</span>
             <div class="float-right">
-              <a href="{{ route('sales.create') }}" class="btn btn-primary btn-sm ml-2 d-print-none" data-placement="left">
+              <a href="{{ route('sales.create') }}" class="btn btn-dark text-white btn-sm float-right" data-placement="left">
                 <i class="fas fa-plus"></i> {{ __('Crear Nuevo') }}
               </a>
             </div>

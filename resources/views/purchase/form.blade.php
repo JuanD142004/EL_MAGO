@@ -8,6 +8,30 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        body{
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed;
+            height: 100vh; /* Ajusta la altura al 100% de la ventana */
+            width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
+        .container{
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
         .form-container {
             margin: auto;
             margin-top: 20px;
@@ -103,64 +127,60 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
+    
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12 form-container">
-                <div class="box box-info padding-1">
-                    <div class="box-body">
-                        <h2>Formulario de Detalles de Compras</h2>
-                        <form id="detailsForm">
-                            @csrf
-                            <div class="table-responsive">
-                                <table class="table" id="detalle-table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID del Producto</th>
-                                            <th>Lote</th>
-                                            <th>Cantidad</th>
-                                            <th>Valor Unitario</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="selectedProductsBody">
-                                        <tr class="product-row-template">
-                                            <td>
-                                                {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto']) }}
-                                                {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
-                                            <td>
-                                                {{ Form::text('purchase_lot[]', null, ['class' => 'form-control purchase-lot', 'placeholder' => 'Lote']) }}
-                                                {!! $errors->first('purchase_lot', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
-                                            <td>
-                                                {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad']) }}
-                                                {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
-                                            <td>
-                                                {{ Form::text('unit_value[]', null, ['class' => 'form-control unit-value', 'placeholder' => 'Valor Unitario']) }}
-                                                {!! $errors->first('unit_value', '<div class="invalid-feedback">:message</div>') !!}
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger eliminar-detalle" onclick="eliminarDetalle(this)"><i class="fas fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box-footer mt20">
-                                <button type="button" class="btn btn-primary" id="agregarDetalle">Agregar Producto</button>
-                            </div>
-                        </form>
+            <div class="row">
+                <div class="col-12 form-container">
+                    <div class="box box-info padding-1">
+                        <div class="box-body">
+                            <h2>Formulario de Detalles de Compras</h2>
+                            <form id="detailsForm">
+                                @csrf
+                                <div class="table-responsive">
+                                    <table class="table" id="detalle-table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID del Producto</th>
+                                                <th>Lote</th>
+                                                <th>Cantidad</th>
+                                                <th>Valor Unitario</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="selectedProductsBody">
+                                            <tr class="product-row-template">
+                                                <td>
+                                                    {{ Form::select('products_id[]', $products->pluck('product_name', 'id'), null, ['class' => 'form-control products-id', 'placeholder' => 'Selecciona un producto']) }}
+                                                    {!! $errors->first('products_id', '<div class="invalid-feedback">:message</div>') !!}
+                                                </td>
+                                                <td>
+                                                    {{ Form::text('purchase_lot[]', null, ['class' => 'form-control purchase-lot', 'placeholder' => 'Lote']) }}
+                                                    {!! $errors->first('purchase_lot', '<div class="invalid-feedback">:message</div>') !!}
+                                                </td>
+                                                <td>
+                                                    {{ Form::text('amount[]', null, ['class' => 'form-control amount', 'placeholder' => 'Cantidad']) }}
+                                                    {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
+                                                </td>
+                                                <td>
+                                                    {{ Form::text('unit_value[]', null, ['class' => 'form-control unit-value', 'placeholder' => 'Valor Unitario']) }}
+                                                    {!! $errors->first('unit_value', '<div class="invalid-feedback">:message</div>') !!}
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger eliminar-detalle" onclick="eliminarDetalle(this)"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="box-footer mt20">
+                                    <button type="button" class="btn btn-primary" id="agregarDetalle">Agregar Producto</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
