@@ -54,8 +54,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <h4 class="m-0">{{ __('Show') }} Load</h4>
-                    <a class="btn btn-dark btn-sm" href="{{ route('loads.index') }}"> {{ __('Back') }}</a>
+                    <h4 class="m-0">{{ __('Detalle') }} De carga</h4>
+                    <a class="btn btn-dark btn-sm" href="{{ route('loads.index') }}" style="background-color: #00008B;"><i class="fas fa-arrow-left"></i> {{ __('Volver') }}</a>
                 </div>
 
                 <div class="card-body bg-white">

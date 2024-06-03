@@ -6,17 +6,14 @@
 
 @section('content')
     <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-8">
 
                 <div class="card card-default">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="card-title">{{ __('Editar') }} Tipo de Camión</span>
-                             <div>
-            <a href="{{ url()->previous() }}" class="btn btn-default btn-sm" style="background-color: #007bff; color: #fff;"><i class="fas fa-arrow-left"></i> {{ __('Atrás') }}</a>
-        </div>
-                           
+                             
                         </div>
                     </div>
                     <div class="card-body bg-white">

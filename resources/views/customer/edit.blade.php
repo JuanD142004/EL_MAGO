@@ -5,16 +5,15 @@
 @endsection
 
 @section('content')
+<br>
     <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-8">
                 <div class="card card-default">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center"> <!-- Modificado aquí -->
                             <span class="card-title">{{ __('Editar') }} Cliente</span>
-                            <div>
-                                <a href="{{ url()->previous() }}" class="btn btn-default btn-sm" style="background-color: #007bff; color: #fff;"><i class="fas fa-arrow-left"></i> {{ __('Atrás') }}</a>
-                            </div>
+                            
                         </div> <!-- Modificado aquí -->
                     </div>
                     <div class="card-body bg-white">

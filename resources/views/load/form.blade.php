@@ -10,6 +10,43 @@
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 
     <style>
+        body {
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
+         .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-container .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box-footer {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        
         .form-container {
             margin: auto;
             margin-top: 20px;
@@ -64,7 +101,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="box box-info padding-1">
                     <div class="box-body">
                         <h2>Formulario de Carga</h2>
@@ -80,7 +117,7 @@
 
                             <td>
                                 <div class="form-group">
-                                    <label for="routes_id">{{ __('ID de Ruta') }}</label>
+                                    <label for="routes_id">{{ __('Ruta') }}</label>
                                     {{ Form::select('routes_id', $routes->pluck('route_name', 'id'), old('routes_id', optional($load)->routes_id), ['class' => 'form-control ' . ($errors->has('routes_id') ? 'is-invalid' : ''), 'id' => 'routes_id', 'placeholder' => 'Selecciona la ruta']) }}
                                     {!! $errors->first('routes_id', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
@@ -88,7 +125,7 @@
 
                             <td>
                                 <div class="form-group">
-                                    <label for="truck_types_id">{{ __('ID de Tipo de Camión') }}</label>
+                                    <label for="truck_types_id">{{ __('Tipo de Camión') }}</label>
                                     {{ Form::select('truck_types_id', $truckTypes->pluck('truck_brand', 'id'), old('truck_types_id', optional($load)->truck_types_id), ['class' => 'form-control ' . ($errors->has('truck_types_id') ? 'is-invalid' : ''), 'id' => 'truck_types_id', 'placeholder' => 'Selecciona el tipo de camión']) }}
                                     {!! $errors->first('truck_types_id', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
@@ -115,7 +152,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>{{ __('Amount') }}</th>
+                                            <th>{{ __('Cantidad') }}</th>
                                             <th>{{ __('ID de Producto') }}</th>
                                             <th>{{ __('Acciones') }}</th>
                                         </tr>
@@ -124,7 +161,7 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    {{ Form::text('amount[]', old('amount'), ['class' => 'form-control ' . ($errors->has('amount') ? 'is-invalid' : ''), 'placeholder' => 'Amount']) }}
+                                                    {{ Form::text('amount[]', old('amount'), ['class' => 'form-control ' . ($errors->has('amount') ? 'is-invalid' : ''), 'placeholder' => 'Cantidad']) }}
                                                     {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
                                                 </div>
                                             </td>

@@ -6,11 +6,34 @@
 
 
 @section('content')
-<!-- CSS Dependencies -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+
+    <style>
+        body{
+        background-image: url('/img/El_mago.jpg');
+        background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+        background-position: center; /* Centra la imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        background-attachment: fixed;
+        height: 100vh; /* Ajusta la altura al 100% de la ventana */
+        width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+        overflow-x: hidden; /* Evita el desbordamiento horizontal */
+    }
+
+
+    .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
+    </style>
 <br>
     <div class="container-fluid">
         <div class="row">
@@ -22,7 +45,7 @@
                                 {{ __('Clientes') }}
                             </span>
                             <div class="float-right">
-                                <a href="{{ route('customer.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('customer.create') }}" class="btn btn-dark text-white btn-sm float-right"  data-placement="left">
                                   <i class="fas fa-plus"></i>  {{ __('Crear Cliente') }}
                                 </a>
                             </div>
@@ -33,9 +56,9 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <div class="card-body bg-white">
+                    <div class="card-body">
                         <div class="table-responsive">
-                            <table  id="myTable" class="table table-striped table-hover">
+                            <table class="table table-striped table-hover" id="myTable" style="width:100%">
 
                                 <thead class="thead">
                                     <tr>
@@ -104,7 +127,8 @@
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>  
+
 
 
 

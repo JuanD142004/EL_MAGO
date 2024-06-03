@@ -69,6 +69,10 @@ class LoadController extends Controller
         $routes = Route::all();
         $truckTypes = TruckType::all();
         $detailsLoads = DetailsLoad::where('loads_id', $id)->get();
+        $products = Product::all(); // Asegúrate de importar el modelo Product y obtener todos los productos
+
+         // Obtener los IDs de los productos que ya están asociados a esta carga
+        $selectedProductIds = $detailsLoads->pluck('products_id')->toArray();
 
         $currentTime = now();
         $createdAt = $load->created_at;
@@ -80,7 +84,7 @@ class LoadController extends Controller
                 ->with('error', 'No puedes editar esta carga porque han pasado más de 24 horas desde su registro o la fecha de la carga ya ha pasado.');
         }
 
-        return view('load.edit', compact('load', 'routes', 'truckTypes', 'detailsLoads'));
+        return view('load.edit', compact('load', 'routes', 'truckTypes', 'detailsLoads', 'products'));
     }
 
     public function update(Request $request, Load $load)
@@ -132,6 +136,8 @@ class LoadController extends Controller
         $load->save();
 
         $action = $load->enabled ? 'habilitado' : 'inhabilitado';
+        $load->enabled = $request->status;
+        $load->save();
 
         return redirect()->route('loads.index')->with('success', "La carga ha sido $action correctamente.");
     }

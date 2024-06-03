@@ -35,7 +35,7 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-10 mx-auto">
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -65,9 +65,9 @@
                                         <th>Date</th>
                                         <th>Route Name</th>
                                         <th>Truck Type</th>
-                                        <th>Estado de la carga</th>
-                                        <th>Acciones</th>
                                         <th>Mostrar</th>
+                                        <th>Estado de la carga</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,14 +78,18 @@
                                             <td>{{ $load->route->route_name }}</td>
                                             <td>{{ $load->truckType->truck_brand }}</td>
                                             <td>
+                                                         <a class="btn btn-sm btn-primary" href="{{ route('load.show', $load->id) }}" style="background-color: #004085; border-color: #003768;" ><i class="fa fa-fw fa-eye"></i> {{ __('Mostar') }}</a>
+                                                    </td>
+                                            <td>
                                                 <form id="toggle-form-{{ $load->id }}" action="{{ route('load.update_status', $load) }}" method="POST">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="button" class="btn btn-sm {{ $load->enabled ? 'btn-warning' : 'btn-success' }}" onclick="toggleSaleStatus({{ $load->id }}, {{ $load->enabled ? 0 : 1 }}, '{{ $load->date }}')">
+                                                    <button type="submit" class="btn btn-sm {{ $load->enabled ? 'btn-warning' : 'btn-success' }}">
                                                         <i class="fa fa-fw {{ $load->enabled ? 'fa-times' : 'fa-check' }}"></i> {{ $load->enabled ? 'Inhabilitar' : 'Habilitar' }}
                                                     </button>
                                                     <input type="hidden" name="status" value="{{ $load->enabled ? 0 : 1 }}">
                                                 </form>
+
                                             </td>
                                             <td>
                                                 <form action="{{ route('load.destroy', $load->id) }}" method="POST">
@@ -96,9 +100,7 @@
                                                     @endif
                                                     @csrf
                                                     @method('DELETE')
-                                                    <td>
-                                                         <a class="btn btn-sm btn-primary" href="{{ route('load.show', $load->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}</a>
-                                                    </td>
+                                                    
 
                                                 </form>
                                             </td>
