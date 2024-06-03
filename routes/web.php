@@ -71,12 +71,18 @@ Route::patch('/departament/{id}/update_status', [DepartamentController::class, '
 // Rutas para los municipios
 Route::resource('municipality', MunicipalityController::class);
 
-// Rutas para rutas
-Route::get('/route/create/departament/{departament}/municipalities', [DepartamentController::class, 'municipalities']);
+//Rutas para Ruta
+Route::get('/route/create/departament/{departament}/municipalities', [App\Http\Controllers\DepartamentController::class, 'municipalities']);
+// Ruta para inhabilitar la ruta
+Route::patch('/route/disable/{id}', [App\Http\Controllers\RouteController::class, 'disable'])->name('route.disable');
+
+// Ruta para habilitar un tipo ruta
+Route::patch('/route/enable/{id}', [App\Http\Controllers\RouteController::class, 'enable'])->name('route.enable');
+// Ruta para actualizar el estado de la ruta
+Route::patch('/route/{id}/update_status', [App\Http\Controllers\RouteController::class, 'updateStatus'])->name('update_status');
+// web.php
+Route::patch('route/update_status/{id}', [RouteController::class, 'updateStatus'])->name('update_status');
 Route::resource('route', RouteController::class);
-Route::patch('/route/disable/{id}', [RouteController::class, 'disable'])->name('route.disable');
-Route::patch('/route/enable/{id}', [RouteController::class, 'enable'])->name('route.enable');
-Route::patch('/route/{id}/update_status', [RouteController::class, 'updateStatus'])->name('route.update_status');
 
 // Rutas para empleados
 Route::resource('employee', EmployeeController::class);
@@ -122,8 +128,6 @@ Route::post('/toggle-purchase-status/{id}', [PurchaseController::class, 'toggleS
 Route::post('/toggle-purchase-status/{id}', [PurchaseController::class, 'toggleStatus']);
 
 Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
-
-
 
 
 

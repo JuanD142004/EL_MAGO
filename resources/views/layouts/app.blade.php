@@ -116,7 +116,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" text-dark" href="{{ route('route.index') }}">{{ __('Generar Rutas') }}</a>
-                            <a class="dropdown-item" text-dark" href="{{ route('departament.index') }}">{{ __('Departamentos') }}</a>
+                            <a class="dropdown-item" "text-dark" href="{{ route('departament.index') }}">{{ __('Departamentos') }}</a>
                             <a class="dropdown-item" text-dark" href="{{ route('municipality.index') }}">{{ __('Municipios') }}</a>
                         </div>
                     </li> 

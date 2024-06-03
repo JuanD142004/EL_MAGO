@@ -11,27 +11,9 @@
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<style>
-    body{
-    background-image: url('/img/imagenproductos.png');
-    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-attachment: fixed;
-    height: 100vh; /* Ajusta la altura al 100% de la ventana */
-    width: 100vw; /* Ajusta el ancho al 100% de la ventana */
-}
 
-.card {
-    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
-    border: none; /* Sin bordes para la tarjeta */
-}
-
-.table {
-    background-color: rgba(255, 255, 255, 0.5) !important; /* Fondo blanco con 50% de opacidad */
-}
-
-</style>
+<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 <body>
 <div class="container-fluid">
    <div class="row">
@@ -119,13 +101,21 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js" defer></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" defer></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js" defer></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js" defer></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js" defer></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
 
 
@@ -156,7 +146,39 @@ $(document).ready(function() {
                 "copy": "Copiar",
                 "colvis": "Visibilidad"
             }
-        }
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copy',
+                text: '<i class="fas fa-copy"></i> Copiar',
+                className: 'btn btn-primary',
+                title: 'Productos'
+            },
+            {
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                className: 'btn btn-success',
+                title: 'Productos'
+            },
+            {
+                extend: 'pdf',
+                text: '<i class="fas fa-file-pdf"></i> PDF',
+                className: 'btn btn-danger',
+                title: 'Productos'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i> Imprimir',
+                className: 'btn btn-info',
+                title: 'Productos'
+            },
+            {
+                extend: 'colvis',
+                text: '<i class="fas fa-columns"></i> Visibilidad',
+                className: 'btn btn-warning'
+            }
+        ]
     });
 });
 
