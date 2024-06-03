@@ -7,14 +7,74 @@
 <link href="/path/to/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 @section('content')
 <br>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+<!-- DataTable de reportes -->
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 <body>
+    <style>
+        /* Estilos personalizados para los botones de exportación */
+        .dt-buttons .btn {
+            font-size: 14px;
+            margin-right: 10px;
+            border-radius: 5px;
+            padding: 11px 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .dt-buttons .btn-success {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+        }
+        
+        .dt-buttons .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+        
+        .dt-buttons .btn-info {
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+        }
+        
+        .dt-buttons .btn:hover {
+            opacity: 0.8;
+        }
+        
+        .dt-buttons .btn:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        
+        /* Estilos adicionales para ajustar el espaciado y la alineación */
+        .dataTables_wrapper .dt-buttons {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .dataTables_wrapper .dt-buttons .btn {
+            background-color: #1e3a5e !important;
+            border-color: #1e3a5e !important;
+            color: white !important;
+        }
+        
+        .dataTables_wrapper .dt-buttons .btn:hover {
+            background-color: #143755 !important;
+            border-color: #143755 !important;
+        }
+        
+        .dataTables_wrapper .dt-buttons .btn i {
+            margin-right: 5px;
+        }
+        </style>
 <div class="container-fluid">
    <div class="row">
     <div class="col-sm-12">
@@ -108,7 +168,7 @@
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-
+<!-- script de reportes -->
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" defer></script>
@@ -120,68 +180,69 @@
 
 
 <script>
-$(document).ready(function() {
-    $('#myTable').DataTable({
-        responsive:true,
-        language: {
-            "sProcessing":     "Procesando...",
-            "sLengthMenu":     "Mostrar _MENU_ registros",
-            "sZeroRecords":    "No se encontraron resultados",
-            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-            "sSearch":         "Buscar:",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":     "Último",
-                "sNext":     "Siguiente",
-                "sPrevious": "Anterior"
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            responsive: true,
+            language: {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
             },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            },
-            "buttons": {
-                "copy": "Copiar",
-                "colvis": "Visibilidad"
-            }
-        },
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'copy',
-                text: '<i class="fas fa-copy"></i> Copiar',
-                className: 'btn btn-primary',
-                title: 'Productos'
-            },
-            {
-                extend: 'excel',
-                text: '<i class="fas fa-file-excel"></i> Excel',
-                className: 'btn btn-success',
-                title: 'Productos'
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf"></i> PDF',
-                className: 'btn btn-danger',
-                title: 'Productos'
-            },
-            {
-                extend: 'print',
-                text: '<i class="fas fa-print"></i> Imprimir',
-                className: 'btn btn-info',
-                title: 'Productos'
-            },
-            {
-                extend: 'colvis',
-                text: '<i class="fas fa-columns"></i> Visibilidad',
-                className: 'btn btn-warning'
-            }
-        ]
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: '<i class="bi bi-file-earmark-excel-fill"></i>',
+                    titleAttr: 'Exportar a Excel',
+                    title: 'Distribuciones El Mago Productos',
+                    className: 'btn btn-success',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Esto excluye la última columna (acciones)
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: '<i class="bi bi-filetype-pdf"></i>',
+                    titleAttr: 'Exportar a PDF',
+                    title: 'Distribuciones El Mago Productos',
+                    className: 'btn btn-danger',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Esto excluye la última columna (acciones)
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="bi bi-printer"></i>',
+                    titleAttr: 'Imprimir',
+                    title:'Distribuciones El Mago Productos',
+                    className: 'btn btn-info',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Esto excluye la última columna (acciones)
+                    }
+                }
+            ]
+        });
     });
-});
-
+    
     function toggleSaleStatus(productId, status) {
         var form = document.getElementById('toggle-form-' + productId);
         var action = status ? 'habilitar' : 'inhabilitar';
