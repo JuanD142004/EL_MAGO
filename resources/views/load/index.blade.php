@@ -46,7 +46,7 @@
         /* Estilos personalizados para los botones de exportación */
         .dt-buttons .btn {
             font-size: 14px; /* Aumenta el tamaño de la fuente */
-            padding: 9px 24px; /* Aumenta el rellenado (padding) */
+            padding: 11px 24px; /* Aumenta el rellenado (padding) */
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
