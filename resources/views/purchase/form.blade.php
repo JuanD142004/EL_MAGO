@@ -14,13 +14,7 @@
             background-position: center; /* Centra la imagen */
             background-repeat: no-repeat; /* Evita que la imagen se repita */
             background-attachment: fixed;
-            height: 100vh; /* Ajusta la altura al 100% de la ventana */
-            width: 100vw; /* Ajusta el ancho al 100% de la ventana */
             overflow-x: hidden; /* Evita el desbordamiento horizontal */
-        }
-        .container{
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
-            border: none; /* Sin bordes para la tarjeta */
         }
 
 
@@ -32,20 +26,10 @@
         .table {
             background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
         }
+        
         .form-container {
             margin: auto;
             margin-top: 20px;
-        }
-
-        table {
-            width: 100%;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
         th {
@@ -80,20 +64,15 @@
         .remove-product-btn i {
             pointer-events: none;
         }
-
-        .detail-form-container {
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="box box-info padding-1">
+            <div class="col-md-6" >
+                <div class="box box-info padding-1" >
                     <div class="box-body">
                         <h2>Formulario de Compras</h2>
                         <form id="mainForm">
@@ -120,7 +99,7 @@
                             </div>
                             <div class="box-footer" style="margin: 20px;">
                                 <button type="button" class="btn btn-success" onclick="enviarDetalles()">Enviar</button>
-                                <a class="btn btn-primary" href="{{ route('purchase.index') }}">Volver</a>
+                                <a class="btn btn-primary" href="{{ route('purchase.index') }}"><i class="fas fa-chevron-left"></i>Volver</a>
                             </div>
                         </form> <!-- Mueve esta etiqueta de cierre aquí -->
                     </div>
@@ -140,7 +119,7 @@
                                     <table class="table" id="detalle-table">
                                         <thead>
                                             <tr>
-                                                <th>ID del Producto</th>
+                                                <th>Producto</th>
                                                 <th>Lote</th>
                                                 <th>Cantidad</th>
                                                 <th>Valor Unitario</th>
@@ -181,6 +160,7 @@
                 </div>
             </div>
     </div>
+</body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
