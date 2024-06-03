@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('truck_types', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_UNIQUE');
-            $table->string('truck_brand', 45);
-            $table->string('plate', 10);
-            $table->string('ability', 45);
+        Schema::create('sales', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('customers_id')->index('fk_sales_customers1_idx');
+            $table->string('price_total', 45);
+            $table->string('payment_method', 45);
             $table->timestamps();
             $table->tinyInteger('enabled')->nullable();
-
-            $table->primary(['id']);
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('truck_types');
+        Schema::dropIfExists('sales');
     }
 };

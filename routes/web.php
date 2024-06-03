@@ -142,8 +142,6 @@ Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purc
 
 
 
-
-
 // ruta para la barra de busqueda
 Route::get('/purchase/search', [PurchaseController::class, 'search'])->name('purchase.search');
 
