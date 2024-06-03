@@ -21,29 +21,74 @@
     <body>
     <style>
         body{
-        background-image: url('/img/El_mago.jpg');
-        background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
-        background-position: center; /* Centra la imagen */
-        background-repeat: no-repeat; /* Evita que la imagen se repita */
-        background-attachment: fixed;
-        height: 100vh; /* Ajusta la altura al 100% de la ventana */
-        width: 100vw; /* Ajusta el ancho al 100% de la ventana */
-        padding:0;
-        margin:0;
-        overflow-x: hidden; /* Evita el desbordamiento horizontal */
-    }
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed;
+            height: 100vh; /* Ajusta la altura al 100% de la ventana */
+            width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
 
 
-    .card {
-            background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco con 80% de opacidad */
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
             border: none; /* Sin bordes para la tarjeta */
         }
 
         .table {
             background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
         }
+        .form-container {
+            margin: auto;
+            margin-top: 20px;
+        }
 
+        /* Estilos para la tabla */
+        table {
+            width: 100%;
+        }
 
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remove-product-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 32px;
+            width: 32px;
+            border: none;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-product-btn:hover {
+            background-color: #c82333;
+        }
+
+        .remove-product-btn i {
+            pointer-events: none;
+        }
         .btn-dark-blue {
             background-color: #004085;
             border-color: #003768;
@@ -59,8 +104,8 @@
             opacity: 1;
         }
 
-        .btn-dark-blue.disabled, 
-        .btn-dark-blue:disabled {
+        .btn-dark-blue.enabled, 
+        .btn-dark-blue:enabled {
             background-color: #004085;
             border-color: #003768;
             opacity: 0.65;
@@ -136,9 +181,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('purchase.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('purchase.create') }}" class="btn btn-dark text-white btn-sm float-right"
                                     data-placement="left">
-                                    {{ __('Crear Nuevo') }}
+                                    <i class="fas fa-plus"></i> {{ __('Crear Nuevo') }}
                                 </a>
                             </div>
                         </div>

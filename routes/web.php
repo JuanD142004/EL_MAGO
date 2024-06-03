@@ -112,6 +112,8 @@ Route::post('/loads', [LoadController::class, 'store'])->name('loads.store');
 Route::get('/loads', [LoadController::class, 'index'])->name('loads.index');
 Route::patch('/loads/{load}', [LoadController::class, 'update'])->name('loads.update');
 Route::patch('/loads/{load}/update_status', [LoadController::class, 'updateStatus'])->name('load.update_status');
+Route::patch('/loads/{id}/update_status',  [LoadController::class, 'updateStatus'])->name('load.update_status');
+
 
 
 // Rutas para ventas y detalles de ventas

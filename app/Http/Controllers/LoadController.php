@@ -121,26 +121,20 @@ class LoadController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|boolean',
-        ]);
+{
+    $request->validate([
+        'status' => 'required|boolean',
+    ]);
 
-        $load = Load::findOrFail($id);
-        $load->enabled = $request->input('status');
-        if ($load->enabled) {
-            $load->disabled_at = now()->addHours(24);
-        } else {
-            $load->disabled_at = null;
-        }
-        $load->save();
+    $load = Load::findOrFail($id);
+    $load->enabled = $request->input('status');
+    $load->save();
 
-        $action = $load->enabled ? 'habilitado' : 'inhabilitado';
-        $load->enabled = $request->status;
-        $load->save();
+    $action = $load->enabled ? 'habilitado' : 'inhabilitado';
 
-        return redirect()->route('loads.index')->with('success', "La carga ha sido $action correctamente.");
-    }
+    return redirect()->route('loads.index')->with('success', "La carga ha sido $action correctamente.");
+}
+
 
     public function destroy($id)
     {
