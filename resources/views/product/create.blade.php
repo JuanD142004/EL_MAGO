@@ -6,28 +6,23 @@
 
 @section('content')
 <br>
- <section class="content container-fluid">
-      
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12"><div class="float-right mb-3">
-        </div>
+<section class="content container-fluid">
+    <div class="d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card card-default">
+                <div class="card-header">
+                    <span class="card-title">{{ __('Crear') }} Producto Nuevo</span>
+                </div>
+                <div class="card-body bg-white">
+                    <form method="POST" action="{{ route('product.store') }}" role="form" enctype="multipart/form-data">
+                        @csrf
 
-                <div class="card card-default">
-                    <div class="card-header">
-  
-                        <span class="card-title">{{ __('Crear') }} Producto Nuevo</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('product.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+                        @include('product.form')
 
-                            @include('product.form')
-
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection

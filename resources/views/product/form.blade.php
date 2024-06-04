@@ -1,5 +1,44 @@
+    <style>
+        body {
+                background-image: url('/img/El_mago.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                height: 100vh;
+                width: 100vw;
+            }
+
+            .card {
+                background-color: rgba(255, 255, 255, 0.7);
+                border: none;
+                padding: 20px;
+                margin: 20px;
+                border-radius: 8px;
+            }
+
+            .form-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .form-container .form-group {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .box-footer {
+                display: flex;
+                justify-content: flex-start;
+                gap: 10px;
+                margin-top: 20px;
+            }
+    </style>
+
 <div class="box box-info padding-1">
     <div class="box-body">
+    <div class="container">
         <div class="form-group">
             <label for="product_name">{{ __('Nombre del Producto') }}</label>
             <input type="text" name="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name', $product?->product_name) }}" id="product_name" placeholder="Nombre del Producto">
@@ -54,6 +93,7 @@
             </select>
             {!! $errors->first('suppliers_id', '<div class="invalid-feedback">Selecciona un proveedor</div>') !!}
         </div>
+    </div>
         <br>
         <div class="box-footer mt20">
             <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
