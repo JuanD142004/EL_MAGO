@@ -18,6 +18,26 @@
 <body>
     <style>
         /* Estilos personalizados para los botones de exportación */
+        body{
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed;
+            height: 100vh; /* Ajusta la altura al 100% de la ventana */
+            width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
+
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
+
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
         .dt-buttons .btn {
             font-size: 14px;
             margin-right: 10px;

@@ -2,16 +2,24 @@
 
 @section('content')
 
-<style>
-    .input-border {
-        border: 1px solid blue;
-        border-radius: 10px;
-        background: transparent;
-        color: #333;
-    }
-</style>
+    <style>
+        
+        .input-border {
+            border: 1px solid blue;
+            border-radius: 10px;
+            background: transparent;
+            color: #333;
+        }
+        .no-scrollbar {
+            overflow: hidden; /* Oculta ambas barras de desplazamiento */
+        }
 
-<div class="container-fluid d-flex justify-content-center align-items-center" style="background-image: url({{ asset('mago.jpg') }}); background-size: cover; background-position: center; min-height: 100vh; background-color: transparent;">
+        .no-scrollbar::-webkit-scrollbar {
+            display: none; /* Oculta la scrollbar en Chrome, Safari, etc. */
+        }
+    </style>
+
+<div class="container-fluid d-flex justify-content-center align-items-center no-scrollbar" style="background-image: url({{ asset('mago.jpg') }}); background-size: cover; background-position: center; min-height: 100vh; background-color: transparent; ">
 
     <div class="row">
         <div class="col-md-5">

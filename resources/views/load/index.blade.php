@@ -101,7 +101,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-15 mx-auto">
+            <div class="col-sm-12 mx-auto">
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -150,7 +150,7 @@
                                                 <form id="toggle-form-{{ $load->id }}" action="{{ route('load.update_status', $load) }}" method="POST">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-sm {{ $load->enabled ? 'btn-warning' : 'btn-success' }}">
+                                                    <button type="button" class="btn btn-sm {{ $load->enabled ? 'btn-warning' : 'btn-success' }}" onclick="toggleSaleStatus({{ $load->id }}, {{ $load->enabled ? 'false' : 'true' }})">
                                                         <i class="fa fa-fw {{ $load->enabled ? 'fa-times' : 'fa-check' }}"></i> {{ $load->enabled ? 'Inhabilitar' : 'Habilitar' }}
                                                     </button>
                                                     <input type="hidden" name="status" value="{{ $load->enabled ? 0 : 1 }}">
@@ -179,6 +179,9 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
@@ -187,7 +190,6 @@
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- script de reportes -->
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
@@ -264,24 +266,24 @@
         });
         
     function toggleSaleStatus(supplierId, status) {
-        var form = document.getElementById('toggle-form-' + supplierId);
-        var action = status ? 'habilitar' : 'inhabilitar';
+    var form = document.getElementById('toggle-form-' + supplierId);
+    var action = status ? 'habilitar' : 'inhabilitar';
 
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: `Esta acción cambiará el estado del proveedor a ${status ? 'habilitado' : 'inhabilitado'}!`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: `Sí, ${action}`,
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
-        });
-    }
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Esta acción cambiará el estado del proveedor a ${status ? 'habilitado' : 'inhabilitado'}!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Sí, ${action}`,
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+}
     </script>
 
 @endsection
