@@ -128,9 +128,9 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Date</th>
-                                        <th>Route Name</th>
-                                        <th>Truck Type</th>
+                                        <th>Fecha</th>
+                                        <th>Nombre de Ruta</th>
+                                        <th>Tipo de Camion</th>
                                         <th>Mostrar</th>
                                         <th>Estado de la carga</th>
                                         <th>Editar</th>

@@ -126,17 +126,12 @@
                                     <th>Marca</th>
                                     <th>Precio unitario</th>
                                     <th>Unidad de medida</th>
-                                    <th>Proveedores Id</th>
-                                    <th>Estado Id</th>
+                                    <th>Proveedores</th>
+                                    <th>Estado</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(count($products) <= 0)
-                                <tr>
-                                    <td colspan="4">No hay resultados</td>
-                                </tr>
-                                @else
                                 @foreach ($products as $product)
                                 <tr>
                                     <td>{{ ++$i }}</td>
@@ -162,7 +157,6 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @endif
                             </tbody>
                             <tfoot>
                                 <tr>

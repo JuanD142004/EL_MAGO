@@ -199,10 +199,10 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Supplier</th>
-                                        <th>Date</th>
-                                        <th>Total Value</th>
-                                        <th>Num Bill</th>
+                                        <th>Proveedor</th>
+                                        <th>Fecha</th>
+                                        <th>Total</th>
+                                        <th>Numero de Factura</th>
                                         <th>Mostrar</th>
                                         <th>Anular</th>
                                     </tr>
