@@ -8,12 +8,14 @@
         "php": "^8.1",
         "caouecs/laravel-lang": "5.0.0",
         "guzzlehttp/guzzle": "^7.2",
+        "laravel-lang/lang": "*",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "*",
         "laravelcollective/html": "*",
-        "laraveles/spanish": "*"
+        "laraveles/spanish": "*",
+        "spatie/laravel-backup": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
