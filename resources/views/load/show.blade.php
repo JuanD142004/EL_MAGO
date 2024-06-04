@@ -9,45 +9,105 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<style>
-    .card {
-        width: 100%;
-        margin: auto;
-    }
+    <style>
+        body{
+            background-image: url('/img/El_mago.jpg');
+            background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed;
+            height: 100vh; /* Ajusta la altura al 100% de la ventana */
+            width: 100vw; /* Ajusta el ancho al 100% de la ventana */
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
 
-    .card-header h4 {
-        font-size: 1.5rem;
-    }
 
-    .btn-primary {
-        font-size: 1.2rem;
-    }
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+            border: none; /* Sin bordes para la tarjeta */
+        }
 
-    .table th,
-    .table td {
-        font-size: 1.1rem;
-    }
+        .table {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+        }
+        .card {
+            width: 100%;
+            margin: auto;
+        }
 
-    .alert {
-        font-size: 1.1rem;
-        color: #856404;
-        background-color: #fff3cd;
-        border-color: #ffeeba;
-    }
+        .card-header h4 {
+            font-size: 1.5rem;
+        }
 
-    h5 {
-        font-size: 1.3rem;
-    }
+        .btn-primary {
+            font-size: 1.2rem;
+        }
 
-    .details-table-container {
-        margin-top: 20px;
-    }
+        .table th,
+        .table td {
+            font-size: 1.1rem;
+        }
 
-    .table-details th,
-    .table-details td {
-        padding: 15px;
-    }
-</style>
+        .alert {
+            font-size: 1.1rem;
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+
+        h5 {
+            font-size: 1.3rem;
+        }
+
+        .details-table-container {
+            margin-top: 20px;
+        }
+
+        .table-details th,
+        .table-details td {
+            padding: 15px;
+        }
+
+
+
+        .card {
+            width: 100%;
+            margin: auto;
+        }
+
+        .card-header h4 {
+            font-size: 1.5rem;
+        }
+
+        .btn-primary {
+            font-size: 1.2rem;
+        }
+
+        .table th,
+        .table td {
+            font-size: 1.1rem;
+        }
+
+        .alert {
+            font-size: 1.1rem;
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+
+        h5 {
+            font-size: 1.3rem;
+        }
+
+        .details-table-container {
+            margin-top: 20px;
+        }
+
+        .table-details th,
+        .table-details td {
+            padding: 15px;
+        }
+    </style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -65,15 +125,15 @@
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <th>Date</th>
+                                            <th>Fecha</th>
                                             <td>{{ $load->date }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Route Name</th>
+                                            <th>Nombre de Ruta</th>
                                             <td>{{ $load->route->route_name ?? 'N/A' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Truck Type</th>
+                                            <th>Tipo de Camion</th>
                                             <td>{{ $load->truckType->truck_brand ?? 'N/A' }}</td>
                                         </tr>
                                     </tbody>
@@ -85,9 +145,9 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Amount</th>
-                                            <th>Product Name</th>
-                                            <th>Loads Id</th>
+                                            <th>Cantidad</th>
+                                            <th>Nombre del Producto</th>
+                                            <th>Id de carga</th>
                                         </tr>
                                     </thead>
                                     <tbody>

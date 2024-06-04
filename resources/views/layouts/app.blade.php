@@ -61,6 +61,11 @@
             width: 100%;
             background-color: white;
         }
+        .content-wrapper {
+            flex-grow: 1;
+            overflow-y: auto; /* Permite el scroll vertical si es necesario */
+            padding-bottom: 80px; /* Altura del footer para evitar solapamiento */
+        }
     </style>
 
     <!-- Scripts -->
@@ -146,8 +151,6 @@
         <main>
             @yield('content')
         </main>
-        <br>
-        <br>
         <br>
         <br>
         <br>
