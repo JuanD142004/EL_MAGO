@@ -79,7 +79,8 @@
                 <option value="Tonelada" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Tonelada' ? 'selected' : '' }}>Tonelada(1000kg)</option>
                 <option value="Bulto" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Bulto' ? 'selected' : '' }}>Bulto(40kg)</option>
                 <option value="Kilogramo" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Kilogramo' ? 'selected' : '' }}>Kilogramo</option>
-                <option value="Libra" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Libra' ? 'selected' : '' }}>Libra</option>
+                <1option value="Libra" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Libra' ? 'selected' : '' }}>Libra</1option>
+                <option value="Caja" {{ old('unit_of_measurement', $product?->unit_of_measurement) == 'Caja' ? 'selected' : '' }}>Caja(25Kg)</option>
             </select>
             {!! $errors->first('unit_of_measurement', '<div class="invalid-feedback">Selecciona una Unidad de Medida</div>') !!}
         </div>

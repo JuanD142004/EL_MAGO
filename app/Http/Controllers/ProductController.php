@@ -54,7 +54,6 @@ class ProductController extends Controller
             // otras reglas de validación
         ], [
             'product_name.required' => 'El nombre del producto es obligatorio.',
-            'product_name.unique' => 'El nombre del producto ya está registrado.',
             'brand.required' => 'La marca es obligatoria.',
             'price_unit.required' => 'El precio unitario es obligatorio.',
             'unit_of_measurement.required' => 'La unidad de medida es obligatoria.',
